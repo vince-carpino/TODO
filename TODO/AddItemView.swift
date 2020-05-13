@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct AddItemView: View {
-    @State var itemName: String
+    @Binding var itemName: String
 
     var body: some View {
         VStack {
             Text("Add an item")
                 .font(.largeTitle)
+                .bold()
 
             Spacer()
 
             VStack(alignment: .leading) {
                 Text("Name")
-                    .font(.callout)
+                    .font(.title)
                     .bold()
                     .padding(.bottom, -10)
 
@@ -32,6 +33,7 @@ struct AddItemView: View {
             HStack {
                 Button(action: {
                     print("Cancel...")
+                    
                 }) {
                     HStack {
                         Image(systemName: "xmark")
@@ -41,12 +43,12 @@ struct AddItemView: View {
                     }
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(.red)
+                    .foregroundColor(.gray)
                     .background(Color.white)
                     .cornerRadius(40)
                     .overlay(
                         RoundedRectangle(cornerRadius: 40)
-                            .stroke(Color.red, lineWidth: 3)
+                            .stroke(Color.gray, lineWidth: 3)
                     )
                 }
 
@@ -73,6 +75,6 @@ struct AddItemView: View {
 
  struct AddItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemView(itemName: "some value")
+        AddItemView(itemName: Binding.constant("some value"))
     }
  }
