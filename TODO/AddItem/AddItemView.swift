@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AddItemView: View {
-    @Binding var itemName: String
+    @State var itemName: String
 
     var body: some View {
         VStack {
@@ -26,6 +26,7 @@ struct AddItemView: View {
 
                 TextField("Enter a name...", text: $itemName)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.default)
             }
 
             Spacer()
@@ -33,6 +34,7 @@ struct AddItemView: View {
             VStack {
                 Button(action: {
                     print("Add Item...")
+                    
                 }) {
                     HStack {
                         Image(systemName: "plus")
@@ -43,7 +45,7 @@ struct AddItemView: View {
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .foregroundColor(.white)
-                    .background(Color.blue)
+                    .background(buttonColor)
                     .cornerRadius(40)
                 }
                 .disabled(self.itemName.isEmpty)
@@ -55,10 +57,14 @@ struct AddItemView: View {
         }
         .padding()
     }
+
+    var buttonColor: Color {
+        return self.itemName.isEmpty ? .gray : .blue
+    }
 }
 
  struct AddItemView_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemView(itemName: Binding.constant("some value"))
+        AddItemView(itemName: "")
     }
  }

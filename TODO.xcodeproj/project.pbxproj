@@ -111,9 +111,8 @@
 				D0008C33244E67DF00E4F5AD /* AppDelegate.swift */,
 				D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */,
 				D0008C37244E67E000E4F5AD /* ItemListView.swift */,
-				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
-				D0BEB2B4246A370400781D9E /* AddItemView.swift */,
+				D005D469246CBE17004C03E1 /* AddItem */,
 				D0008C39244E67E200E4F5AD /* Assets.xcassets */,
 				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
 				D0008C41244E67E200E4F5AD /* Info.plist */,
@@ -146,6 +145,15 @@
 				D0008C57244E67E200E4F5AD /* Info.plist */,
 			);
 			path = TODOUITests;
+			sourceTree = "<group>";
+		};
+		D005D469246CBE17004C03E1 /* AddItem */ = {
+			isa = PBXGroup;
+			children = (
+				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
+				D0BEB2B4246A370400781D9E /* AddItemView.swift */,
+			);
+			path = AddItem;
 			sourceTree = "<group>";
 		};
 		D0DD642C246BA99300ECFAC2 /* Models */ = {

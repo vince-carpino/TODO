@@ -23,7 +23,7 @@ struct AddItemButton: View {
                 .foregroundColor(.blue)
         }
         .sheet(isPresented: $showAddView) {
-            AddItemView(itemName: Binding.constant(""))
+            AddItemView(itemName: "")
         }
     }
 }
