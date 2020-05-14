@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ItemListView: View {
-    @State var items: [Item]
+    @State var items = UserDefaults.standard.object(forKey: "items") as? [Item] ?? [Item]()
 
     var body: some View {
         ZStack {
@@ -38,6 +38,6 @@ struct ItemListView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ItemListView(items: [Item(name: "item 1", id: 0), Item(name: "item 2", id: 1)])
+        ItemListView()
     }
 }
