@@ -30,28 +30,7 @@ struct AddItemView: View {
 
             Spacer()
 
-            HStack {
-                Button(action: {
-                    print("Cancel...")
-                    
-                }) {
-                    HStack {
-                        Image(systemName: "xmark")
-
-                        Text("Cancel")
-                            .fontWeight(.semibold)
-                    }
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .foregroundColor(.gray)
-                    .background(Color.white)
-                    .cornerRadius(40)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 40)
-                            .stroke(Color.gray, lineWidth: 3)
-                    )
-                }
-
+            VStack {
                 Button(action: {
                     print("Add Item...")
                 }) {
@@ -67,6 +46,11 @@ struct AddItemView: View {
                     .background(Color.blue)
                     .cornerRadius(40)
                 }
+                .disabled(self.itemName.isEmpty)
+
+                Text("swipe down to cancel")
+                    .foregroundColor(.gray)
+                    .font(.footnote)
             }
         }
         .padding()
