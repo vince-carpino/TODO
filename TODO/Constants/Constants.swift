@@ -7,3 +7,8 @@
 //
 
 import Foundation
+
+class Constants {
+    public static var ItemsListKey = "items"
+    public static var LatestItemIdKey = "latestItemId"
+}
