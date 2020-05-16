@@ -9,11 +9,14 @@
 import SwiftUI
 
 struct AddItemButton: View {
-    @State var showAddView: Bool
+    @Environment(\.managedObjectContext) var moc
+    @Binding var showAddView: Bool
+
+//    @Binding var itemsList: [Item]
 
     var body: some View {
         Button(action: {
-            print("Add item...")
+//            print("\n\nAdd item...")
             self.showAddView = true
         }) {
             Image(systemName: "plus.circle.fill")
@@ -23,13 +26,13 @@ struct AddItemButton: View {
                 .foregroundColor(.blue)
         }
         .sheet(isPresented: $showAddView) {
-            AddItemView(itemName: "")
+            AddItemView().environment(\.managedObjectContext, self.moc)
         }
     }
 }
 
 struct AddItemButton_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemButton(showAddView: false)
+        AddItemButton(showAddView: Binding.constant(false))
     }
 }
