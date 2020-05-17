@@ -6,27 +6,23 @@
 //  Copyright © 2020 Vince Carpino. All rights reserved.
 //
 
+import CoreData
 import SwiftUI
 
 struct ItemDetailView: View {
-    var item: Item
+    let item: Item
 
     var body: some View {
         VStack {
             Spacer()
 
-            VStack {
-                Text("Name")
-                    .bold()
-
+            VStack(alignment: .leading) {
                 Text(item.name ?? "")
-            }
-
-            VStack {
-                Text("Id")
+                    .font(.title)
                     .bold()
 
-                Text("\(item.id ?? UUID())")
+                Text("Name")
+                    .font(.subheadline)
             }
 
             Spacer()
@@ -72,7 +68,14 @@ struct ItemDetailView: View {
 }
 
 struct ItemDetailView_Previews: PreviewProvider {
+    static let moc = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
+
     static var previews: some View {
-        ItemDetailView(item: Item())
+        let item = Item(context: moc)
+        item.id = UUID()
+        item.name = "Test item"
+        return NavigationView {
+            ItemDetailView(item: item)
+        }
     }
 }
