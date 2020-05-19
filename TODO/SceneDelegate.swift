@@ -24,7 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-        let contentView = ItemListView().environment(\.managedObjectContext, context)
+//        let contentView = ItemListView().environment(\.managedObjectContext, context)
+
+        let contentView = ItemScrollView().environment(\.managedObjectContext, context)
 
 //        // Create the SwiftUI view that provides the window contents.
 //        let contentView = ItemListView()
