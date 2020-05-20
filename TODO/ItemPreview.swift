@@ -10,6 +10,8 @@ import CoreData
 import SwiftUI
 
 struct ItemPreview: View {
+    @Environment(\.managedObjectContext) var moc
+
     let item: Item
 
     @State private var isPresentingDetail = false
@@ -36,7 +38,7 @@ struct ItemPreview: View {
             .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentingDetail) {
-            ItemDetailView(item: self.item)
+            ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
         }
     }
 }

@@ -78,6 +78,12 @@ struct ItemDetailView: View {
                         let okayButton = Alert.Button.destructive(Text("Yes"), action: {
                             print("MARKING AS DELETED")
                             self.item.hasBeenDeleted = true
+
+                            do {
+                                try self.moc.save()
+                            } catch {
+                                print("ERROR WHILE SAVING")
+                            }
                         })
                         let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
                             print("DON'T DO IT")
