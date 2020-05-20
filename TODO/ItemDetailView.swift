@@ -10,6 +10,9 @@ import CoreData
 import SwiftUI
 
 struct ItemDetailView: View {
+    @Environment(\.managedObjectContext) var moc
+    @State private var isPresentingDeleteConfirmation = false
+
     let item: Item
 
     var body: some View {
@@ -24,12 +27,24 @@ struct ItemDetailView: View {
                 Text("Name")
                     .font(.subheadline)
             }
+            .padding()
 
             Spacer()
 
             HStack {
                 Button(action: {
                     print("Delete Item...")
+
+                    self.isPresentingDeleteConfirmation = true
+//
+//                    self.moc.delete(self.item)
+//
+//                    do {
+//                        try self.moc.save()
+//                    } catch {
+//                        print("THERE WAS AN ERROR SAVING")
+//                    }
+
                 }) {
                     HStack {
                         Image(systemName: "xmark")
@@ -43,6 +58,25 @@ struct ItemDetailView: View {
                     .foregroundColor(.white)
                     .background(Color.red)
                     .cornerRadius(40)
+                }
+                .alert(isPresented: self.$isPresentingDeleteConfirmation) {
+                    let title: Text = Text("Are you sure?")
+                    let message: Text = Text("This cannot be undone")
+                    let okayButton = Alert.Button.default(Text("Yes"), action: {
+                        print("DELETE ITEM NOW")
+                        self.moc.delete(self.item)
+
+                        do {
+                            try self.moc.save()
+                        } catch {
+                            print("THERE WAS AN ERROR SAVING")
+                        }
+                    })
+                    let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
+                        print("DON'T DO IT")
+                    }
+
+                    return Alert(title: title, message: message, primaryButton: okayButton, secondaryButton: cancelButton)
                 }
 
                 Button(action: {
