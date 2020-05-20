@@ -12,19 +12,32 @@ import SwiftUI
 struct ItemPreview: View {
     let item: Item
 
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(item.name ?? "Unknown name")
-                .font(.title)
-                .bold()
+    @State private var isPresentingDetail = false
 
-            Text("Name")
-                .font(.headline)
+    var body: some View {
+        Button(action: {
+            print("tapped on \(self.item.name ?? "Unknown name")")
+
+            self.isPresentingDetail = true
+        }) {
+            VStack(alignment: .leading) {
+                Text(item.name ?? "Unknown name")
+                    .font(.title)
+                    .bold()
+                    .lineLimit(3)
+                    .truncationMode(.tail)
+
+                Text("Name")
+                    .font(.headline)
+            }
+            .padding(30)
+            .foregroundColor(.white)
+            .background(Color(red: 22/255, green: 160/255, blue: 132/255))
+            .cornerRadius(10)
         }
-        .padding(30)
-        .foregroundColor(.white)
-        .background(Color.blue)
-        .cornerRadius(10)
+        .sheet(isPresented: $isPresentingDetail) {
+            ItemDetailView(item: self.item)
+        }
     }
 }
 
