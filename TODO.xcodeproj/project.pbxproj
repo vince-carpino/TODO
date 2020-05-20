@@ -157,8 +157,8 @@
 		D005D469246CBE17004C03E1 /* AddItem */ = {
 			isa = PBXGroup;
 			children = (
-				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D0BEB2B4246A370400781D9E /* AddItemView.swift */,
+				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 			);
 			path = AddItem;
 			sourceTree = "<group>";
