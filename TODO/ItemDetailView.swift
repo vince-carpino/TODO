@@ -24,16 +24,32 @@ struct ItemDetailView: View {
                 Spacer()
 
                 VStack(alignment: .leading) {
-                    Text(item.name ?? "")
-                        .font(.title)
-                        .foregroundColor(.clouds)
-                        .bold()
+                    VStack(alignment: .leading) {
+                        Text(item.name ?? "")
+                            .font(.title)
+                            .foregroundColor(.clouds)
+                            .bold()
+                            .lineLimit(5)
+                            .truncationMode(.tail)
 
-                    Text("Name")
-                        .font(.subheadline)
-                        .foregroundColor(.clouds)
+                        Text("Name")
+                            .font(.subheadline)
+                            .foregroundColor(.clouds)
+                    }
+                    .padding()
+
+                    VStack(alignment: .leading) {
+                        Text("\(item.creationTime ?? Date())")
+                            .font(.title)
+                            .foregroundColor(.clouds)
+                            .bold()
+
+                        Text("Creation Time")
+                            .font(.subheadline)
+                            .foregroundColor(.clouds)
+                    }
+                    .padding()
                 }
-                .padding()
 
                 Spacer()
 
@@ -42,15 +58,6 @@ struct ItemDetailView: View {
                         print("Delete Item...")
 
                         self.isPresentingDeleteConfirmation = true
-                        //
-                        //                    self.moc.delete(self.item)
-                        //
-                        //                    do {
-                        //                        try self.moc.save()
-                        //                    } catch {
-                        //                        print("THERE WAS AN ERROR SAVING")
-                        //                    }
-
                     }) {
                         HStack {
                             Image(systemName: "xmark")
@@ -68,15 +75,9 @@ struct ItemDetailView: View {
                     .alert(isPresented: self.$isPresentingDeleteConfirmation) {
                         let title: Text = Text("Are you sure?")
                         let message: Text = Text("This cannot be undone")
-                        let okayButton = Alert.Button.default(Text("Yes"), action: {
-                            print("DELETE ITEM NOW")
-                            self.moc.delete(self.item)
-
-                            do {
-                                try self.moc.save()
-                            } catch {
-                                print("THERE WAS AN ERROR SAVING")
-                            }
+                        let okayButton = Alert.Button.destructive(Text("Yes"), action: {
+                            print("MARKING AS DELETED")
+                            self.item.hasBeenDeleted = true
                         })
                         let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
                             print("DON'T DO IT")
@@ -115,8 +116,9 @@ struct ItemDetailView_Previews: PreviewProvider {
         let item = Item(context: moc)
         item.id = UUID()
         item.name = "Test item"
-        return NavigationView {
-            ItemDetailView(item: item)
-        }
+        item.creationTime = Date()
+        item.hasBeenDeleted = false
+
+        return ItemDetailView(item: item)
     }
 }

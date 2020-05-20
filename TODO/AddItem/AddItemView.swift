@@ -80,6 +80,8 @@ struct AddItemView: View {
         let item = Item(context: self.moc)
         item.id = UUID()
         item.name = self.itemName
+        item.creationTime = Date()
+        item.hasBeenDeleted = false
 
         do {
             try self.moc.save()
