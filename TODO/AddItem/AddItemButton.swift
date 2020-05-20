@@ -10,22 +10,25 @@ import SwiftUI
 
 struct AddItemButton: View {
     @Environment(\.managedObjectContext) var moc
-    @Binding var showAddView: Bool
 
-//    @Binding var itemsList: [Item]
+    @State private var isPresentingAddItemView = false
 
     var body: some View {
         Button(action: {
-//            print("\n\nAdd item...")
-            self.showAddView = true
+            self.isPresentingAddItemView = true
         }) {
             Image(systemName: "plus.circle.fill")
                 .resizable()
                 .frame(width: 60, height: 60)
                 .imageScale(.large)
                 .foregroundColor(.blue)
+                .background(Color.white)
+                .clipShape(Circle())
+                .overlay(
+                    Circle().stroke(Color.white, lineWidth: 3)
+                )
         }
-        .sheet(isPresented: $showAddView) {
+        .sheet(isPresented: $isPresentingAddItemView) {
             AddItemView().environment(\.managedObjectContext, self.moc)
         }
     }
@@ -33,6 +36,6 @@ struct AddItemButton: View {
 
 struct AddItemButton_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemButton(showAddView: Binding.constant(false))
+        AddItemButton()
     }
 }
