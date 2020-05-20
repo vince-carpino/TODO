@@ -15,13 +15,13 @@ struct AddItemView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 44/255, green: 62/255, blue: 80/255)
+            Color.midnightBlue
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
                 Text("Add an item")
                     .font(.largeTitle)
-                    .foregroundColor(.white)
+                    .foregroundColor(.clouds)
                     .bold()
 
                 Spacer()
@@ -29,7 +29,7 @@ struct AddItemView: View {
                 VStack(alignment: .leading) {
                     Text("Name")
                         .font(.title)
-                        .foregroundColor(.white)
+                        .foregroundColor(.clouds)
                         .bold()
                         .padding(.bottom, -10)
 
@@ -53,14 +53,14 @@ struct AddItemView: View {
                         }
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.white)
+                        .foregroundColor(.clouds)
                         .background(buttonColor)
                         .cornerRadius(40)
                     }
-                    .disabled(self.itemName.isEmpty)
+                    .disabled(self.nameFieldIsEmpty())
 
                     Text("swipe down to cancel")
-                        .foregroundColor(.gray)
+                        .foregroundColor(.silver)
                         .font(.footnote)
                 }
             }
@@ -68,8 +68,12 @@ struct AddItemView: View {
         }
     }
 
+    fileprivate func nameFieldIsEmpty() -> Bool {
+        return self.itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     var buttonColor: Color {
-        return self.itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? .gray : .blue
+        return nameFieldIsEmpty() ? .concrete : .peterRiver
     }
 
     fileprivate func addNewItem() {

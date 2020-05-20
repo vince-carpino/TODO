@@ -31,8 +31,8 @@ struct ItemPreview: View {
                     .font(.headline)
             }
             .padding(30)
-            .foregroundColor(.white)
-            .background(Color(red: 22/255, green: 160/255, blue: 132/255))
+            .foregroundColor(.clouds)
+            .background(Color.greenSea)
             .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentingDetail) {

@@ -21,11 +21,11 @@ struct AddItemButton: View {
                 .resizable()
                 .frame(width: 60, height: 60)
                 .imageScale(.large)
-                .foregroundColor(.blue)
-                .background(Color.white)
+                .foregroundColor(.peterRiver)
+                .background(Color.clouds)
                 .clipShape(Circle())
                 .overlay(
-                    Circle().stroke(Color.white, lineWidth: 3)
+                    Circle().stroke(Color.clouds, lineWidth: 3)
                 )
         }
         .sheet(isPresented: $isPresentingAddItemView) {

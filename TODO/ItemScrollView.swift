@@ -15,7 +15,7 @@ struct ItemScrollView: View {
 
     var body: some View {
         ZStack {
-            Color(red: 44/255, green: 62/255, blue: 80/255)
+            Color.midnightBlue
                 .edgesIgnoringSafeArea(.all)
 
             ScrollView(showsIndicators: false) {
