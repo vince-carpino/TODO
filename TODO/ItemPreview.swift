@@ -22,20 +22,15 @@ struct ItemPreview: View {
 
             self.isPresentingDetail = true
         }) {
-            VStack(alignment: .leading) {
-                Text(item.name ?? "Unknown name")
-                    .font(.title)
-                    .bold()
-                    .lineLimit(3)
-                    .truncationMode(.tail)
-
-                Text("Name")
-                    .font(.headline)
-            }
-            .padding(30)
-            .foregroundColor(.clouds)
-            .background(Color.greenSea)
-            .cornerRadius(10)
+            Text(item.name ?? "Unknown name")
+                .font(.title)
+                .bold()
+                .lineLimit(3)
+                .truncationMode(.tail)
+                .padding(30)
+                .foregroundColor(.clouds)
+                .background(Color.greenSea)
+                .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentingDetail) {
             ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
