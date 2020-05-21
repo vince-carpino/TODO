@@ -111,7 +111,7 @@ struct ItemDetailView: View {
                         .cornerRadius(40)
                     }
                     .sheet(isPresented: $isPresentingEditSheet) {
-                        EditItemView(item: self.item).environment(\.managedObjectContext, self.moc)
+                        AddEditItemView(item: self.item).environment(\.managedObjectContext, self.moc)
                     }
                 }
                 .padding()

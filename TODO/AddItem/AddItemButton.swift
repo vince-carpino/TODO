@@ -29,7 +29,7 @@ struct AddItemButton: View {
                 )
         }
         .sheet(isPresented: $isPresentingAddItemView) {
-            AddItemView().environment(\.managedObjectContext, self.moc)
+            AddEditItemView(item: nil).environment(\.managedObjectContext, self.moc)
         }
     }
 }
