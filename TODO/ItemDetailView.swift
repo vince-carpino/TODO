@@ -12,6 +12,7 @@ import SwiftUI
 struct ItemDetailView: View {
     @Environment(\.managedObjectContext) var moc
     @State private var isPresentingDeleteConfirmation = false
+    @State private var isPresentingEditSheet = false
 
     let item: Item
 
@@ -60,7 +61,7 @@ struct ItemDetailView: View {
                         self.isPresentingDeleteConfirmation = true
                     }) {
                         HStack {
-                            Image(systemName: "xmark")
+                            Image(systemName: "trash")
                                 .imageScale(.medium)
 
                             Text("Delete Item")
@@ -94,6 +95,7 @@ struct ItemDetailView: View {
 
                     Button(action: {
                         print("Edit Item...")
+                        self.isPresentingEditSheet = true
                     }) {
                         HStack {
                             Image(systemName: "slider.horizontal.3")
@@ -107,6 +109,9 @@ struct ItemDetailView: View {
                         .foregroundColor(.clouds)
                         .background(Color.peterRiver)
                         .cornerRadius(40)
+                    }
+                    .sheet(isPresented: $isPresentingEditSheet) {
+                        EditItemView(item: self.item).environment(\.managedObjectContext, self.moc)
                     }
                 }
                 .padding()
