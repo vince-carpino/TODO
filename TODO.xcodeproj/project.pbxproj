@@ -120,13 +120,12 @@
 				D089D9C2246CE65900A8CE33 /* Constants */,
 				D0008C33244E67DF00E4F5AD /* AppDelegate.swift */,
 				D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */,
-				D0008C37244E67E000E4F5AD /* ItemListView.swift */,
-				D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */,
-				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
-				D07699BE2475F6A300454092 /* EditItemView.swift */,
-				D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */,
+				D0166B0D24763CD90045418A /* Container */,
 				D0166B0A247635B70045418A /* AddEditItemView.swift */,
-				D005D469246CBE17004C03E1 /* AddItem */,
+				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
+				D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */,
+				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
+				D0166B0C24763CA00045418A /* Unused */,
 				D0008C39244E67E200E4F5AD /* Assets.xcassets */,
 				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
 				D0008C41244E67E200E4F5AD /* Info.plist */,
@@ -162,13 +161,22 @@
 			path = TODOUITests;
 			sourceTree = "<group>";
 		};
-		D005D469246CBE17004C03E1 /* AddItem */ = {
+		D0166B0C24763CA00045418A /* Unused */ = {
 			isa = PBXGroup;
 			children = (
+				D0008C37244E67E000E4F5AD /* ItemListView.swift */,
 				D0BEB2B4246A370400781D9E /* AddItemView.swift */,
-				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
+				D07699BE2475F6A300454092 /* EditItemView.swift */,
 			);
-			path = AddItem;
+			path = Unused;
+			sourceTree = "<group>";
+		};
+		D0166B0D24763CD90045418A /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */,
+			);
+			path = Container;
 			sourceTree = "<group>";
 		};
 		D089D9C2246CE65900A8CE33 /* Constants */ = {
