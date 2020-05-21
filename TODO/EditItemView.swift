@@ -86,6 +86,7 @@ struct EditItemView: View {
     fileprivate func saveItem() {
         self.moc.performAndWait {
             item.name = self.newName
+            
             do {
                 try self.moc.save()
                 print("saved item: \(self.item.name ?? "NIL NAME")")
@@ -93,14 +94,6 @@ struct EditItemView: View {
                 print("Error while saving item:\n***\n\(error)\n***")
             }
         }
-
-//        self.item.name = self.newName
-//        let item = Item(context: self.moc)
-//        item.id = UUID()
-//        item.name = self.newName
-//        item.creationTime = Date()
-//        item.hasBeenDeleted = false
-
     }
 }
 
