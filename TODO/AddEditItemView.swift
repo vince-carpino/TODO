@@ -16,7 +16,16 @@ struct AddEditItemView: View {
     @State private var itemName = ""
     @State private var newName = ""
 
+    @State private var hasDueDate = false
+    @State private var dueDate = Date()
+
     let item: Item?
+
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        return formatter
+    }
 
     var body: some View {
         ZStack {
@@ -28,29 +37,84 @@ struct AddEditItemView: View {
                     .font(.largeTitle)
                     .foregroundColor(.clouds)
                     .bold()
+                    .padding(.bottom, 15)
 
                 Spacer()
 
-                VStack(alignment: .leading) {
-                    Text("Name")
-                        .font(.title)
-                        .foregroundColor(.clouds)
-                        .bold()
-                        .padding(.bottom, -10)
+                Form {
+                    Section {
+                        if self.isNewItem() {
+                            TextField("Enter a name...", text: $itemName)
+                        } else {
+                            TextField("Enter a name...", text: $newName)
+                                .onAppear {
+                                    self.newName = self.item?.name ?? ""
+                                }
+                        }
+                    }
 
-                    if self.isNewItem() {
-                        TextField("Enter a name...", text: $itemName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.default)
-                    } else {
-                        TextField("Enter a name...", text: $newName)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .keyboardType(.default)
-                            .onAppear(perform: {
-                                self.newName = self.item?.name ?? ""
-                        })
+                    Section {
+                        Toggle(isOn: $hasDueDate) {
+                            HStack {
+                                Text("Due date")
+                                Spacer()
+                            }
+                        }
+                        .onAppear {
+                            self.hasDueDate = self.item?.hasDueDate ?? false
+                        }
+
+                        if hasDueDate {
+                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: .date)
+                                .onAppear {
+                                    self.dueDate = self.item?.dueDate ?? Date()
+                                }
+                        }
                     }
                 }
+
+//                VStack {
+//                    VStack(alignment: .leading) {
+//                        Text("Name")
+//                            .font(.headline)
+//                            .foregroundColor(.clouds)
+//                            .bold()
+//                            .padding(.bottom, -10)
+//
+//                        if self.isNewItem() {
+//                            TextField("Enter a name...", text: $itemName)
+//                                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                                .keyboardType(.default)
+//                        } else {
+//                            TextField("Enter a name...", text: $newName)
+//                                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                                .keyboardType(.default)
+//                                .onAppear(perform: {
+//                                    self.newName = self.item?.name ?? ""
+//                            })
+//                        }
+//                    }
+//
+//                    VStack {
+//                        HStack {
+//                            Text("Due date")
+//                                .foregroundColor(.clouds)
+//                                .font(.headline)
+//
+//                            Spacer()
+//
+//                            Toggle(isOn: self.$hasDueDate) {
+//                                Text("")
+//                            }
+//                        }
+//
+//                        if hasDueDate {
+//                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: .date)
+//                                .foregroundColor(.clouds)
+//                                .labelsHidden()
+//                        }
+//                    }
+//                }
 
                 Spacer()
 
@@ -106,9 +170,15 @@ struct AddEditItemView: View {
         item.name = self.itemName
         item.creationTime = Date()
         item.hasBeenDeleted = false
+        item.hasDueDate = self.hasDueDate
+
+        if item.hasDueDate {
+            item.dueDate = self.dueDate
+        }
 
         do {
             try self.moc.save()
+            print("saved item: \(item.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) with dueDate \(self.dueDate)")
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
         }
@@ -117,10 +187,15 @@ struct AddEditItemView: View {
     fileprivate func saveItem() {
         self.moc.performAndWait {
             item?.name = self.newName
+            item?.hasDueDate = self.hasDueDate
+
+            if self.hasDueDate {
+                item?.dueDate = self.dueDate
+            }
 
             do {
                 try self.moc.save()
-                print("saved item: \(self.item?.name ?? "NIL NAME")")
+                print("saved item: \(self.item?.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) with dueDate \(self.dueDate)")
             } catch {
                 print("Error while saving item:\n***\n\(error)\n***")
             }
