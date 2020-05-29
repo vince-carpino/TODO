@@ -18,6 +18,7 @@ struct AddEditItemView: View {
 
     @State private var hasDueDate = false
     @State private var dueDate = Date()
+    @State private var hasDueTime = false
 
     let item: Item?
 
@@ -43,14 +44,10 @@ struct AddEditItemView: View {
 
                 Form {
                     Section {
-                        if self.isNewItem() {
-                            TextField("Enter a name...", text: $itemName)
-                        } else {
-                            TextField("Enter a name...", text: $newName)
-                                .onAppear {
-                                    self.newName = self.item?.name ?? ""
-                                }
-                        }
+                        TextField("Enter a name...", text: self.isNewItem() ? $itemName : $newName)
+                            .onAppear {
+                                self.newName = self.item?.name ?? ""
+                            }
                     }
 
                     Section {
@@ -65,13 +62,27 @@ struct AddEditItemView: View {
                         }
 
                         if hasDueDate {
-                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: .date)
+                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: self.hasDueTime ? [.hourAndMinute, .date] : .date)
                                 .onAppear {
                                     self.dueDate = self.item?.dueDate ?? Date()
                                 }
+
+                            Toggle(isOn: $hasDueTime) {
+                                HStack {
+                                    Text("Due at time")
+                                    Spacer()
+                                }
+                            }
+                            .onAppear {
+                                self.hasDueTime = self.item?.hasDueTime ?? false
+                            }
                         }
                     }
                 }
+                .onAppear {
+                    UITableView.appearance().backgroundColor = .clear
+                }
+                .background(Color.midnightBlue)
 
 //                VStack {
 //                    VStack(alignment: .leading) {
@@ -171,14 +182,19 @@ struct AddEditItemView: View {
         item.creationTime = Date()
         item.hasBeenDeleted = false
         item.hasDueDate = self.hasDueDate
+        item.hasDueTime = self.hasDueTime
 
-        if item.hasDueDate {
+        if item.hasDueDate, !item.hasDueTime {
+            item.dueDate = Calendar.current.date(bySetting: .hour, value: 1, of: self.dueDate)
+            item.dueDate = Calendar.current.date(bySetting: .minute, value: 0, of: self.dueDate)
+            item.dueDate = Calendar.current.date(bySetting: .second, value: 0, of: self.dueDate)
+        } else if self.hasDueDate, self.hasDueTime {
             item.dueDate = self.dueDate
         }
 
         do {
             try self.moc.save()
-            print("saved item: \(item.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) with dueDate \(self.dueDate)")
+            print("saved item: \(item.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) and hasDueTime: \(self.hasDueTime) with dueDate \(self.dueDate)")
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
         }
@@ -212,6 +228,8 @@ struct AddEditItemView_Previews: PreviewProvider {
         item.name = "Test item"
         item.creationTime = Date()
         item.hasBeenDeleted = false
+        item.hasDueDate = true
+        item.hasDueTime = true
 
         return Group {
             AddEditItemView(item: nil)

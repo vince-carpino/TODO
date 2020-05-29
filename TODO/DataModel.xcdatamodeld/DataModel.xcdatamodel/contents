@@ -5,10 +5,11 @@
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="hasBeenDeleted" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="hasDueDate" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="hasDueTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="133"/>
+        <element name="Item" positionX="-63" positionY="-18" width="128" height="148"/>
     </elements>
 </model>

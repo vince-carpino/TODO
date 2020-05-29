@@ -11,7 +11,10 @@ import SwiftUI
 
 struct ItemScrollView: View {
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(entity: Item.entity(), sortDescriptors: [ NSSortDescriptor(key: "creationTime", ascending: true) ]) var items: FetchedResults<Item>
+    @FetchRequest(entity: Item.entity(), sortDescriptors: [
+        NSSortDescriptor(key: "dueDate", ascending: true),
+        NSSortDescriptor(key: "creationTime", ascending: true)
+    ]) var items: FetchedResults<Item>
 
     var body: some View {
         ZStack {
@@ -34,7 +37,7 @@ struct ItemScrollView: View {
                     Spacer()
 
                     AddItemButton()
-                    .padding()
+                        .padding()
                 }
             }
         }

@@ -16,40 +16,26 @@ struct ItemDetailView: View {
 
     let item: Item
 
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        return formatter
+    }
+
     var body: some View {
         ZStack {
             Color.midnightBlue
                 .edgesIgnoringSafeArea(.all)
 
-            VStack {
+            VStack(alignment: .leading) {
                 Spacer()
 
                 VStack(alignment: .leading) {
-                    VStack(alignment: .leading) {
-                        Text(item.name ?? "")
-                            .font(.title)
-                            .foregroundColor(.clouds)
-                            .bold()
-                            .lineLimit(5)
-                            .truncationMode(.tail)
+                    ItemPropertyDetail(propertyValue: item.name ?? "", propertyName: "Name")
 
-                        Text("Name")
-                            .font(.subheadline)
-                            .foregroundColor(.clouds)
-                    }
-                    .padding()
+                    ItemPropertyDetail(propertyValue: dateFormatter.string(from: item.creationTime ?? Date()), propertyName: "Creation time")
 
-                    VStack(alignment: .leading) {
-                        Text("\(item.creationTime ?? Date())")
-                            .font(.title)
-                            .foregroundColor(.clouds)
-                            .bold()
-
-                        Text("Creation Time")
-                            .font(.subheadline)
-                            .foregroundColor(.clouds)
-                    }
-                    .padding()
+                    ItemPropertyDetail(propertyValue: item.hasDueDate ? dateFormatter.string(from: item.dueDate ?? Date()) : "No due date", propertyName: "Due date")
                 }
 
                 Spacer()
@@ -128,8 +114,28 @@ struct ItemDetailView_Previews: PreviewProvider {
         item.id = UUID()
         item.name = "Test item"
         item.creationTime = Date()
+        item.hasDueDate = true
+        item.dueDate = Date()
         item.hasBeenDeleted = false
 
         return ItemDetailView(item: item)
+    }
+}
+
+struct ItemPropertyDetail: View {
+    let propertyValue: String
+    let propertyName: String
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(propertyValue)
+                .font(.title)
+                .bold()
+
+            Text(propertyName)
+                .font(.subheadline)
+        }
+        .foregroundColor(.clouds)
+        .padding()
     }
 }
