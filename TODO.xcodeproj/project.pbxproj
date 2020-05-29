@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D0008C34244E67DF00E4F5AD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0008C33244E67DF00E4F5AD /* AppDelegate.swift */; };
 		D0008C36244E67DF00E4F5AD /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */; };
-		D0008C38244E67E000E4F5AD /* ItemListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0008C37244E67E000E4F5AD /* ItemListView.swift */; };
 		D0008C3A244E67E200E4F5AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0008C39244E67E200E4F5AD /* Assets.xcassets */; };
 		D0008C3D244E67E200E4F5AD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0008C3C244E67E200E4F5AD /* Preview Assets.xcassets */; };
 		D0008C40244E67E200E4F5AD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */; };
@@ -19,9 +18,7 @@
 		D049B23F2474EF67005A4017 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D049B23E2474EF67005A4017 /* Colors.swift */; };
 		D0517ABE2473557F00FFC5F1 /* ItemPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */; };
 		D0517AC02473582C00FFC5F1 /* ItemScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */; };
-		D07699BF2475F6A300454092 /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07699BE2475F6A300454092 /* EditItemView.swift */; };
 		D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D078586C246F52BF00F370BF /* DataModel.xcdatamodeld */; };
-		D0BEB2B5246A370400781D9E /* AddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEB2B4246A370400781D9E /* AddItemView.swift */; };
 		D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */; };
 		D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */; };
 /* End PBXBuildFile section */
@@ -47,7 +44,6 @@
 		D0008C30244E67DF00E4F5AD /* Task Mastery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Task Mastery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0008C33244E67DF00E4F5AD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		D0008C37244E67E000E4F5AD /* ItemListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemListView.swift; sourceTree = "<group>"; };
 		D0008C39244E67E200E4F5AD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D0008C3C244E67E200E4F5AD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D0008C3F244E67E200E4F5AD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -62,9 +58,7 @@
 		D049B23E2474EF67005A4017 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPreview.swift; sourceTree = "<group>"; };
 		D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemScrollView.swift; sourceTree = "<group>"; };
-		D07699BE2475F6A300454092 /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
 		D078586D246F52BF00F370BF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		D0BEB2B4246A370400781D9E /* AddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemView.swift; sourceTree = "<group>"; };
 		D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -125,7 +119,6 @@
 				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
 				D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */,
 				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
-				D0166B0C24763CA00045418A /* Unused */,
 				D0008C39244E67E200E4F5AD /* Assets.xcassets */,
 				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
 				D0008C41244E67E200E4F5AD /* Info.plist */,
@@ -159,16 +152,6 @@
 				D0008C57244E67E200E4F5AD /* Info.plist */,
 			);
 			path = TODOUITests;
-			sourceTree = "<group>";
-		};
-		D0166B0C24763CA00045418A /* Unused */ = {
-			isa = PBXGroup;
-			children = (
-				D0008C37244E67E000E4F5AD /* ItemListView.swift */,
-				D0BEB2B4246A370400781D9E /* AddItemView.swift */,
-				D07699BE2475F6A300454092 /* EditItemView.swift */,
-			);
-			path = Unused;
 			sourceTree = "<group>";
 		};
 		D0166B0D24763CD90045418A /* Container */ = {
@@ -323,9 +306,6 @@
 				D049B23F2474EF67005A4017 /* Colors.swift in Sources */,
 				D0008C34244E67DF00E4F5AD /* AppDelegate.swift in Sources */,
 				D0008C36244E67DF00E4F5AD /* SceneDelegate.swift in Sources */,
-				D0008C38244E67E000E4F5AD /* ItemListView.swift in Sources */,
-				D0BEB2B5246A370400781D9E /* AddItemView.swift in Sources */,
-				D07699BF2475F6A300454092 /* EditItemView.swift in Sources */,
 				D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */,
 				D0517ABE2473557F00FFC5F1 /* ItemPreview.swift in Sources */,
 				D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */,
