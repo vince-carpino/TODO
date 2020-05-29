@@ -1,6 +1,6 @@
 //
 //  ItemPreview.swift
-//  TODO:
+//  TODO
 //
 //  Created by Vince Carpino on 5/18/20.
 //  Copyright © 2020 Vince Carpino. All rights reserved.
@@ -12,9 +12,9 @@ import SwiftUI
 struct ItemPreview: View {
     @Environment(\.managedObjectContext) var moc
 
-    let item: Item
-
     @State private var isPresentingDetail = false
+
+    let item: Item
 
     var body: some View {
         Button(action: {

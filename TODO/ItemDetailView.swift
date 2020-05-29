@@ -1,6 +1,6 @@
 //
 //  ItemDetailView.swift
-//  TODO:
+//  TODO
 //
 //  Created by Vince Carpino on 5/11/20.
 //  Copyright © 2020 Vince Carpino. All rights reserved.
@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ItemDetailView: View {
     @Environment(\.managedObjectContext) var moc
+
     @State private var isPresentingDeleteConfirmation = false
     @State private var isPresentingEditSheet = false
 

@@ -79,53 +79,10 @@ struct AddEditItemView: View {
                         }
                     }
                 }
-                .onAppear {
-                    UITableView.appearance().backgroundColor = .clear
-                }
-                .background(Color.midnightBlue)
-
-//                VStack {
-//                    VStack(alignment: .leading) {
-//                        Text("Name")
-//                            .font(.headline)
-//                            .foregroundColor(.clouds)
-//                            .bold()
-//                            .padding(.bottom, -10)
-//
-//                        if self.isNewItem() {
-//                            TextField("Enter a name...", text: $itemName)
-//                                .textFieldStyle(RoundedBorderTextFieldStyle())
-//                                .keyboardType(.default)
-//                        } else {
-//                            TextField("Enter a name...", text: $newName)
-//                                .textFieldStyle(RoundedBorderTextFieldStyle())
-//                                .keyboardType(.default)
-//                                .onAppear(perform: {
-//                                    self.newName = self.item?.name ?? ""
-//                            })
-//                        }
-//                    }
-//
-//                    VStack {
-//                        HStack {
-//                            Text("Due date")
-//                                .foregroundColor(.clouds)
-//                                .font(.headline)
-//
-//                            Spacer()
-//
-//                            Toggle(isOn: self.$hasDueDate) {
-//                                Text("")
-//                            }
-//                        }
-//
-//                        if hasDueDate {
-//                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: .date)
-//                                .foregroundColor(.clouds)
-//                                .labelsHidden()
-//                        }
-//                    }
+//                .onAppear {
+//                    UITableView.appearance().backgroundColor = .clear
 //                }
+//                .background(Color.midnightBlue)
 
                 Spacer()
 

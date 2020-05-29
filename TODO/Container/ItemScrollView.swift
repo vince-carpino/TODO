@@ -1,6 +1,6 @@
 //
 //  ItemScrollView.swift
-//  TODO:
+//  TODO
 //
 //  Created by Vince Carpino on 5/18/20.
 //  Copyright © 2020 Vince Carpino. All rights reserved.
@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ItemScrollView: View {
     @Environment(\.managedObjectContext) var moc
+
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
         NSSortDescriptor(key: "dueDate", ascending: true),
         NSSortDescriptor(key: "creationTime", ascending: true)
