@@ -12,7 +12,7 @@ extension Color {
     public static let turquoise = Color(red: 26/255, green: 188/255, blue: 156/255)
     public static let greenSea = Color(red: 22/255, green: 160/255, blue: 133/255)
 
-    public static let emerald = Color(red: 46/255, green: 204/255, blue: 112/255)
+    public static let emerland = Color(red: 46/255, green: 204/255, blue: 112/255)
     public static let nephritis = Color(red: 39/255, green: 174/255, blue: 96/255)
 
     public static let peterRiver = Color(red: 52/255, green: 152/255, blue: 219/255)
