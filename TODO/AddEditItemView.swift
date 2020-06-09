@@ -138,6 +138,7 @@ struct AddEditItemView: View {
         item.name = self.itemName
         item.creationTime = Date()
         item.hasBeenDeleted = false
+        item.isCompleted = false
         item.hasDueDate = self.hasDueDate
         item.hasDueTime = self.hasDueTime
 

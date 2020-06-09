@@ -29,13 +29,18 @@ struct ItemPreview: View {
                 .truncationMode(.tail)
                 .padding(30)
                 .foregroundColor(.clouds)
-                .background(Color.greenSea)
+                .background(getBackgroundColor(item: item))
                 .cornerRadius(10)
         }
         .sheet(isPresented: $isPresentingDetail) {
             ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
         }
+        .accessibility(identifier: "itemPreviewButton")
     }
+}
+
+private func getBackgroundColor(item: Item) -> Color {
+    return item.isCompleted ? .silver : .greenSea
 }
 
 struct ItemPreview_Previews: PreviewProvider {
@@ -45,6 +50,7 @@ struct ItemPreview_Previews: PreviewProvider {
         let item = Item(context: moc)
         item.id = UUID()
         item.name = "Some name"
+        item.isCompleted = false
 
         return ItemPreview(item: item)
     }

@@ -15,6 +15,8 @@ struct ItemDetailView: View {
     @State private var isPresentingDeleteConfirmation = false
     @State private var isPresentingEditSheet = false
 
+    @State private var isCompleted = false
+
     let item: Item
 
     private var dateFormatter: DateFormatter {
@@ -41,68 +43,99 @@ struct ItemDetailView: View {
 
                 Spacer()
 
-                HStack {
+                VStack {
                     Button(action: {
-                        print("Delete Item...")
+                        self.item.isCompleted.toggle()
+                        self.isCompleted = self.item.isCompleted
 
-                        self.isPresentingDeleteConfirmation = true
+                        do {
+                            try self.moc.save()
+                        } catch {
+                            print("ERROR WHILE SAVING")
+                        }
                     }) {
                         HStack {
-                            Image(systemName: "trash")
+                            Image(systemName: self.$isCompleted.wrappedValue ? "nosign" : "checkmark")
                                 .imageScale(.medium)
 
-                            Text("Delete Item")
+                            Text("Mark as \(self.$isCompleted.wrappedValue ? "Incomplete" : "Done")")
                                 .fontWeight(.semibold)
                         }
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
-                        .background(Color.alizarin)
+                        .background(self.$isCompleted.wrappedValue ? Color.silver : Color.nephritis)
                         .cornerRadius(40)
                     }
-                    .alert(isPresented: self.$isPresentingDeleteConfirmation) {
-                        let title: Text = Text("Are you sure?")
-                        let message: Text = Text("This cannot be undone")
-                        let okayButton = Alert.Button.destructive(Text("Yes"), action: {
-                            print("MARKING AS DELETED")
-                            self.item.hasBeenDeleted = true
 
-                            do {
-                                try self.moc.save()
-                            } catch {
-                                print("ERROR WHILE SAVING")
+                    HStack {
+                        Button(action: {
+                            print("Delete Item...")
+
+                            self.isPresentingDeleteConfirmation = true
+                        }) {
+                            HStack {
+                                Image(systemName: "trash")
+                                    .imageScale(.medium)
+
+                                Text("Delete Item")
+                                    .fontWeight(.semibold)
                             }
-                        })
-                        let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
-                            print("DON'T DO IT")
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .foregroundColor(.alizarin)
+                            .overlay(RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color.alizarin, lineWidth: 3)
+                            )
+                        }
+                        .alert(isPresented: self.$isPresentingDeleteConfirmation) {
+                            let title: Text = Text("Are you sure?")
+                            let message: Text = Text("This cannot be undone")
+                            let okayButton = Alert.Button.destructive(Text("Yes"), action: {
+                                print("MARKING AS DELETED")
+                                self.item.hasBeenDeleted = true
+
+                                do {
+                                    try self.moc.save()
+                                } catch {
+                                    print("ERROR WHILE SAVING")
+                                }
+                            })
+                            let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
+                                print("DON'T DO IT")
+                            }
+
+                            return Alert(title: title, message: message, primaryButton: okayButton, secondaryButton: cancelButton)
                         }
 
-                        return Alert(title: title, message: message, primaryButton: okayButton, secondaryButton: cancelButton)
-                    }
+                        Button(action: {
+                            print("Edit Item...")
+                            self.isPresentingEditSheet = true
+                        }) {
+                            HStack {
+                                Image(systemName: "slider.horizontal.3")
+                                    .imageScale(.medium)
 
-                    Button(action: {
-                        print("Edit Item...")
-                        self.isPresentingEditSheet = true
-                    }) {
-                        HStack {
-                            Image(systemName: "slider.horizontal.3")
-                                .imageScale(.medium)
-
-                            Text("Edit Item")
-                                .fontWeight(.semibold)
+                                Text("Edit Item")
+                                    .fontWeight(.semibold)
+                            }
+                            .padding()
+                            .frame(minWidth: 0, maxWidth: .infinity)
+                            .foregroundColor(.peterRiver)
+                            .overlay(RoundedRectangle(cornerRadius: 40)
+                                .stroke(Color.peterRiver, lineWidth: 3)
+                            )
                         }
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
-                        .background(Color.peterRiver)
-                        .cornerRadius(40)
-                    }
-                    .sheet(isPresented: $isPresentingEditSheet) {
-                        AddEditItemView(item: self.item).environment(\.managedObjectContext, self.moc)
+                        .sheet(isPresented: $isPresentingEditSheet) {
+                            AddEditItemView(item: self.item).environment(\.managedObjectContext, self.moc)
+                        }
                     }
                 }
                 .padding()
             }
+        }
+        .onAppear {
+            self.isCompleted = self.item.isCompleted
         }
     }
 }
