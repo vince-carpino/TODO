@@ -35,7 +35,6 @@ struct ItemPreview: View {
         .sheet(isPresented: $isPresentingDetail) {
             ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
         }
-        .accessibility(identifier: "itemPreviewButton")
     }
 }
 
