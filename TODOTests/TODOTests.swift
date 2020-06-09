@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import TODO
+@testable import Task_Mastery
 
 class TODOTests: XCTestCase {
 
