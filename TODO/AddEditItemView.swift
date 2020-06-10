@@ -150,6 +150,10 @@ struct AddEditItemView: View {
             item.dueDate = self.dueDate
         }
 
+        saveContext()
+    }
+
+    fileprivate func saveContext() {
         do {
             try self.moc.save()
         } catch {
@@ -166,11 +170,7 @@ struct AddEditItemView: View {
                 item?.dueDate = self.dueDate
             }
 
-            do {
-                try self.moc.save()
-            } catch {
-                print("Error while saving item:\n***\n\(error)\n***")
-            }
+            saveContext()
         }
     }
 }
