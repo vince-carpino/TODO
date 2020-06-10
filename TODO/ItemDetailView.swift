@@ -11,6 +11,7 @@ import SwiftUI
 
 struct ItemDetailView: View {
     @Environment(\.managedObjectContext) var moc
+    @Environment(\.presentationMode) var presentationMode
 
     @State private var isPresentingDeleteConfirmation = false
     @State private var isPresentingEditSheet = false
@@ -47,6 +48,10 @@ struct ItemDetailView: View {
                     Button(action: {
                         self.item.isCompleted.toggle()
                         self.isCompleted = self.item.isCompleted
+
+                        if self.isCompleted {
+                            self.presentationMode.wrappedValue.dismiss()
+                        }
 
                         do {
                             try self.moc.save()
