@@ -152,7 +152,6 @@ struct AddEditItemView: View {
 
         do {
             try self.moc.save()
-            print("saved item: \(item.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) and hasDueTime: \(self.hasDueTime) with dueDate \(self.dueDate)")
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
         }
@@ -169,7 +168,6 @@ struct AddEditItemView: View {
 
             do {
                 try self.moc.save()
-                print("saved item: \(self.item?.name ?? "NIL NAME") with hasDueDate: \(self.hasDueDate) with dueDate \(self.dueDate)")
             } catch {
                 print("Error while saving item:\n***\n\(error)\n***")
             }

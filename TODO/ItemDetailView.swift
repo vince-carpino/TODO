@@ -75,8 +75,6 @@ struct ItemDetailView: View {
 
                     HStack {
                         Button(action: {
-                            print("Delete Item...")
-
                             self.isPresentingDeleteConfirmation = true
                         }) {
                             HStack {
@@ -97,7 +95,6 @@ struct ItemDetailView: View {
                             let title: Text = Text("Are you sure?")
                             let message: Text = Text("This cannot be undone")
                             let okayButton = Alert.Button.destructive(Text("Yes"), action: {
-                                print("MARKING AS DELETED")
                                 self.item.hasBeenDeleted = true
 
                                 do {
@@ -106,15 +103,12 @@ struct ItemDetailView: View {
                                     print("ERROR WHILE SAVING")
                                 }
                             })
-                            let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {
-                                print("DON'T DO IT")
-                            }
+                            let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {}
 
                             return Alert(title: title, message: message, primaryButton: okayButton, secondaryButton: cancelButton)
                         }
 
                         Button(action: {
-                            print("Edit Item...")
                             self.isPresentingEditSheet = true
                         }) {
                             HStack {

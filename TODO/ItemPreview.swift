@@ -18,8 +18,6 @@ struct ItemPreview: View {
 
     var body: some View {
         Button(action: {
-            print("tapped on \(self.item.name ?? "Unknown name")")
-
             self.isPresentingDetail = true
         }) {
             Text(item.name ?? "Unknown name")
