@@ -79,10 +79,6 @@ struct AddEditItemView: View {
                         }
                     }
                 }
-//                .onAppear {
-//                    UITableView.appearance().backgroundColor = .clear
-//                }
-//                .background(Color.midnightBlue)
 
                 Spacer()
 
