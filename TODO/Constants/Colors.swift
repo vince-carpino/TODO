@@ -9,33 +9,43 @@
 import SwiftUI
 
 extension Color {
-    public static let turquoise = Color(red: 26/255, green: 188/255, blue: 156/255)
-    public static let greenSea = Color(red: 22/255, green: 160/255, blue: 133/255)
+    public static let turquoise = Color(#colorLiteral(red: 0.1019607843, green: 0.7372549176, blue: 0.611764729, alpha: 1))
+    public static let greenSea = Color(#colorLiteral(red: 0.08627451211, green: 0.6274510026, blue: 0.521568656, alpha: 1))
 
-    public static let emerland = Color(red: 46/255, green: 204/255, blue: 112/255)
-    public static let nephritis = Color(red: 39/255, green: 174/255, blue: 96/255)
+    public static let emerland = Color(#colorLiteral(red: 0.180392161, green: 0.8000000715, blue: 0.4431372881, alpha: 1))
+    public static let nephritis = Color(#colorLiteral(red: 0.1529411823, green: 0.6823529601, blue: 0.3764706254, alpha: 1))
 
-    public static let peterRiver = Color(red: 52/255, green: 152/255, blue: 219/255)
-    public static let belizeHole = Color(red: 41/255, green: 128/255, blue: 185/255)
+    public static let peterRiver = Color(#colorLiteral(red: 0.2039215863, green: 0.5960784554, blue: 0.8588235974, alpha: 1))
+    public static let belizeHole = Color(#colorLiteral(red: 0.160784319, green: 0.501960814, blue: 0.7254902124, alpha: 1))
 
-    public static let amethyst = Color(red: 156/255, green: 89/255, blue: 182/255)
-    public static let wisteria = Color(red: 142/255, green: 68/255, blue: 173/255)
+    public static let amethyst = Color(#colorLiteral(red: 0.6078431606, green: 0.3490196168, blue: 0.7137255073, alpha: 1))
+    public static let wisteria = Color(#colorLiteral(red: 0.5568627715, green: 0.2666666806, blue: 0.6784313917, alpha: 1))
 
-    public static let wetAsphalt = Color(red: 52/255, green: 73/255, blue: 94/255)
-    public static let midnightBlue = Color(red: 44/255, green: 62/255, blue: 80/255)
+    public static let wetAsphalt = Color(#colorLiteral(red: 0.2039215863, green: 0.2862745225, blue: 0.3686274588, alpha: 1))
+    public static let midnightBlue = Color(#colorLiteral(red: 0.1725490242, green: 0.2431372702, blue: 0.3137255013, alpha: 1))
 
-    public static let sunFlower = Color(red: 241/255, green: 196/255, blue: 15/255)
-    public static let orange = Color(red: 243/255, green: 157/255, blue: 18/255)
+    public static let sunFlower = Color(#colorLiteral(red: 0.9450981021, green: 0.7686275244, blue: 0.05882353336, alpha: 1))
+    public static let orange = Color(#colorLiteral(red: 0.9529412389, green: 0.611764729, blue: 0.07058823854, alpha: 1))
 
-    public static let carrot = Color(red: 230/255, green: 125/255, blue: 34/255)
-    public static let pumpkin = Color(red: 211/255, green: 84/255, blue: 0/255)
+    public static let carrot = Color(#colorLiteral(red: 0.9019608498, green: 0.4941176772, blue: 0.1333333403, alpha: 1))
+    public static let pumpkin = Color(#colorLiteral(red: 0.8274510503, green: 0.3294117749, blue: 0, alpha: 1))
 
-    public static let alizarin = Color(red: 231/255, green: 77/255, blue: 60/255)
-    public static let pomegranate = Color(red: 192/255, green: 57/255, blue: 43/255)
+    public static let alizarin = Color(#colorLiteral(red: 0.9058824182, green: 0.2980392277, blue: 0.2352941334, alpha: 1))
+    public static let pomegranate = Color(#colorLiteral(red: 0.7529412508, green: 0.2235294282, blue: 0.1686274558, alpha: 1))
 
-    public static let clouds = Color(red: 236/255, green: 240/255, blue: 241/255)
-    public static let silver = Color(red: 189/255, green: 195/255, blue: 199/255)
+    public static let clouds = Color(#colorLiteral(red: 0.9254902601, green: 0.9411765337, blue: 0.9450981021, alpha: 1))
+    public static let silver = Color(#colorLiteral(red: 0.741176486, green: 0.764705956, blue: 0.7803922296, alpha: 1))
 
-    public static let concrete = Color(red: 149/255, green: 165/255, blue: 166/255)
-    public static let asbestos = Color(red: 127/255, green: 140/255, blue: 141/255)
+    public static let concrete = Color(#colorLiteral(red: 0.5843137503, green: 0.6470588446, blue: 0.650980413, alpha: 1))
+    public static let asbestos = Color(#colorLiteral(red: 0.4980392456, green: 0.5490196347, blue: 0.5529412031, alpha: 1))
+
+    public static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
+    public static let darkStart = Color(red: 50 / 255, green: 60 / 255, blue: 65 / 255)
+    public static let darkEnd = Color(red: 25 / 255, green: 25 / 255, blue: 30 / 255)
+
+//    public static let darkStart = Color.wetAsphalt
+//    public static let darkEnd = Color.midnightBlue
+
+    public static let lightStart = Color.turquoise
+    public static let lightEnd = Color.greenSea
 }
