@@ -21,7 +21,7 @@ struct ItemPreview: View {
             self.isPresentingDetail = true
         }) {
             Text(item.name ?? "Unknown name")
-                .font(.title)
+                .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .bold()
                 .lineLimit(3)
                 .truncationMode(.tail)

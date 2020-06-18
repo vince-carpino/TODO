@@ -19,17 +19,21 @@ struct ItemScrollView: View {
 
     var body: some View {
         ZStack {
-            Color.midnightBlue
+//            Color.midnightBlue
+//                .edgesIgnoringSafeArea(.all)
+
+            Color.offWhite
                 .edgesIgnoringSafeArea(.all)
 
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 40) {
                     ForEach(items.filter { !$0.hasBeenDeleted }, id: \.id) { item in
-                        ItemPreview(item: item)
+//                        ItemPreview(item: item)
+                        NeumorphicItemPreviewCard(itemName: item.name ?? "NO NAME")
                     }
                 }
             }
-            .padding()
+//            .padding()
 
             VStack {
                 Spacer()
