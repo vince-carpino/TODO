@@ -17,6 +17,7 @@ struct ItemDetailView: View {
     @State private var isPresentingEditSheet = false
 
     @State private var isCompleted = false
+    @State private var isCurrentItem = false
 
     let item: Item
 
@@ -45,6 +46,32 @@ struct ItemDetailView: View {
                 Spacer()
 
                 VStack {
+                    Button(action: {
+                        self.item.isCurrentItem.toggle()
+                        self.isCurrentItem = self.item.isCurrentItem
+
+                        print("MARKED AS \(self.isCurrentItem ? "" : "NOT ")CURRENT")
+
+                        do {
+                            try self.moc.save()
+                        } catch {
+                            print("ERROR WHILE SAVING")
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: self.$isCurrentItem.wrappedValue ? "bolt.slash.fill" : "bolt.fill")
+                                .imageScale(.medium)
+
+                            Text("\(self.$isCurrentItem.wrappedValue ? "Don't " : "")Set as Current")
+                                .fontWeight(.semibold)
+                        }
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.clouds)
+                        .background(self.$isCurrentItem.wrappedValue ? Color.silver : Color.amethyst)
+                        .cornerRadius(40)
+                    }
+
                     Button(action: {
                         self.item.isCompleted.toggle()
                         self.isCompleted = self.item.isCompleted
@@ -135,6 +162,7 @@ struct ItemDetailView: View {
         }
         .onAppear {
             self.isCompleted = self.item.isCompleted
+            self.isCurrentItem = self.item.isCurrentItem
         }
     }
 }
@@ -150,6 +178,7 @@ struct ItemDetailView_Previews: PreviewProvider {
         item.hasDueDate = true
         item.dueDate = Date()
         item.hasBeenDeleted = false
+        item.isCurrentItem = false
 
         return ItemDetailView(item: item)
     }
