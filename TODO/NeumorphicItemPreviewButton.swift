@@ -116,12 +116,12 @@ struct LightBackground<S: Shape>: View {
 struct NeumorphicItemPreviewCard: View {
     var itemName: String
 
-    private let cornerRadius: CGFloat = 20
+    private let cornerRadius: CGFloat = 25
 
     var body: some View {
         Button(action: {}) {
             Text(itemName)
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .font(.system(size: 25, weight: .semibold, design: .rounded))
                 .foregroundColor(.black)
                 .contentShape(RoundedRectangle(cornerRadius: cornerRadius))
                 .lineLimit(3)
