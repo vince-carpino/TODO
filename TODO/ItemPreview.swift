@@ -37,7 +37,7 @@ struct ItemPreview: View {
 }
 
 private func getBackgroundColor(item: Item) -> Color {
-    return item.isCompleted ? .silver : .greenSea
+    return item.isCompleted ? .silver : item.isCurrentItem ? .amethyst : .greenSea
 }
 
 struct ItemPreview_Previews: PreviewProvider {
@@ -48,6 +48,7 @@ struct ItemPreview_Previews: PreviewProvider {
         item.id = UUID()
         item.name = "Some name"
         item.isCompleted = false
+        item.isCurrentItem = true
 
         return ItemPreview(item: item)
     }
