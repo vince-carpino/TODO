@@ -82,6 +82,8 @@ struct ItemDetailView: View {
                         self.isCompleted = self.item.isCompleted
 
                         if self.isCompleted {
+                            self.item.isCurrentItem = false
+                            self.isCurrentItem = self.item.isCurrentItem
                             self.presentationMode.wrappedValue.dismiss()
                         }
 
