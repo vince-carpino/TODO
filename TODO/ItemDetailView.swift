@@ -50,6 +50,11 @@ struct ItemDetailView: View {
                         self.item.isCurrentItem.toggle()
                         self.isCurrentItem = self.item.isCurrentItem
 
+                        if self.isCurrentItem {
+                            self.item.isCompleted = false
+                            self.isCompleted = self.item.isCompleted
+                        }
+
                         print("MARKED AS \(self.isCurrentItem ? "" : "NOT ")CURRENT")
 
                         do {
