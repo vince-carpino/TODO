@@ -48,4 +48,8 @@ extension Color {
 
     public static let lightStart = Color.turquoise
     public static let lightEnd = Color.greenSea
+
+    public static let currentItemColor = Color.amethyst
+    public static let completedItemColor = Color.silver
+    public static let incompleteItemColor = Color.greenSea
 }

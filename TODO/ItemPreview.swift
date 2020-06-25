@@ -37,7 +37,7 @@ struct ItemPreview: View {
 }
 
 private func getBackgroundColor(item: Item) -> Color {
-    return item.isCompleted ? .silver : item.isCurrentItem ? .amethyst : .greenSea
+    return item.isCompleted ? .completedItemColor : item.isCurrentItem ? .currentItemColor : .incompleteItemColor
 }
 
 struct ItemPreview_Previews: PreviewProvider {

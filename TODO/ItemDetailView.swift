@@ -73,7 +73,7 @@ struct ItemDetailView: View {
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
-                        .background(self.$isCurrentItem.wrappedValue ? Color.silver : Color.amethyst)
+                        .background(self.$isCurrentItem.wrappedValue ? Color.completedItemColor : Color.currentItemColor)
                         .cornerRadius(40)
                     }
 
@@ -103,7 +103,7 @@ struct ItemDetailView: View {
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
-                        .background(self.$isCompleted.wrappedValue ? Color.silver : Color.nephritis)
+                        .background(self.$isCompleted.wrappedValue ? Color.completedItemColor : Color.nephritis)
                         .cornerRadius(40)
                     }
 
