@@ -37,6 +37,7 @@ struct ItemDetailView: View {
 
                 VStack(alignment: .leading) {
                     ItemPropertyDetail(propertyValue: item.name ?? "", propertyName: "Name")
+                        .lineLimit(3)
 
                     ItemPropertyDetail(propertyValue: dateFormatter.string(from: item.creationTime ?? Date()), propertyName: "Creation time")
 
@@ -187,7 +188,20 @@ struct ItemDetailView_Previews: PreviewProvider {
         item.hasBeenDeleted = false
         item.isCurrentItem = false
 
-        return ItemDetailView(item: item)
+        let itemWithLongName = Item(context: moc)
+        itemWithLongName.id = UUID()
+        itemWithLongName.name = String(repeating: "Here's a long name ", count: 5)
+        itemWithLongName.creationTime = Date()
+        itemWithLongName.hasDueDate = true
+        itemWithLongName.dueDate = Date()
+        itemWithLongName.hasBeenDeleted = false
+        itemWithLongName.isCurrentItem = false
+
+        return Group {
+            ItemDetailView(item: item)
+
+            ItemDetailView(item: itemWithLongName)
+        }
     }
 }
 
