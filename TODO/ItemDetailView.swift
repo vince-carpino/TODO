@@ -58,11 +58,7 @@ struct ItemDetailView: View {
 
                         print("MARKED AS \(self.isCurrentItem ? "" : "NOT ")CURRENT")
 
-                        do {
-                            try self.moc.save()
-                        } catch {
-                            print("ERROR WHILE SAVING")
-                        }
+                        self.saveContext()
                     }) {
                         HStack {
                             Image(systemName: self.$isCurrentItem.wrappedValue ? "bolt.slash.fill" : "bolt.fill")
@@ -88,11 +84,7 @@ struct ItemDetailView: View {
                             self.presentationMode.wrappedValue.dismiss()
                         }
 
-                        do {
-                            try self.moc.save()
-                        } catch {
-                            print("ERROR WHILE SAVING")
-                        }
+                        self.saveContext()
                     }) {
                         HStack {
                             Image(systemName: self.$isCompleted.wrappedValue ? "nosign" : "checkmark")
@@ -132,11 +124,7 @@ struct ItemDetailView: View {
                             let okayButton = Alert.Button.destructive(Text("Yes"), action: {
                                 self.item.hasBeenDeleted = true
 
-                                do {
-                                    try self.moc.save()
-                                } catch {
-                                    print("ERROR WHILE SAVING")
-                                }
+                                self.saveContext()
                             })
                             let cancelButton = Alert.Button.cancel(Text("Wait nvm")) {}
 
@@ -171,6 +159,14 @@ struct ItemDetailView: View {
         .onAppear {
             self.isCompleted = self.item.isCompleted
             self.isCurrentItem = self.item.isCurrentItem
+        }
+    }
+
+    private func saveContext() {
+        do {
+            try moc.save()
+        } catch {
+            print("Error while saving item:\n***\n\(error)\n***")
         }
     }
 }
