@@ -35,7 +35,7 @@ struct AddEditItemView: View {
 
             VStack {
                 Text(self.isNewItem() ? "Add Item" : "Edit Item")
-                    .font(.largeTitle)
+                    .font(.system(size: 30, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
                     .bold()
                     .padding(.bottom, 15)
@@ -47,13 +47,15 @@ struct AddEditItemView: View {
                         TextField("Enter a name...", text: self.isNewItem() ? $itemName : $newName)
                             .onAppear {
                                 self.newName = self.item?.name ?? ""
-                            }
+                        }
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
                     }
 
                     Section {
                         Toggle(isOn: $hasDueDate) {
                             HStack {
                                 Text("Due date")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
                                 Spacer()
                             }
                         }
@@ -63,6 +65,7 @@ struct AddEditItemView: View {
 
                         if hasDueDate {
                             DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: self.hasDueTime ? [.hourAndMinute, .date] : .date)
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 .onAppear {
                                     self.dueDate = self.item?.dueDate ?? Date()
                                 }
@@ -70,6 +73,7 @@ struct AddEditItemView: View {
                             Toggle(isOn: $hasDueTime) {
                                 HStack {
                                     Text("Due at time")
+                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
                                     Spacer()
                                 }
                             }
@@ -94,9 +98,10 @@ struct AddEditItemView: View {
                     }) {
                         HStack {
                             Image(systemName: isNewItem() ? "plus" : "checkmark.square.fill")
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text(self.isNewItem() ? "Add Item" : "Save")
-                                .fontWeight(.semibold)
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -108,7 +113,7 @@ struct AddEditItemView: View {
 
                     Text("swipe down to cancel")
                         .foregroundColor(.silver)
-                        .font(.footnote)
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
                 }
             }
             .padding()

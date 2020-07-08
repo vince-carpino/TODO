@@ -65,7 +65,7 @@ struct ItemDetailView: View {
                                 .imageScale(.medium)
 
                             Text("\(self.$isCurrentItem.wrappedValue ? "Don't " : "")Set as Current")
-                                .fontWeight(.semibold)
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
                         }
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -91,7 +91,7 @@ struct ItemDetailView: View {
                                 .imageScale(.medium)
 
                             Text("Mark as \(self.$isCompleted.wrappedValue ? "Incomplete" : "Done")")
-                                .fontWeight(.semibold)
+                                .font(.system(size: 18, weight: .semibold, design: .rounded))
                         }
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -109,7 +109,7 @@ struct ItemDetailView: View {
                                     .imageScale(.medium)
 
                                 Text("Delete Item")
-                                    .fontWeight(.semibold)
+                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                             }
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -139,7 +139,7 @@ struct ItemDetailView: View {
                                     .imageScale(.medium)
 
                                 Text("Edit Item")
-                                    .fontWeight(.semibold)
+                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                             }
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
@@ -208,11 +208,10 @@ struct ItemPropertyDetail: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(propertyValue)
-                .font(.title)
-                .bold()
+                .font(.system(size: 28, weight: .semibold, design: .rounded))
 
             Text(propertyName)
-                .font(.subheadline)
+                .font(.system(size: 14, weight: .semibold, design: .rounded))
         }
         .foregroundColor(.clouds)
         .padding()
