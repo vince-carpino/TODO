@@ -14,9 +14,7 @@ struct AddItemButton: View {
     @State private var isPresentingAddItemView = false
 
     var body: some View {
-        Button(action: {
-            self.isPresentingAddItemView = true
-        }) {
+        Button(action: {}) {
             HStack() {
                 Image(systemName: "plus.square")
                     .font(.system(size: 24, weight: .semibold, design: .rounded))
@@ -33,6 +31,13 @@ struct AddItemButton: View {
             .background(Color.peterRiver)
             .cornerRadius(10)
             .shadow(radius: 10)
+            .onTapGesture {
+                print("TAPPED")
+            }
+            .onLongPressGesture {
+                print("LONG PRESSED")
+                self.isPresentingAddItemView = true
+            }
         }
         .sheet(isPresented: $isPresentingAddItemView) {
             AddEditItemView(item: nil).environment(\.managedObjectContext, self.moc)
