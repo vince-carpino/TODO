@@ -38,9 +38,7 @@ struct ItemScrollView: View {
             VStack {
                 Spacer()
 
-                HStack {
-                    Spacer()
-
+                ZStack {
                     AddItemButton()
                         .padding()
                 }

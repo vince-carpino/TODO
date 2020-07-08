@@ -17,16 +17,22 @@ struct AddItemButton: View {
         Button(action: {
             self.isPresentingAddItemView = true
         }) {
-            Image(systemName: "plus.circle.fill")
-                .resizable()
-                .frame(width: 60, height: 60)
-                .imageScale(.large)
-                .foregroundColor(.peterRiver)
-                .background(Color.clouds)
-                .clipShape(Circle())
-                .overlay(
-                    Circle().stroke(Color.clouds, lineWidth: 3)
-                )
+            HStack() {
+                Image(systemName: "plus.square")
+                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .foregroundColor(.clouds)
+
+                Text("new item")
+                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .bold()
+                    .foregroundColor(.clouds)
+                    .cornerRadius(10)
+            }
+            .padding()
+            .frame(minWidth: 0, maxWidth: .infinity)
+            .background(Color.peterRiver)
+            .cornerRadius(10)
+            .shadow(radius: 10)
         }
         .sheet(isPresented: $isPresentingAddItemView) {
             AddEditItemView(item: nil).environment(\.managedObjectContext, self.moc)
@@ -37,5 +43,6 @@ struct AddItemButton: View {
 struct AddItemButton_Previews: PreviewProvider {
     static var previews: some View {
         AddItemButton()
+        .padding()
     }
 }
