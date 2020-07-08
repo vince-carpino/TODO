@@ -13,6 +13,8 @@ struct ItemDetailView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
 
+    @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.isCurrentItem, ascending: true)], predicate: NSPredicate(format: "isCurrentItem == true")) var currentItem: FetchedResults<Item>
+
     @State private var isPresentingDeleteConfirmation = false
     @State private var isPresentingEditSheet = false
 
@@ -52,6 +54,7 @@ struct ItemDetailView: View {
                         self.isCurrentItem = self.item.isCurrentItem
 
                         if self.isCurrentItem {
+                            self.markPreviousCurrentItemAsNotCurrent()
                             self.item.isCompleted = false
                             self.isCompleted = self.item.isCompleted
                         }
@@ -167,6 +170,20 @@ struct ItemDetailView: View {
             try moc.save()
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
+        }
+    }
+
+    private func markPreviousCurrentItemAsNotCurrent() {
+        if self.currentItem.first == nil {
+            print("NO ITEM MARKED AS CURRENT")
+            return
+        }
+
+        if let previousCurrentItem = self.currentItem.first {
+            moc.performAndWait {
+                previousCurrentItem.isCurrentItem = false
+                saveContext()
+            }
         }
     }
 }
