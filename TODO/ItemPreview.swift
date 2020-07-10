@@ -29,6 +29,10 @@ struct ItemPreview: View {
                 .foregroundColor(.clouds)
                 .background(getBackgroundColor(item: item))
                 .cornerRadius(10)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(Color.clouds, lineWidth: 5)
+                )
         }
         .sheet(isPresented: $isPresentingDetail) {
             ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
@@ -50,6 +54,10 @@ struct ItemPreview_Previews: PreviewProvider {
         item.isCompleted = false
         item.isCurrentItem = true
 
-        return ItemPreview(item: item)
+        return ZStack {
+            RainbowViewVertical()
+
+            ItemPreview(item: item)
+        }
     }
 }
