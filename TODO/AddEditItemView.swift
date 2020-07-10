@@ -47,8 +47,8 @@ struct AddEditItemView: View {
                         TextField("Enter a name...", text: self.isNewItem() ? $itemName : $newName)
                             .onAppear {
                                 self.newName = self.item?.name ?? ""
-                        }
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            }
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
                     }
 
                     Section {
@@ -98,7 +98,7 @@ struct AddEditItemView: View {
                     }) {
                         HStack {
                             Image(systemName: isNewItem() ? "plus" : "checkmark.square.fill")
-                            .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text(self.isNewItem() ? "Add Item" : "Save")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
@@ -151,7 +151,7 @@ struct AddEditItemView: View {
             item.dueDate = self.dueDate
         }
 
-        saveContext()
+        self.saveContext()
     }
 
     fileprivate func saveContext() {

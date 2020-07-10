@@ -15,7 +15,7 @@ struct AddItemButton: View {
 
     var body: some View {
         Button(action: {}) {
-            HStack() {
+            HStack {
                 Image(systemName: "plus.square")
                     .font(.system(size: 24, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
@@ -48,6 +48,6 @@ struct AddItemButton: View {
 struct AddItemButton_Previews: PreviewProvider {
     static var previews: some View {
         AddItemButton()
-        .padding()
+            .padding()
     }
 }

@@ -22,15 +22,15 @@ struct ItemScrollView: View {
             Color.midnightBlue
                 .edgesIgnoringSafeArea(.all)
 
-//            Color.offWhite
-//                .edgesIgnoringSafeArea(.all)
-
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 40) {
+                    Spacer(minLength: 0)
+
                     ForEach(items.filter { !$0.hasBeenDeleted }, id: \.id) { item in
                         ItemPreview(item: item)
-//                        NeumorphicItemPreviewCard(itemName: item.name ?? "NO NAME")
                     }
+
+                    Spacer(minLength: 50)
                 }
             }
             .padding()

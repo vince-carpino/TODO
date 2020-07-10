@@ -90,7 +90,7 @@ struct ItemDetailView: View {
                         self.saveContext()
                     }) {
                         HStack {
-                            Image(systemName: self.$isCompleted.wrappedValue ? "nosign" : "checkmark")
+                            Image(systemName: self.$isCompleted.wrappedValue ? "nosign" : "checkmark.square.fill")
                                 .imageScale(.medium)
 
                             Text("Mark as \(self.$isCompleted.wrappedValue ? "Incomplete" : "Done")")
