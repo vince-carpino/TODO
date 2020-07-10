@@ -14,7 +14,7 @@ struct ItemScrollView: View {
 
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
         NSSortDescriptor(key: "dueDate", ascending: true),
-        NSSortDescriptor(key: "creationTime", ascending: true)
+        NSSortDescriptor(key: "creationTime", ascending: false)
     ]) var items: FetchedResults<Item>
 
     var body: some View {
