@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //        let contentView = ItemListView().environment(\.managedObjectContext, context)
 
         let contentView = ItemScrollView().environment(\.managedObjectContext, context)
+//        let contentView = QuickAddItemView()
 
 //        // Create the SwiftUI view that provides the window contents.
 //        let contentView = ItemListView()
