@@ -182,7 +182,6 @@ struct ItemDetailView: View {
         if let previousCurrentItem = self.currentItem.first {
             moc.performAndWait {
                 previousCurrentItem.isCurrentItem = false
-                saveContext()
             }
         }
     }
