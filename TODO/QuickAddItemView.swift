@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct QuickAddItemView: View {
+    @Binding var isPresented: Bool
+
     @State private var itemName = "Item name"
 
     var body: some View {
@@ -34,7 +36,9 @@ struct QuickAddItemView: View {
                     Button(action: {
                         print("--- DONE ---")
                         self.hideKeyboard()
-                        // dismiss current view (show previous view)
+                        withAnimation {
+                            self.isPresented = false
+                        }
                     }) {
                         HStack {
                             Image(systemName: "checkmark")
@@ -50,9 +54,9 @@ struct QuickAddItemView: View {
                     Button(action: {
                         print("--- ADD ---")
                         print("ADDED \(self.itemName)")
-                        self.itemName = ""
                         // create new item with name
                         // clear input
+                        self.itemName = ""
                     }) {
                         HStack {
                             Image(systemName: "plus")
@@ -130,7 +134,7 @@ struct QuickAddItemView_Previews: PreviewProvider {
 
             ItemScrollView().environment(\.managedObjectContext, moc)
 
-            QuickAddItemView()
+            QuickAddItemView(isPresented: Binding.constant(true)).environment(\.managedObjectContext, moc)
         }
     }
 }

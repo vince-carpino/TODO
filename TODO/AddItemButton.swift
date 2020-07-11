@@ -11,6 +11,8 @@ import SwiftUI
 struct AddItemButton: View {
     @Environment(\.managedObjectContext) var moc
 
+    @Binding var isPresentingQuickAddItemView: Bool
+    
     @State private var isPresentingAddItemView = false
 
     var body: some View {
@@ -32,7 +34,10 @@ struct AddItemButton: View {
             .cornerRadius(10)
             .shadow(radius: 10)
             .onTapGesture {
-                print("TAPPED")
+                print("in onTapGesture")
+                withAnimation {
+                    self.isPresentingQuickAddItemView = true
+                }
             }
             .onLongPressGesture {
                 print("LONG PRESSED")
@@ -47,7 +52,7 @@ struct AddItemButton: View {
 
 struct AddItemButton_Previews: PreviewProvider {
     static var previews: some View {
-        AddItemButton()
+        AddItemButton(isPresentingQuickAddItemView: Binding.constant(false))
             .padding()
     }
 }

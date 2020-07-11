@@ -12,6 +12,8 @@ import SwiftUI
 struct ItemScrollView: View {
     @Environment(\.managedObjectContext) var moc
 
+    @State private var isPresentingQuickAddItemView = false
+
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
         NSSortDescriptor(key: "dueDate", ascending: true),
         NSSortDescriptor(key: "creationTime", ascending: false)
@@ -39,9 +41,14 @@ struct ItemScrollView: View {
                 Spacer()
 
                 ZStack {
-                    AddItemButton()
+                    AddItemButton(isPresentingQuickAddItemView: self.$isPresentingQuickAddItemView)
                         .padding()
                 }
+            }
+
+            if isPresentingQuickAddItemView {
+                QuickAddItemView(isPresented: self.$isPresentingQuickAddItemView)
+                    .transition(.opacity)
             }
         }
     }
