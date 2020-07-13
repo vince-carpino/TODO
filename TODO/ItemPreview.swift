@@ -31,7 +31,7 @@ struct ItemPreview: View {
                 .cornerRadius(10)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
-                        .stroke(Color.clouds, lineWidth: 5)
+                        .strokeBorder(Color.clouds, lineWidth: 5)
                 )
         }
         .sheet(isPresented: $isPresentingDetail) {
