@@ -9,14 +9,14 @@
 import SwiftUI
 
 struct QuickAddItemView: View {
+    @Environment(\.managedObjectContext) var moc
+
     @Binding var isPresented: Bool
 
     @State private var itemName = "Item name"
 
     var body: some View {
         ZStack {
-//            RainbowViewVertical()
-
             VisualEffectView(effect: UIBlurEffect(style: .light))
                 .edgesIgnoringSafeArea(.all)
 
@@ -54,8 +54,7 @@ struct QuickAddItemView: View {
                     Button(action: {
                         print("--- ADD ---")
                         print("ADDED \(self.itemName)")
-                        // create new item with name
-                        // clear input
+                        self.addNewItem()
                         self.itemName = ""
                     }) {
                         HStack {
@@ -82,6 +81,27 @@ struct QuickAddItemView: View {
 
     fileprivate func nameFieldIsEmpty() -> Bool {
         return itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    fileprivate func addNewItem() {
+        let item = Item(context: self.moc)
+        item.id = UUID()
+        item.name = self.itemName
+        item.creationTime = Date()
+        item.hasBeenDeleted = false
+        item.isCompleted = false
+        item.hasDueDate = false
+        item.hasDueTime = false
+
+        self.saveContext()
+    }
+
+    fileprivate func saveContext() {
+        do {
+            try self.moc.save()
+        } catch {
+            print("Error while saving item:\n***\n\(error)\n***")
+        }
     }
 }
 
