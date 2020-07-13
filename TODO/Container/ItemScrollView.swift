@@ -24,18 +24,22 @@ struct ItemScrollView: View {
             Color.midnightBlue
                 .edgesIgnoringSafeArea(.all)
 
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 40) {
-                    Spacer(minLength: 0)
+            VStack {
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 40) {
+                        Spacer(minLength: 0)
 
-                    ForEach(items.filter { !$0.hasBeenDeleted }, id: \.id) { item in
-                        ItemPreview(item: item)
+                        ForEach(items.filter { !$0.hasBeenDeleted }, id: \.id) { item in
+                            ItemPreview(item: item)
+                        }
+
+                        Spacer(minLength: 50)
                     }
-
-                    Spacer(minLength: 50)
                 }
+                .padding()
+
+                Spacer(minLength: 45)
             }
-            .padding()
 
             VStack {
                 Spacer()
