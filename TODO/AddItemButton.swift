@@ -34,13 +34,11 @@ struct AddItemButton: View {
             .cornerRadius(10)
             .shadow(radius: 10)
             .onTapGesture {
-                print("in onTapGesture")
                 withAnimation {
                     self.isPresentingQuickAddItemView = true
                 }
             }
             .onLongPressGesture {
-                print("LONG PRESSED")
                 self.isPresentingAddItemView = true
             }
         }
