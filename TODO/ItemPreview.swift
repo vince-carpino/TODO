@@ -12,14 +12,14 @@ import SwiftUI
 struct ItemPreview: View {
     @Environment(\.managedObjectContext) var moc
 
+    @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.isCurrentItem, ascending: true)], predicate: NSPredicate(format: "isCurrentItem == true")) var currentItem: FetchedResults<Item>
+
     @State private var isPresentingDetail = false
 
     let item: Item
 
     var body: some View {
-        Button(action: {
-            self.isPresentingDetail = true
-        }) {
+        Button(action: {}) {
             Text(item.name ?? "Unknown name")
                 .font(.system(size: 24, weight: .semibold, design: .rounded))
                 .bold()
@@ -33,9 +33,39 @@ struct ItemPreview: View {
                     RoundedRectangle(cornerRadius: 10)
                         .strokeBorder(Color.clouds, lineWidth: 5)
                 )
+                .onTapGesture {
+                    self.isPresentingDetail = true
+                }
+                .onLongPressGesture {
+                    self.markPreviousCurrentItemAsNotCurrent()
+                    self.item.isCompleted = false
+                    self.item.isCurrentItem = true
+                    self.saveContext()
+                }
         }
         .sheet(isPresented: $isPresentingDetail) {
             ItemDetailView(item: self.item).environment(\.managedObjectContext, self.moc)
+        }
+    }
+
+    private func markPreviousCurrentItemAsNotCurrent() {
+        if currentItem.first == nil {
+            print("NO ITEM MARKED AS CURRENT")
+            return
+        }
+
+        if let previousCurrentItem = currentItem.first {
+            moc.performAndWait {
+                previousCurrentItem.isCurrentItem = false
+            }
+        }
+    }
+
+    private func saveContext() {
+        do {
+            try moc.save()
+        } catch {
+            print("Error while saving item:\n***\n\(error)\n***")
         }
     }
 }
