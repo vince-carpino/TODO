@@ -24,6 +24,7 @@
 		D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */; };
 		D0C5BED624984DDC00366A85 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5BED524984DDC00366A85 /* Buttons.swift */; };
 		D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */; };
+		D0E8A53824C253D50043F181 /* ItemPreviewOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E8A53724C253D50043F181 /* ItemPreviewOptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		D0C5BED524984DDC00366A85 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemButton.swift; sourceTree = "<group>"; };
+		D0E8A53724C253D50043F181 /* ItemPreviewOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemPreviewOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +126,7 @@
 				D0166B0A247635B70045418A /* AddEditItemView.swift */,
 				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
 				D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */,
+				D0E8A53724C253D50043F181 /* ItemPreviewOptionsView.swift */,
 				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D01D0F7824B614C00037D8DB /* QuickAddItemView.swift */,
 				D0BE8412249429C5002E89BA /* NeumorphicItemPreviewButton.swift */,
@@ -313,6 +316,7 @@
 				D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */,
 				D0166B0B247635B70045418A /* AddEditItemView.swift in Sources */,
 				D049B23F2474EF67005A4017 /* Colors.swift in Sources */,
+				D0E8A53824C253D50043F181 /* ItemPreviewOptionsView.swift in Sources */,
 				D0C5BED624984DDC00366A85 /* Buttons.swift in Sources */,
 				D0008C34244E67DF00E4F5AD /* AppDelegate.swift in Sources */,
 				D0008C36244E67DF00E4F5AD /* SceneDelegate.swift in Sources */,
