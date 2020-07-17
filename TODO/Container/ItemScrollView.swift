@@ -13,6 +13,7 @@ struct ItemScrollView: View {
     @Environment(\.managedObjectContext) var moc
 
     @State private var isPresentingQuickAddItemView = false
+    @State private var isPresentingItemPreviewOptionsView = false
 
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
         NSSortDescriptor(key: "dueDate", ascending: true),
@@ -30,7 +31,7 @@ struct ItemScrollView: View {
                         Spacer(minLength: 0)
 
                         ForEach(items.filter { !$0.hasBeenDeleted }, id: \.id) { item in
-                            ItemPreview(item: item)
+                            ItemPreview(isPresentingMenuOptions: self.$isPresentingItemPreviewOptionsView, item: item)
                         }
 
                         Spacer(minLength: 50)
@@ -52,6 +53,11 @@ struct ItemScrollView: View {
 
             if isPresentingQuickAddItemView {
                 QuickAddItemView(isPresented: self.$isPresentingQuickAddItemView)
+                    .transition(.opacity)
+            }
+
+            if isPresentingItemPreviewOptionsView {
+                ItemPreviewOptionsView(isPresented: self.$isPresentingItemPreviewOptionsView)
                     .transition(.opacity)
             }
         }
