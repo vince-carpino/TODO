@@ -65,11 +65,10 @@ struct ItemDetailView: View {
                     }) {
                         HStack {
                             Image(systemName: self.$isCurrentItem.wrappedValue ? "bolt.slash.fill" : "bolt.fill")
-                                .imageScale(.medium)
 
                             Text("\(self.$isCurrentItem.wrappedValue ? "Don't " : "")Set as Current")
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
                         }
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
@@ -91,11 +90,10 @@ struct ItemDetailView: View {
                     }) {
                         HStack {
                             Image(systemName: self.$isCompleted.wrappedValue ? "nosign" : "checkmark.square.fill")
-                                .imageScale(.medium)
 
                             Text("Mark as \(self.$isCompleted.wrappedValue ? "Incomplete" : "Done")")
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
                         }
+                        .font(.system(size: 18, weight: .semibold, design: .rounded))
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
@@ -109,11 +107,10 @@ struct ItemDetailView: View {
                         }) {
                             HStack {
                                 Image(systemName: "trash")
-                                    .imageScale(.medium)
 
                                 Text("Delete Item")
-                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                             }
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .foregroundColor(.alizarin)
@@ -139,11 +136,10 @@ struct ItemDetailView: View {
                         }) {
                             HStack {
                                 Image(systemName: "slider.horizontal.3")
-                                    .imageScale(.medium)
 
                                 Text("Edit Item")
-                                    .font(.system(size: 18, weight: .semibold, design: .rounded))
                             }
+                            .font(.system(size: 18, weight: .semibold, design: .rounded))
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
                             .foregroundColor(.peterRiver)
@@ -174,12 +170,12 @@ struct ItemDetailView: View {
     }
 
     private func markPreviousCurrentItemAsNotCurrent() {
-        if self.currentItem.first == nil {
+        if currentItem.first == nil {
             print("NO ITEM MARKED AS CURRENT")
             return
         }
 
-        if let previousCurrentItem = self.currentItem.first {
+        if let previousCurrentItem = currentItem.first {
             moc.performAndWait {
                 previousCurrentItem.isCurrentItem = false
             }

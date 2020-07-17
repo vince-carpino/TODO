@@ -48,6 +48,7 @@ struct QuickAddItemView: View {
                         .padding(12)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .background(Color.midnightBlue)
+                        .foregroundColor(.clouds)
                         .cornerRadius(10)
                     }
 
@@ -65,11 +66,11 @@ struct QuickAddItemView: View {
                         .padding(12)
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .background(self.nameFieldIsEmpty() ? Color.silver : Color.peterRiver)
+                        .foregroundColor(self.nameFieldIsEmpty() ? .concrete : .clouds)
                         .cornerRadius(10)
                     }
                     .disabled(nameFieldIsEmpty())
                 }
-                .foregroundColor(.clouds)
                 .font(.system(size: 16, weight: .semibold, design: .rounded))
             }
             .onAppear {
@@ -80,7 +81,7 @@ struct QuickAddItemView: View {
     }
 
     fileprivate func nameFieldIsEmpty() -> Bool {
-        return itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        return self.itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     fileprivate func addNewItem() {
@@ -108,7 +109,7 @@ struct QuickAddItemView: View {
 struct VisualEffectView: UIViewRepresentable {
     var effect: UIVisualEffect?
     func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
-    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
+    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = self.effect }
 }
 
 #if canImport(UIKit)
