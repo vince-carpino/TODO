@@ -14,7 +14,6 @@ struct ItemPreview: View {
 
     @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.isCurrentItem, ascending: true)], predicate: NSPredicate(format: "isCurrentItem == true")) var currentItem: FetchedResults<Item>
 
-    @Binding var isPresentingMenuOptions: Bool
     @State private var isPresentingDetail = false
 
     let item: Item
@@ -39,13 +38,11 @@ struct ItemPreview: View {
                         self.isPresentingDetail = true
                     }
                     .onLongPressGesture {
-                        withAnimation {
-                            self.isPresentingMenuOptions = true
-                        }
-//                        self.markPreviousCurrentItemAsNotCurrent()
-//                        self.item.isCompleted = false
-//                        self.item.isCurrentItem = true
-//                        self.saveContext()
+                        if self.item.isCompleted { return }
+
+                        self.item.isCurrentItem ? self.markItemAsDone() : self.markItemAsCurrent()
+
+                        self.saveContext()
                     }
             }
             .sheet(isPresented: $isPresentingDetail) {
@@ -54,14 +51,25 @@ struct ItemPreview: View {
         }
     }
 
+    private func markItemAsCurrent() {
+        self.markPreviousCurrentItemAsNotCurrent()
+        self.item.isCompleted = false
+        self.item.isCurrentItem = true
+    }
+
+    private func markItemAsDone() {
+        self.item.isCurrentItem = false
+        self.item.isCompleted = true
+    }
+
     private func markPreviousCurrentItemAsNotCurrent() {
-        if currentItem.first == nil {
+        if self.currentItem.first == nil {
             print("NO ITEM MARKED AS CURRENT")
             return
         }
 
         if let previousCurrentItem = currentItem.first {
-            moc.performAndWait {
+            self.moc.performAndWait {
                 previousCurrentItem.isCurrentItem = false
             }
         }
@@ -69,7 +77,7 @@ struct ItemPreview: View {
 
     private func saveContext() {
         do {
-            try moc.save()
+            try self.moc.save()
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
         }
@@ -93,7 +101,7 @@ struct ItemPreview_Previews: PreviewProvider {
         return ZStack {
             RainbowViewVertical()
 
-            ItemPreview(isPresentingMenuOptions: Binding.constant(false), item: item)
+            ItemPreview(item: item)
         }
     }
 }
