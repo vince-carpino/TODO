@@ -97,7 +97,7 @@ struct AddEditItemView: View {
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
-                            Image(systemName: isNewItem() ? "plus" : "checkmark.square.fill")
+                            Image(systemName: isNewItem() ? "plus" : "arrow.down.square.fill")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text(self.isNewItem() ? "Add Item" : "Save")
