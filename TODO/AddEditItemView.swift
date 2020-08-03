@@ -20,6 +20,12 @@ struct AddEditItemView: View {
     @State private var dueDate = Date()
     @State private var hasDueTime = false
 
+    @State private var priorityIndex = 0
+
+    private let priorities = ["LOW", "MEDIUM", "HIGH"]
+    private let prioritiesValues = [0, 50, 100]
+    private let prioritiesMap = ["LOW": 0, "MEDIUM": 50, "HIGH": 100]
+
     let item: Item?
 
     var dateFormatter: DateFormatter {
@@ -43,7 +49,9 @@ struct AddEditItemView: View {
                 Spacer()
 
                 Form {
-                    Section {
+                    Section(header: Text("NAME")
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    ) {
                         TextField("Enter a name...", text: self.isNewItem() ? $itemName : $newName)
                             .onAppear {
                                 self.newName = self.item?.name ?? ""
@@ -51,37 +59,52 @@ struct AddEditItemView: View {
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                     }
 
-                    Section {
-                        Toggle(isOn: $hasDueDate) {
-                            HStack {
-                                Text("Due date")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                Spacer()
+                    Section(header: Text("PRIORITY")
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    ) {
+                        Picker(selection: $priorityIndex, label: Text("")) {
+                            ForEach(0..<priorities.count) { index in
+                                Text(self.priorities[index])
+                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
                             }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
                         .onAppear {
-                            self.hasDueDate = self.item?.hasDueDate ?? false
-                        }
-
-                        if hasDueDate {
-                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: self.hasDueTime ? [.hourAndMinute, .date] : .date)
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                .onAppear {
-                                    self.dueDate = self.item?.dueDate ?? Date()
-                                }
-
-                            Toggle(isOn: $hasDueTime) {
-                                HStack {
-                                    Text("Due at time")
-                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                    Spacer()
-                                }
-                            }
-                            .onAppear {
-                                self.hasDueTime = self.item?.hasDueTime ?? false
-                            }
+                            self.priorityIndex = self.getPriorityIndexFromValue(self.item?.priorityValue ?? 0)
                         }
                     }
+
+//                    Section {
+//                        Toggle(isOn: $hasDueDate) {
+//                            HStack {
+//                                Text("Due date")
+//                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+//                                Spacer()
+//                            }
+//                        }
+//                        .onAppear {
+//                            self.hasDueDate = self.item?.hasDueDate ?? false
+//                        }
+//
+//                        if hasDueDate {
+//                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: self.hasDueTime ? [.hourAndMinute, .date] : .date)
+//                                .font(.system(size: 18, weight: .semibold, design: .rounded))
+//                                .onAppear {
+//                                    self.dueDate = self.item?.dueDate ?? Date()
+//                                }
+//
+//                            Toggle(isOn: $hasDueTime) {
+//                                HStack {
+//                                    Text("Due at time")
+//                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+//                                    Spacer()
+//                                }
+//                            }
+//                            .onAppear {
+//                                self.hasDueTime = self.item?.hasDueTime ?? false
+//                            }
+//                        }
+//                    }
                 }
 
                 Spacer()
@@ -133,6 +156,15 @@ struct AddEditItemView: View {
         return self.nameFieldIsEmpty() ? .concrete : .peterRiver
     }
 
+    private func getPriorityValue() -> Int16 {
+        let selectedPriority = self.priorities[self.priorityIndex]
+        return Int16(self.prioritiesMap[selectedPriority] ?? -1)
+    }
+
+    private func getPriorityIndexFromValue(_ value: Int16) -> Int {
+        return self.prioritiesValues.firstIndex(of: Int(value)) ?? 0
+    }
+
     fileprivate func addNewItem() {
         let item = Item(context: self.moc)
         item.id = UUID()
@@ -142,6 +174,7 @@ struct AddEditItemView: View {
         item.isCompleted = false
         item.hasDueDate = self.hasDueDate
         item.hasDueTime = self.hasDueTime
+        item.priorityValue = self.getPriorityValue()
 
         if item.hasDueDate, !item.hasDueTime {
             item.dueDate = Calendar.current.date(bySetting: .hour, value: 1, of: self.dueDate)
@@ -166,6 +199,7 @@ struct AddEditItemView: View {
         self.moc.performAndWait {
             item?.name = self.newName
             item?.hasDueDate = self.hasDueDate
+            item?.priorityValue = self.getPriorityValue()
 
             if self.hasDueDate {
                 item?.dueDate = self.dueDate
