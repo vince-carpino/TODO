@@ -29,6 +29,8 @@ struct ItemDetailView: View {
         return formatter
     }
 
+    private let priorityMap = [0: "Low", 50: "Medium", 100: "High"]
+
     var body: some View {
         ZStack {
             Color.midnightBlue
@@ -40,6 +42,8 @@ struct ItemDetailView: View {
                 VStack(alignment: .leading) {
                     ItemPropertyDetail(propertyValue: item.name ?? "", propertyName: "Name")
                         .lineLimit(3)
+
+                    ItemPropertyDetail(propertyValue: self.priorityMap[Int(item.priorityValue)] ?? "Low", propertyName: "Priority")
 
                     ItemPropertyDetail(propertyValue: dateFormatter.string(from: item.creationTime ?? Date()), propertyName: "Creation time")
 
@@ -195,6 +199,7 @@ struct ItemDetailView_Previews: PreviewProvider {
         item.dueDate = Date()
         item.hasBeenDeleted = false
         item.isCurrentItem = false
+        item.priorityValue = 50
 
         let itemWithLongName = Item(context: moc)
         itemWithLongName.id = UUID()
