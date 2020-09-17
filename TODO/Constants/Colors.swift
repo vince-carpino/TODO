@@ -16,7 +16,7 @@ extension Color {
     public static let pumpkin = Color(#colorLiteral(red: 0.8274510503, green: 0.3294117749, blue: 0, alpha: 1))
 
     public static let sunFlower = Color(#colorLiteral(red: 0.9450981021, green: 0.7686275244, blue: 0.05882353336, alpha: 1))
-    public static let orange = Color(#colorLiteral(red: 0.9529412389, green: 0.611764729, blue: 0.07058823854, alpha: 1))
+    public static let clementine = Color(#colorLiteral(red: 0.9529412389, green: 0.611764729, blue: 0.07058823854, alpha: 1))
 
     public static let emerland = Color(#colorLiteral(red: 0.180392161, green: 0.8000000715, blue: 0.4431372881, alpha: 1))
     public static let nephritis = Color(#colorLiteral(red: 0.1529411823, green: 0.6823529601, blue: 0.3764706254, alpha: 1))
