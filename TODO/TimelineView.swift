@@ -9,69 +9,20 @@
 import SwiftUI
 
 struct TimelineView: View {
-    private var itemNames: [String] = [
-        "some item",
-        "another thing to do",
-        "work",
-        "lunch",
-        "work",
-        "learning session",
-        "workout",
-        "edit photos",
-        "house projects",
-        "tomorrow prep",
-        "some item",
-        "another thing to do with a long name",
-        "work",
-        "lunch",
-        "work",
-        "learning session",
-        "workout",
-        "edit photos",
-        "house projects",
-        "tomorrow prep",
-        "some item",
-        "another thing to do",
-        "work",
-        "lunch",
-        "work",
-        "learning session",
-        "workout",
-        "edit photos",
-        "house projects",
-        "tomorrow prep",
-    ]
-    private var colors: [Color] = [
-        .red,
-        .orange,
-        .yellow,
-        .green,
-        .blue,
-        .purple,
-        .pink,
-        .black,
-        .gray,
-        .midnightBlue,
-        .red,
-        .orange,
-        .yellow,
-        .green,
-        .blue,
-        .purple,
-        .pink,
-        .black,
-        .gray,
-        .midnightBlue,
-        .red,
-        .orange,
-        .yellow,
-        .green,
-        .blue,
-        .purple,
-        .pink,
-        .black,
-        .gray,
-        .midnightBlue,
+//    @State private var finalTimeBlocks: [TimeBlock] = []
+
+    let timeBlocks: [TimeBlock]
+//    private var finalTimeBlocks: [TimeBlock]
+
+    private let origTimeBlocks: [TimeBlock] = [
+        TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+        TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+        TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+        TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
+        TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+        TimeBlockSpacer(startTime: 17.5, endTime: 18),
+        TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+        TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
     ]
 
     var body: some View {
@@ -87,73 +38,124 @@ struct TimelineView: View {
                 ScrollView(showsIndicators: false) {
                     ZStack {
                         VStack(spacing: 0) {
-                            ForEach(0..<24) { index in
-                                TimelineSeparator(hour: index)
+                            ForEach(0..<timeBlocks.count) { index in
+                                TimelineSeparator(hour: self.timeBlocks[index].startTime)
 
                                 HStack {
                                     Spacer()
-                                        .frame(width: 50)
+                                        .frame(width: 65)
 
-                                    TimelineItem(itemName: self.itemNames[index], itemColor: self.colors[index])
+                                    TimelineItem(timeBlock: self.timeBlocks[index])
+                                }
+
+                                if index == self.timeBlocks.count - 1 {
+                                    TimelineSeparator(hour: self.timeBlocks[index].endTime)
                                 }
                             }
 
                             Spacer()
                         }
-//                        .frame(maxWidth: .infinity)
-//                        .padding()
-
-//                        VStack(spacing: 0) {
-//                            Spacer()
-//                                .frame(height: 20)
-//
-//                            ForEach(0..<23) { index in
-//                                HStack {
-//                                    Spacer()
-//                                        .frame(width: 50)
-//                                    TimelineItem(itemName: self.itemNames[index], itemColor: self.colors[index])
-//                                }
-//
-//                                Spacer()
-//                                    .frame(height: 4)
-//                            }
-//
-//                            Spacer()
-//                        }
                     }
                     .frame(maxWidth: .infinity)
                     .padding()
                 }
             }
         }
+//        .onAppear(perform: {
+//            self.finalTimeBlocks = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: self.origTimeBlocks)
+//        })
+    }
+}
+
+class TimeBlock: Equatable {
+    static func == (lhs: TimeBlock, rhs: TimeBlock) -> Bool {
+        return lhs.name == rhs.name
+            && lhs.color == rhs.color
+            && lhs.startTime == rhs.startTime
+            && lhs.endTime == rhs.endTime
+    }
+
+    var name: String
+    var color: Color
+    var startTime: Double
+    var endTime: Double
+
+    init(name: String, color: Color, startTime: Double, endTime: Double) {
+        self.name = name
+        self.color = color
+        self.startTime = startTime
+        self.endTime = endTime
+    }
+}
+
+class TimeBlockSpacer: TimeBlock {
+    init(startTime: Double, endTime: Double) {
+        super.init(name: "free", color: .clear, startTime: startTime, endTime: endTime)
+    }
+}
+
+class TimeBlockHelper {
+    static func getFinalTimeBlocks(originalTimeBlocks: [TimeBlock]) -> [TimeBlock] {
+        var newTimeBlocks: [TimeBlock] = []
+        newTimeBlocks.append(contentsOf: originalTimeBlocks)
+
+        if originalTimeBlocks.count < 2 { return originalTimeBlocks }
+
+        for i in 1..<originalTimeBlocks.count {
+            let currentTimeBlock = originalTimeBlocks[i]
+            let previousTimeBlock = originalTimeBlocks[i - 1]
+
+            if currentTimeBlock.startTime != previousTimeBlock.endTime {
+                let freeTime = TimeBlockSpacer(startTime: previousTimeBlock.endTime, endTime: currentTimeBlock.startTime)
+                let indexOfCurrentTimeBlock = originalTimeBlocks.firstIndex { (timeBlock) -> Bool in
+                    timeBlock.startTime == currentTimeBlock.startTime
+                }
+
+                newTimeBlocks.insert(freeTime, at: indexOfCurrentTimeBlock!)
+            }
+        }
+
+        return newTimeBlocks
     }
 }
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        TimelineView()
+        let incompleteTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+            TimeBlock(name: "learning session", color: .clementine, startTime: 16, endTime: 17),
+            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
+        ]
+
+        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
+
+        return TimelineView(timeBlocks: completeTimeBlocks)
     }
 }
 
 struct TimelineItem: View {
-    var itemName: String
-    var itemColor: Color
+    let timeBlock: TimeBlock
 
     private let cornerRadius: CGFloat = 5
+    private let baseHeight: CGFloat = 70
 
     var body: some View {
         Button(action: {}) {
             HStack {
-                Text(itemName.uppercased())
+                Text(timeBlock.name.uppercased())
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
-            .frame(maxWidth: .infinity, minHeight: 70, maxHeight: 70)
+            .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(itemColor)
+            .background(timeBlock.color)
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
@@ -161,10 +163,48 @@ struct TimelineItem: View {
             )
         }
     }
+
+    func calculateHeight() -> CGFloat {
+        return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+    }
+}
+
+struct TimelineSpacer {
+    let timeBlockSpacer: TimeBlockSpacer
+
+    private let cornerRadius: CGFloat = 5
+    private let baseHeight: CGFloat = 70
+
+    var body: some View {
+        Button(action: {
+            print("tapped timeline spacer")
+        }) {
+            HStack {
+                Text("free".uppercased())
+                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .bold()
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
+            .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
+            .padding(10)
+            .foregroundColor(.clouds)
+            .background(Color.clear)
+            .cornerRadius(self.cornerRadius)
+            .overlay(
+                RoundedRectangle(cornerRadius: self.cornerRadius)
+                    .strokeBorder(Color.clouds, lineWidth: 3)
+            )
+        }
+    }
+
+    func calculateHeight() -> CGFloat {
+        return CGFloat(timeBlockSpacer.endTime - timeBlockSpacer.startTime) * baseHeight
+    }
 }
 
 struct TimelineSeparator: View {
-    var hour: Int
+    var hour: Double
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -180,8 +220,9 @@ struct TimelineSeparator: View {
         .offset(x: 0, y: -9)
     }
 
-    func getHour(hourPastMidnight: Int) -> String {
+    func getHour(hourPastMidnight: Double) -> String {
         let amPm = hourPastMidnight < 12 ? "AM" : "PM"
+        let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
         var hourNumber = hourPastMidnight
 
         if hourPastMidnight == 0 || hourPastMidnight == 12 {
@@ -190,6 +231,11 @@ struct TimelineSeparator: View {
             hourNumber = hourPastMidnight - 12
         }
 
-        return "\(hourNumber) \(amPm)"
+        if isPartialHour {
+            let minutes = (hourNumber - floor(hourNumber)) * 60
+            return "\(Int(hourNumber)):\(Int(minutes)) \(amPm)"
+        }
+
+        return "\(Int(hourNumber)) \(amPm)"
     }
 }
