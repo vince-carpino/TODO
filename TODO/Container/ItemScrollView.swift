@@ -13,10 +13,14 @@ struct ItemScrollView: View {
     @Environment(\.managedObjectContext) var moc
 
     @State private var isPresentingQuickAddItemView = false
+    @State private var viewModeFilter = 0
+
+    private var viewModeFilterOptions = ["NEXT", "TODAY", "ALL"]
 
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
+        NSSortDescriptor(key: "priorityValue", ascending: false),
         NSSortDescriptor(key: "dueDate", ascending: true),
-        NSSortDescriptor(key: "creationTime", ascending: false)
+        NSSortDescriptor(key: "creationTime", ascending: true)
     ]) var items: FetchedResults<Item>
 
     var body: some View {
@@ -25,6 +29,15 @@ struct ItemScrollView: View {
                 .edgesIgnoringSafeArea(.all)
 
             VStack {
+                Picker(selection: self.$viewModeFilter, label: Text("")) {
+                    ForEach(0..<viewModeFilterOptions.count) { index in
+                        Text(self.viewModeFilterOptions[index])
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 40) {
                         Spacer(minLength: 0)
