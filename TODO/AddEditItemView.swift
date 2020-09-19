@@ -21,8 +21,10 @@ struct AddEditItemView: View {
     @State private var hasDueTime = false
 
     @State private var priorityIndex = 0
+    @State private var timelineIndex = 0
 
     private let priorities = ["LOW", "MEDIUM", "HIGH"]
+    private let timelines = ["LATER", "TODAY", "NEXT"]
     private let prioritiesValues = [0, 50, 100]
     private let prioritiesMap = ["LOW": 0, "MEDIUM": 50, "HIGH": 100]
 
@@ -71,6 +73,21 @@ struct AddEditItemView: View {
                         .pickerStyle(SegmentedPickerStyle())
                         .onAppear {
                             self.priorityIndex = self.getPriorityIndexFromValue(self.item?.priorityValue ?? 0)
+                        }
+                    }
+
+                    Section(header: Text("TIMELINE")
+                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                    ) {
+                        Picker(selection: $timelineIndex, label: Text("")) {
+                            ForEach(0..<timelines.count) { index in
+                                Text(self.timelines[index])
+                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            }
+                        }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .onAppear {
+                            self.timelineIndex = 0
                         }
                     }
 
