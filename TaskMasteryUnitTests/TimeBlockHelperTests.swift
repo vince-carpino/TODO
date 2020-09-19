@@ -11,7 +11,7 @@ import XCTest
 
 class TimeBlockHelperTests: XCTestCase {
 
-    func testGetFinalTimeBlocks() {
+    func testGetFinalTimeBlocksFillsInEmptyTimeslots() {
         let originalTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
@@ -28,5 +28,19 @@ class TimeBlockHelperTests: XCTestCase {
         let actualFinalTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: originalTimeBlocks)
 
         XCTAssertEqual(actualFinalTimeBlocks, expectedFinalTimeBlocks)
+    }
+
+    func testGetFinalTimeBlocksReturnsOriginalListIfCountIsLessThanTwo() {
+        let originalTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "only item", color: .red, startTime: 8, endTime: 9)
+        ]
+
+        let expectedTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "only item", color: .red, startTime: 8, endTime: 9)
+        ]
+
+        let actualFinalTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: originalTimeBlocks)
+
+        XCTAssertEqual(actualFinalTimeBlocks, expectedTimeBlocks)
     }
 }
