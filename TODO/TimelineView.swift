@@ -14,17 +14,6 @@ struct TimelineView: View {
     let timeBlocks: [TimeBlock]
 //    private var finalTimeBlocks: [TimeBlock]
 
-    private let origTimeBlocks: [TimeBlock] = [
-        TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
-        TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
-        TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
-        TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
-        TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
-        TimeBlockSpacer(startTime: 17.5, endTime: 18),
-        TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
-        TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
-    ]
-
     var body: some View {
         ZStack {
             Color.midnightBlue
@@ -99,8 +88,6 @@ class TimeBlockHelper {
         var newTimeBlocks: [TimeBlock] = []
         newTimeBlocks.append(contentsOf: originalTimeBlocks)
 
-        if originalTimeBlocks.count < 2 { return originalTimeBlocks }
-
         for i in 1..<originalTimeBlocks.count {
             let currentTimeBlock = originalTimeBlocks[i]
             let previousTimeBlock = originalTimeBlocks[i - 1]
@@ -166,40 +153,6 @@ struct TimelineItem: View {
 
     func calculateHeight() -> CGFloat {
         return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
-    }
-}
-
-struct TimelineSpacer {
-    let timeBlockSpacer: TimeBlockSpacer
-
-    private let cornerRadius: CGFloat = 5
-    private let baseHeight: CGFloat = 70
-
-    var body: some View {
-        Button(action: {
-            print("tapped timeline spacer")
-        }) {
-            HStack {
-                Text("free".uppercased())
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .bold()
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-            }
-            .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
-            .padding(10)
-            .foregroundColor(.clouds)
-            .background(Color.clear)
-            .cornerRadius(self.cornerRadius)
-            .overlay(
-                RoundedRectangle(cornerRadius: self.cornerRadius)
-                    .strokeBorder(Color.clouds, lineWidth: 3)
-            )
-        }
-    }
-
-    func calculateHeight() -> CGFloat {
-        return CGFloat(timeBlockSpacer.endTime - timeBlockSpacer.startTime) * baseHeight
     }
 }
 
