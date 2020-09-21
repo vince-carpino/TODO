@@ -35,12 +35,8 @@ class TimeBlockHelperTests: XCTestCase {
             TimeBlock(name: "only item", color: .red, startTime: 8, endTime: 9)
         ]
 
-        let expectedTimeBlocks: [TimeBlock] = [
-            TimeBlock(name: "only item", color: .red, startTime: 8, endTime: 9)
-        ]
-
         let actualFinalTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: originalTimeBlocks)
 
-        XCTAssertEqual(actualFinalTimeBlocks, expectedTimeBlocks)
+        XCTAssertEqual(actualFinalTimeBlocks, originalTimeBlocks)
     }
 }
