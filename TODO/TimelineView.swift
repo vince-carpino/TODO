@@ -9,10 +9,7 @@
 import SwiftUI
 
 struct TimelineView: View {
-//    @State private var finalTimeBlocks: [TimeBlock] = []
-
     let timeBlocks: [TimeBlock]
-//    private var finalTimeBlocks: [TimeBlock]
 
     var body: some View {
         ZStack {
@@ -50,9 +47,6 @@ struct TimelineView: View {
                 }
             }
         }
-//        .onAppear(perform: {
-//            self.finalTimeBlocks = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: self.origTimeBlocks)
-//        })
     }
 }
 
