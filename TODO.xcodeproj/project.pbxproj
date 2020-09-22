@@ -19,9 +19,7 @@
 		D0517AC02473582C00FFC5F1 /* ItemScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */; };
 		D06028AB25156C0900811F62 /* TimeBlockHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06028AA25156C0900811F62 /* TimeBlockHelperTests.swift */; };
 		D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D078586C246F52BF00F370BF /* DataModel.xcdatamodeld */; };
-		D0BE8413249429C5002E89BA /* NeumorphicItemPreviewButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BE8412249429C5002E89BA /* NeumorphicItemPreviewButton.swift */; };
 		D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */; };
-		D0C5BED624984DDC00366A85 /* Buttons.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C5BED524984DDC00366A85 /* Buttons.swift */; };
 		D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */; };
 		D0E6089825196C71009A68A5 /* TimeBlockSpacerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6089725196C71009A68A5 /* TimeBlockSpacerTests.swift */; };
 		D0E6089A25197209009A68A5 /* TimelineSeparatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6089925197209009A68A5 /* TimelineSeparatorTests.swift */; };
@@ -56,9 +54,7 @@
 		D06028AA25156C0900811F62 /* TimeBlockHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockHelperTests.swift; sourceTree = "<group>"; };
 		D06028AC25156C0900811F62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D078586D246F52BF00F370BF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
-		D0BE8412249429C5002E89BA /* NeumorphicItemPreviewButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicItemPreviewButton.swift; sourceTree = "<group>"; };
 		D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
-		D0C5BED524984DDC00366A85 /* Buttons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Buttons.swift; sourceTree = "<group>"; };
 		D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemButton.swift; sourceTree = "<group>"; };
 		D0E6089725196C71009A68A5 /* TimeBlockSpacerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockSpacerTests.swift; sourceTree = "<group>"; };
 		D0E6089925197209009A68A5 /* TimelineSeparatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineSeparatorTests.swift; sourceTree = "<group>"; };
@@ -115,8 +111,6 @@
 				D0E8A53724C253D50043F181 /* ItemPreviewOptionsView.swift */,
 				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D01D0F7824B614C00037D8DB /* QuickAddItemView.swift */,
-				D0BE8412249429C5002E89BA /* NeumorphicItemPreviewButton.swift */,
-				D0C5BED524984DDC00366A85 /* Buttons.swift */,
 				D0F83A0724F07CBB0036C4E2 /* TimelineView.swift */,
 				D0008C39244E67E200E4F5AD /* Assets.xcassets */,
 				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
@@ -268,12 +262,10 @@
 				D0166B0B247635B70045418A /* AddEditItemView.swift in Sources */,
 				D049B23F2474EF67005A4017 /* Colors.swift in Sources */,
 				D0E8A53824C253D50043F181 /* ItemPreviewOptionsView.swift in Sources */,
-				D0C5BED624984DDC00366A85 /* Buttons.swift in Sources */,
 				D0008C34244E67DF00E4F5AD /* AppDelegate.swift in Sources */,
 				D0008C36244E67DF00E4F5AD /* SceneDelegate.swift in Sources */,
 				D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */,
 				D0517ABE2473557F00FFC5F1 /* ItemPreview.swift in Sources */,
-				D0BE8413249429C5002E89BA /* NeumorphicItemPreviewButton.swift in Sources */,
 				D01D0F7924B614C00037D8DB /* QuickAddItemView.swift in Sources */,
 				D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */,
 				D0517AC02473582C00FFC5F1 /* ItemScrollView.swift in Sources */,
