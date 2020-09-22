@@ -11,6 +11,8 @@ import SwiftUI
 struct TimelineView: View {
     let timeBlocks: [TimeBlock]
 
+    private let timelineSeparatorWidth: CGFloat = 65
+
     var body: some View {
         ZStack {
             Color.midnightBlue
@@ -29,7 +31,7 @@ struct TimelineView: View {
 
                                 HStack {
                                     Spacer()
-                                        .frame(width: 65)
+                                        .frame(width: self.timelineSeparatorWidth)
 
                                     TimelineItem(timeBlock: self.timeBlocks[index])
                                 }
@@ -155,7 +157,7 @@ struct TimelineSeparator: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(getHour(hourPastMidnight: hour))
+            Text(TimelineSeparator.getHour(hourPastMidnight: hour))
                 .font(.system(size: 15, weight: .semibold, design: .rounded))
                 .foregroundColor(.clouds)
 
@@ -167,12 +169,12 @@ struct TimelineSeparator: View {
         .offset(x: 0, y: -9)
     }
 
-    func getHour(hourPastMidnight: Double) -> String {
+    static func getHour(hourPastMidnight: Double) -> String {
         let amPm = hourPastMidnight < 12 ? "AM" : "PM"
         let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
         var hourNumber = hourPastMidnight
 
-        if hourPastMidnight == 0 || hourPastMidnight == 12 {
+        if hourPastMidnight == 0 {
             hourNumber = 12
         } else if hourPastMidnight > 12 {
             hourNumber = hourPastMidnight - 12
