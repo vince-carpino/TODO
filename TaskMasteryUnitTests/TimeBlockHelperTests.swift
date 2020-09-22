@@ -39,4 +39,16 @@ class TimeBlockHelperTests: XCTestCase {
 
         XCTAssertEqual(actualFinalTimeBlocks, originalTimeBlocks)
     }
+
+    func testGetFinalTimeBlocksReturnsOriginalListIfNoFreeSpace() {
+        let original: [TimeBlock] = [
+            TimeBlock(name: "first", color: .red, startTime: 8, endTime: 9),
+            TimeBlock(name: "second", color: .orange, startTime: 9, endTime: 10),
+            TimeBlock(name: "third", color: .yellow, startTime: 10, endTime: 11)
+        ]
+
+        let actual: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: original)
+
+        XCTAssertEqual(actual, original)
+    }
 }
