@@ -1,5 +1,5 @@
 //
-//  TimeBlockSpacerTests.swift
+//  TimelineSeparatorTests.swift
 //  TaskMasteryUnitTests
 //
 //  Created by Vince Carpino on 9/21/20.
