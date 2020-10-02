@@ -18,21 +18,27 @@ struct AddEditTimelineItemView: View {
     @State private var startTimeValue: Double = 1
     @State private var endTimeValue: Double = 1
 
+    var saveButtonColor: Color {
+        return self.nameFieldIsEmpty() ? .concrete : .peterRiver
+    }
+
     var body: some View {
         ZStack {
             BackgroundView()
 
-            VStack(spacing: 50) {
+            VStack {
                 Text("ADD ITEM")
                     .font(.system(size: 30, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
                     .bold()
                     .padding(.bottom, 15)
 
-//                Spacer()
+                Spacer()
 
                 TimelineItem(timeBlock: timeBlock)
                     .padding()
+
+                Spacer()
 
                 Divider()
                     .background(Color.clouds)
@@ -91,17 +97,9 @@ struct AddEditTimelineItemView: View {
                 .padding()
 
                 VStack {
-                    Button(action: {
-//                        if self.isNewItem() {
-//                            self.addNewItem()
-//                        } else {
-//                            self.saveItem()
-//                        }
-
-//                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
+                    Button(action: {}) {
                         HStack {
-                            Image("plus")
+                            Image(systemName: "plus")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text("SAVE")
@@ -110,20 +108,23 @@ struct AddEditTimelineItemView: View {
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .foregroundColor(.clouds)
-//                        .background(Color.orange)
+                        .background(saveButtonColor)
                         .cornerRadius(40)
                     }
-//                    .disabled(self.nameFieldIsEmpty())
+                    .disabled(self.nameFieldIsEmpty())
 
                     Text("swipe down to cancel")
                         .foregroundColor(.silver)
                         .font(.system(size: 14, weight: .semibold, design: .rounded))
                 }
                 .padding()
-
-//                Spacer()
             }
         }
+    }
+
+    fileprivate func nameFieldIsEmpty() -> Bool {
+        let textFieldToWatch = self.itemName
+        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }
 
