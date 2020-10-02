@@ -15,8 +15,7 @@ struct TimelineView: View {
 
     var body: some View {
         ZStack {
-            Color.midnightBlue
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView()
 
             VStack {
                 Text("TODAY")
@@ -186,5 +185,12 @@ struct TimelineSeparator: View {
         }
 
         return "\(Int(hourNumber)) \(amPm)"
+    }
+}
+
+struct BackgroundView: View {
+    var body: some View {
+        Color.midnightBlue
+            .edgesIgnoringSafeArea(.all)
     }
 }

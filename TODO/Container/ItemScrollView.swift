@@ -25,8 +25,7 @@ struct ItemScrollView: View {
 
     var body: some View {
         ZStack {
-            Color.midnightBlue
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView()
 
             VStack {
                 Picker(selection: self.$viewModeFilter, label: Text("")) {

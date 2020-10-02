@@ -33,8 +33,7 @@ struct ItemDetailView: View {
 
     var body: some View {
         ZStack {
-            Color.midnightBlue
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView()
 
             VStack(alignment: .leading) {
                 Spacer()

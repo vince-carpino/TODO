@@ -38,8 +38,7 @@ struct AddEditItemView: View {
 
     var body: some View {
         ZStack {
-            Color.midnightBlue
-                .edgesIgnoringSafeArea(.all)
+            BackgroundView()
 
             VStack {
                 Text(self.isNewItem() ? "Add Item" : "Edit Item")
