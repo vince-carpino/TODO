@@ -35,7 +35,7 @@ struct AddEditTimelineItemView: View {
 
                 Spacer()
 
-                TimelineItem(timeBlock: timeBlock)
+                TimelineItem(timeBlock: timeBlock, name: $itemName)
                     .padding()
 
                 Spacer()

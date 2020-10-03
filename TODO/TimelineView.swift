@@ -121,6 +121,7 @@ struct TimelineView_Previews: PreviewProvider {
 
 struct TimelineItem: View {
     let timeBlock: TimeBlock
+    var name: Binding<String>?
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
@@ -128,7 +129,7 @@ struct TimelineItem: View {
     var body: some View {
         Button(action: {}) {
             HStack {
-                Text(timeBlock.name.uppercased())
+                Text(name?.wrappedValue.uppercased() ?? timeBlock.name.uppercased())
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .bold()
                     .lineLimit(1)
