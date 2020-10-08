@@ -12,6 +12,7 @@ struct AddEditTimelineItemView: View {
     let timeBlock: TimeBlock
 
     @State private var itemName: String = ""
+    @State private var itemColor: Color = .white
     @State private var itemStartTime: Date = Date()
     @State private var itemEndTime: Date = Date()
 
@@ -35,7 +36,7 @@ struct AddEditTimelineItemView: View {
 
                 Spacer()
 
-                TimelineItem(timeBlock: timeBlock, name: $itemName)
+                TimelineItem(timeBlock: timeBlock, name: $itemName, color: $itemColor)
                     .padding()
 
                 Spacer()
@@ -69,7 +70,10 @@ struct AddEditTimelineItemView: View {
                     }
 
                     VStack(alignment: .leading) {
-                        ColorPicker()
+                        ColorPicker(selectedColor: $itemColor)
+                            .onAppear {
+                                self.itemColor = self.timeBlock.color
+                            }
 
                         Text("COLOR")
                             .font(.system(size: 14, weight: .semibold, design: .rounded))
@@ -130,13 +134,15 @@ struct AddEditTimelineItemView: View {
 
 struct AddEditTimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let timeblock: TimeBlock = TimeBlock(name: "name", color: .red, startTime: 8, endTime: 9)
+        let timeblock: TimeBlock = TimeBlock(name: "name", color: .purple, startTime: 8, endTime: 9)
 
         return AddEditTimelineItemView(timeBlock: timeblock)
     }
 }
 
 struct ColorPicker: View {
+    @Binding var selectedColor: Color
+
     private let colors: [Color] = [
         .red,
         .orange,
@@ -149,12 +155,14 @@ struct ColorPicker: View {
     var body: some View {
         HStack(spacing: 0) {
             ForEach(colors, id: \.self) { color in
-                Button(action: {}) {
+                Button(action: {
+                    selectedColor = color
+                }) {
                     ZStack {
                         Rectangle()
                             .foregroundColor(color)
 
-                        if color == .red {
+                        if color == selectedColor {
                             Image(systemName: "checkmark")
                                 .font(.system(size: 18, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)

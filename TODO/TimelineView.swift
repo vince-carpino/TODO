@@ -120,14 +120,19 @@ struct TimelineView_Previews: PreviewProvider {
 }
 
 struct TimelineItem: View {
+    @State private var isPresentingAddEditView = false
+
     let timeBlock: TimeBlock
     var name: Binding<String>?
+    var color: Binding<Color>?
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
 
     var body: some View {
-        Button(action: {}) {
+        Button(action: {
+            self.isPresentingAddEditView = true
+        }) {
             HStack {
                 Text(name?.wrappedValue.uppercased() ?? timeBlock.name.uppercased())
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
@@ -138,7 +143,7 @@ struct TimelineItem: View {
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(timeBlock.color)
+            .background(color?.wrappedValue ?? timeBlock.color)
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
