@@ -147,7 +147,7 @@ struct TimelineItem: View {
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
-                    .strokeBorder(Color.clouds, lineWidth: 3)
+                    .strokeBorder(Color.clouds, lineWidth: 5)
             )
         }
     }

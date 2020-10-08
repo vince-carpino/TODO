@@ -29,12 +29,10 @@ struct AddEditTimelineItemView: View {
 
             VStack {
                 Text("ADD ITEM")
-                    .font(.system(size: 30, weight: .semibold, design: .rounded))
+                    .font(.system(size: 45, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
                     .bold()
-                    .padding(.bottom, 15)
-
-                Spacer()
+                    .padding()
 
                 TimelineItem(timeBlock: timeBlock, name: $itemName, color: $itemColor)
                     .padding()
@@ -159,8 +157,15 @@ struct ColorPicker: View {
                     selectedColor = color
                 }) {
                     ZStack {
-                        Rectangle()
-                            .foregroundColor(color)
+                        if color == selectedColor {
+                            Rectangle()
+                                .foregroundColor(color)
+                                .overlay(Rectangle()
+                                        .strokeBorder(Color.clouds, lineWidth: 4))
+                        } else {
+                            Rectangle()
+                                .foregroundColor(color)
+                        }
 
                         if color == selectedColor {
                             Image(systemName: "checkmark")
