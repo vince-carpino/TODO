@@ -17,10 +17,16 @@ struct AddEditTimelineItemView: View {
     @State private var itemEndTime: Date = Date()
 
     @State private var startTimeValue: Double = 1
-    @State private var endTimeValue: Double = 1
+    @State private var endTimeValue: Double = 2
+    @State private var startTimeAmPm: String = "AM"
+    @State private var endTimeAmPm: String = "AM"
+
+    private let amPmOptions = ["AM", "PM"]
+    private let startEndTimeValues: ClosedRange<Double> = 1...12
+    private let startEndTimeStep: Double = 1
 
     var saveButtonColor: Color {
-        return self.nameFieldIsEmpty() ? .concrete : .peterRiver
+        return nameFieldIsEmpty() ? .concrete : .peterRiver
     }
 
     var body: some View {
@@ -80,19 +86,59 @@ struct AddEditTimelineItemView: View {
 
                     VStack {
                         VStack(alignment: .leading) {
-                            Slider(value: $startTimeValue, in: 1...12, step: 1)
+                            Slider(value: $startTimeValue, in: startEndTimeValues, step: startEndTimeStep) { isEditing in
+                                if !isEditing {
+                                    checkAndSetEndTime()
+                                }
+                            }
+                            .onAppear {
+                                startTimeValue = timeBlock.startTime
+                            }
 
-                            Text("START TIME: \(Int(startTimeValue))")
-                                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                            HStack {
+                                Text("START TIME: \(Int(startTimeValue))")
+                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.clouds)
+
+                                Spacer()
+
+                                Picker(selection: $startTimeAmPm, label: Text("")) {
+                                    ForEach(amPmOptions, id: \.self) { option in
+                                        Text(option)
+                                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                    }
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                .frame(maxWidth: 125)
+                            }
                         }
 
                         VStack(alignment: .leading) {
-                            Slider(value: $endTimeValue, in: 1...12, step: 1)
+                            Slider(value: $endTimeValue, in: startEndTimeValues, step: startEndTimeStep) { isEditing in
+                                if !isEditing {
+                                    checkAndSetStartTime()
+                                }
+                            }
+                            .onAppear {
+                                endTimeValue = timeBlock.endTime
+                            }
 
-                            Text("END TIME: \(Int(endTimeValue))")
-                                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                            HStack {
+                                Text("END TIME: \(Int(endTimeValue))")
+                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.clouds)
+
+                                Spacer()
+
+                                Picker(selection: $endTimeAmPm, label: Text("")) {
+                                    ForEach(amPmOptions, id: \.self) { option in
+                                        Text(option)
+                                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                    }
+                                }
+                                .pickerStyle(SegmentedPickerStyle())
+                                .frame(maxWidth: 125)
+                            }
                         }
                     }
                 }
@@ -125,8 +171,26 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func nameFieldIsEmpty() -> Bool {
-        let textFieldToWatch = self.itemName
+        let textFieldToWatch = itemName
         return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    fileprivate func checkAndSetStartTime() {
+        if endTimeValue == startEndTimeValues.lowerBound {
+            endTimeValue += startEndTimeStep
+        }
+        if endTimeValue <= startTimeValue {
+            startTimeValue = endTimeValue - startEndTimeStep
+        }
+    }
+
+    fileprivate func checkAndSetEndTime() {
+        if startTimeValue == startEndTimeValues.upperBound {
+            startTimeValue -= startEndTimeStep
+        }
+        if startTimeValue >= endTimeValue {
+            endTimeValue = startTimeValue + startEndTimeStep
+        }
     }
 }
 
@@ -161,7 +225,7 @@ struct ColorPicker: View {
                             Rectangle()
                                 .foregroundColor(color)
                                 .overlay(Rectangle()
-                                        .strokeBorder(Color.clouds, lineWidth: 4))
+                                    .strokeBorder(Color.clouds, lineWidth: 4))
                         } else {
                             Rectangle()
                                 .foregroundColor(color)
