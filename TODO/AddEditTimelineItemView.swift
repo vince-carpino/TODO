@@ -18,12 +18,13 @@ struct AddEditTimelineItemView: View {
 
     @State private var startTimeValue: Double = 1
     @State private var endTimeValue: Double = 2
-    @State private var startTimeAmPm: String = "AM"
-    @State private var endTimeAmPm: String = "AM"
 
-    private let amPmOptions = ["AM", "PM"]
-    private let startEndTimeValues: ClosedRange<Double> = 1...12
     private let startEndTimeStep: Double = 1
+
+    private let minimumStartHour: Double = 0
+    private let maximumStartHour: Double = 23
+    private let minimumEndHour: Double = 0
+    private let maximumEndHour: Double = 23
 
     var saveButtonColor: Color {
         return nameFieldIsEmpty() ? .concrete : .peterRiver
@@ -73,7 +74,7 @@ struct AddEditTimelineItemView: View {
                             .foregroundColor(.clouds)
                     }
 
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
                                 self.itemColor = self.timeBlock.color
@@ -84,62 +85,112 @@ struct AddEditTimelineItemView: View {
                             .foregroundColor(.clouds)
                     }
 
-                    VStack {
-                        VStack(alignment: .leading) {
-                            Slider(value: $startTimeValue, in: startEndTimeValues, step: startEndTimeStep) { isEditing in
-                                if !isEditing {
-                                    checkAndSetEndTime()
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
+                            let startTimeAtMaximum: Bool = maximumStartHour - startTimeValue == startEndTimeStep
+
+                            Button(action: {
+                                if startTimeValue > minimumStartHour {
+                                    startTimeValue -= startEndTimeStep
                                 }
+                            }) {
+                                Image(systemName: "minus")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(startTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
+                                    .background(startTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
+                                    .cornerRadius(10)
                             }
-                            .onAppear {
-                                startTimeValue = timeBlock.startTime
-                            }
+                            .disabled(startTimeAtMinimum)
 
-                            HStack {
-                                Text("START TIME: \(Int(startTimeValue))")
-                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                    .foregroundColor(.clouds)
+                            Spacer()
 
-                                Spacer()
+                            Text("\(Double.getHour(startTimeValue))")
+                                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                                .foregroundColor(.clouds)
+                                .onAppear {
+                                    startTimeValue = timeBlock.startTime
+                                }
 
-                                Picker(selection: $startTimeAmPm, label: Text("")) {
-                                    ForEach(amPmOptions, id: \.self) { option in
-                                        Text(option)
-                                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            Spacer()
+
+                            Button(action: {
+                                if maximumStartHour - startTimeValue > startEndTimeStep {
+                                    startTimeValue += startEndTimeStep
+
+                                    if startTimeValue == endTimeValue {
+                                        endTimeValue += startEndTimeStep
                                     }
                                 }
-                                .pickerStyle(SegmentedPickerStyle())
-                                .frame(maxWidth: 125)
+                            }) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(startTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
+                                    .background(startTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
+                                    .cornerRadius(10)
                             }
+                            .disabled(startTimeAtMaximum)
                         }
 
-                        VStack(alignment: .leading) {
-                            Slider(value: $endTimeValue, in: startEndTimeValues, step: startEndTimeStep) { isEditing in
-                                if !isEditing {
-                                    checkAndSetStartTime()
-                                }
-                            }
-                            .onAppear {
-                                endTimeValue = timeBlock.endTime
-                            }
+                        Text("START TIME")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
+                    }
 
-                            HStack {
-                                Text("END TIME: \(Int(endTimeValue))")
-                                    .font(.system(size: 14, weight: .semibold, design: .rounded))
-                                    .foregroundColor(.clouds)
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            let endTimeAtMinimum: Bool = endTimeValue - minimumStartHour == startEndTimeStep
+                            let endTimeAtMaximum: Bool = endTimeValue == maximumStartHour
 
-                                Spacer()
+                            Button(action: {
+                                if endTimeValue - minimumEndHour > startEndTimeStep {
+                                    endTimeValue -= startEndTimeStep
 
-                                Picker(selection: $endTimeAmPm, label: Text("")) {
-                                    ForEach(amPmOptions, id: \.self) { option in
-                                        Text(option)
-                                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                    if endTimeValue == startTimeValue {
+                                        startTimeValue -= startEndTimeStep
                                     }
                                 }
-                                .pickerStyle(SegmentedPickerStyle())
-                                .frame(maxWidth: 125)
+                            }) {
+                                Image(systemName: "minus")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(endTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
+                                    .background(endTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
+                                    .cornerRadius(10)
                             }
+                            .disabled(endTimeAtMinimum)
+
+                            Spacer()
+
+                            Text("\(Double.getHour(endTimeValue))")
+                                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                                .foregroundColor(.clouds)
+                                .onAppear {
+                                    endTimeValue = timeBlock.endTime
+                                }
+
+                            Spacer()
+
+                            Button(action: {
+                                if endTimeValue < maximumEndHour {
+                                    endTimeValue += startEndTimeStep
+                                }
+                            }) {
+                                Image(systemName: "plus")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .frame(width: 50, height: 50)
+                                    .foregroundColor(endTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
+                                    .background(endTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
+                                    .cornerRadius(10)
+                            }
+                            .disabled(endTimeAtMaximum)
                         }
+
+                        Text("END TIME")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
                     }
                 }
                 .padding()
@@ -173,24 +224,6 @@ struct AddEditTimelineItemView: View {
     fileprivate func nameFieldIsEmpty() -> Bool {
         let textFieldToWatch = itemName
         return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
-
-    fileprivate func checkAndSetStartTime() {
-        if endTimeValue == startEndTimeValues.lowerBound {
-            endTimeValue += startEndTimeStep
-        }
-        if endTimeValue <= startTimeValue {
-            startTimeValue = endTimeValue - startEndTimeStep
-        }
-    }
-
-    fileprivate func checkAndSetEndTime() {
-        if startTimeValue == startEndTimeValues.upperBound {
-            startTimeValue -= startEndTimeStep
-        }
-        if startTimeValue >= endTimeValue {
-            endTimeValue = startTimeValue + startEndTimeStep
-        }
     }
 }
 
