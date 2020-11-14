@@ -98,7 +98,7 @@ struct AddEditTimelineItemView: View {
                             }) {
                                 Image(systemName: "minus")
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 75, height: 75)
                                     .foregroundColor(startTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
                                     .background(startTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
                                     .cornerRadius(10)
@@ -127,7 +127,7 @@ struct AddEditTimelineItemView: View {
                             }) {
                                 Image(systemName: "plus")
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 75, height: 75)
                                     .foregroundColor(startTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
                                     .background(startTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
                                     .cornerRadius(10)
@@ -156,7 +156,7 @@ struct AddEditTimelineItemView: View {
                             }) {
                                 Image(systemName: "minus")
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 75, height: 75)
                                     .foregroundColor(endTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
                                     .background(endTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
                                     .cornerRadius(10)
@@ -181,7 +181,7 @@ struct AddEditTimelineItemView: View {
                             }) {
                                 Image(systemName: "plus")
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 50, height: 50)
+                                    .frame(width: 75, height: 75)
                                     .foregroundColor(endTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
                                     .background(endTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
                                     .cornerRadius(10)
