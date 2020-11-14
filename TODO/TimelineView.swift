@@ -125,6 +125,7 @@ struct TimelineItem: View {
     let timeBlock: TimeBlock
     var name: Binding<String>?
     var color: Binding<Color>?
+    var isPreview: Bool?
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
@@ -153,7 +154,7 @@ struct TimelineItem: View {
     }
 
     func calculateHeight() -> CGFloat {
-        return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+        return isPreview ?? false ? baseHeight : CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
     }
 }
 

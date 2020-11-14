@@ -41,7 +41,8 @@ struct AddEditTimelineItemView: View {
                     .bold()
                     .padding()
 
-                TimelineItem(timeBlock: timeBlock, name: $itemName, color: $itemColor)
+                TimelineItem(timeBlock: timeBlock, name: $itemName, color: $itemColor, isPreview: true)
+                    .disabled(true)
                     .padding()
 
                 Spacer()
@@ -229,9 +230,14 @@ struct AddEditTimelineItemView: View {
 
 struct AddEditTimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let timeblock: TimeBlock = TimeBlock(name: "name", color: .purple, startTime: 8, endTime: 9)
+        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
+        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 
-        return AddEditTimelineItemView(timeBlock: timeblock)
+        return Group {
+            AddEditTimelineItemView(timeBlock: shortTimeBlock)
+
+            AddEditTimelineItemView(timeBlock: longTimeBlock)
+        }
     }
 }
 
