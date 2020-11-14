@@ -59,68 +59,6 @@ struct AddEditItemView: View {
                             }
                             .font(.system(size: 20, weight: .semibold, design: .rounded))
                     }
-
-                    Section(header: Text("PRIORITY")
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    ) {
-                        Picker(selection: $priorityIndex, label: Text("")) {
-                            ForEach(0..<priorities.count) { index in
-                                Text(self.priorities[index])
-                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onAppear {
-                            self.priorityIndex = self.getPriorityIndexFromValue(self.item?.priorityValue ?? 0)
-                        }
-                    }
-
-                    Section(header: Text("TIMELINE")
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
-                    ) {
-                        Picker(selection: $timelineIndex, label: Text("")) {
-                            ForEach(0..<timelines.count) { index in
-                                Text(self.timelines[index])
-                                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                            }
-                        }
-                        .pickerStyle(SegmentedPickerStyle())
-                        .onAppear {
-                            self.timelineIndex = 0
-                        }
-                    }
-
-//                    Section {
-//                        Toggle(isOn: $hasDueDate) {
-//                            HStack {
-//                                Text("Due date")
-//                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-//                                Spacer()
-//                            }
-//                        }
-//                        .onAppear {
-//                            self.hasDueDate = self.item?.hasDueDate ?? false
-//                        }
-//
-//                        if hasDueDate {
-//                            DatePicker("Select a date", selection: $dueDate, in: Date()..., displayedComponents: self.hasDueTime ? [.hourAndMinute, .date] : .date)
-//                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-//                                .onAppear {
-//                                    self.dueDate = self.item?.dueDate ?? Date()
-//                                }
-//
-//                            Toggle(isOn: $hasDueTime) {
-//                                HStack {
-//                                    Text("Due at time")
-//                                        .font(.system(size: 18, weight: .semibold, design: .rounded))
-//                                    Spacer()
-//                                }
-//                            }
-//                            .onAppear {
-//                                self.hasDueTime = self.item?.hasDueTime ?? false
-//                            }
-//                        }
-//                    }
                 }
 
                 Spacer()
