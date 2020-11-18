@@ -132,7 +132,7 @@ struct TimelineItem: View {
 
     var body: some View {
         Button(action: {
-            self.isPresentingAddEditView = true
+            self.isPresentingAddEditView.toggle()
         }) {
             HStack {
                 Text(name?.wrappedValue.uppercased() ?? timeBlock.name.uppercased())
@@ -151,6 +151,9 @@ struct TimelineItem: View {
                     .strokeBorder(Color.clouds, lineWidth: 5)
             )
         }
+        .fullScreenCover(isPresented: $isPresentingAddEditView, content: {
+            AddEditTimelineItemView(timeBlock: timeBlock)
+        })
     }
 
     func calculateHeight() -> CGFloat {

@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct AddEditTimelineItemView: View {
+    @Environment(\.presentationMode) var presentationMode
+
     let timeBlock: TimeBlock
 
     @State private var itemName: String = ""
@@ -197,7 +199,9 @@ struct AddEditTimelineItemView: View {
                 .padding()
 
                 VStack {
-                    Button(action: {}) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
                         HStack {
                             Image(systemName: "plus")
                                 .font(.system(size: 20, weight: .semibold, design: .rounded))
@@ -212,10 +216,6 @@ struct AddEditTimelineItemView: View {
                         .cornerRadius(40)
                     }
                     .disabled(self.nameFieldIsEmpty())
-
-                    Text("swipe down to cancel")
-                        .foregroundColor(.silver)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
                 }
                 .padding()
             }
