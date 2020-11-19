@@ -37,7 +37,7 @@ struct AddEditTimelineItemView: View {
             BackgroundView()
 
             VStack {
-                Text("ADD ITEM")
+                Text("\(isNewItem() ? "ADD" : "EDIT") ITEM")
                     .font(.system(size: 45, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
                     .bold()
@@ -198,7 +198,26 @@ struct AddEditTimelineItemView: View {
                 }
                 .padding()
 
-                VStack {
+                HStack {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+
+                            Text("CANCEL")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        }
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.clouds)
+                        .overlay(RoundedRectangle(cornerRadius: 40)
+                            .stroke(Color.asbestos, lineWidth: 5)
+                        )
+                        .cornerRadius(40)
+                    }
+
                     Button(action: {
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
@@ -222,6 +241,10 @@ struct AddEditTimelineItemView: View {
         }
     }
 
+    fileprivate func isNewItem() -> Bool {
+        return timeBlock.color == .clear
+    }
+
     fileprivate func nameFieldIsEmpty() -> Bool {
         let textFieldToWatch = itemName
         return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -231,13 +254,13 @@ struct AddEditTimelineItemView: View {
 struct AddEditTimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
         let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
-        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
+//        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 
-        return Group {
-            AddEditTimelineItemView(timeBlock: shortTimeBlock)
-
-            AddEditTimelineItemView(timeBlock: longTimeBlock)
-        }
+//        return Group {
+        AddEditTimelineItemView(timeBlock: shortTimeBlock)
+//
+//            AddEditTimelineItemView(timeBlock: longTimeBlock)
+//        }
     }
 }
 
