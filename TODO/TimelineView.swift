@@ -107,7 +107,7 @@ struct TimelineView_Previews: PreviewProvider {
             TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
             TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
             TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
-            TimeBlock(name: "learning session", color: .clementine, startTime: 16, endTime: 17),
+            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
             TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
             TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
             TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
@@ -123,9 +123,6 @@ struct TimelineItem: View {
     @State private var isPresentingAddEditView = false
 
     let timeBlock: TimeBlock
-    var name: Binding<String>?
-    var color: Binding<Color>?
-    var isPreview: Bool?
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
@@ -135,16 +132,16 @@ struct TimelineItem: View {
             self.isPresentingAddEditView.toggle()
         }) {
             HStack {
-                Text(name?.wrappedValue.uppercased() ?? timeBlock.name.uppercased())
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                Text(timeBlock.name.uppercased())
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
+            .font(.system(size: 20, weight: .semibold, design: .rounded))
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(color?.wrappedValue ?? timeBlock.color)
+            .background(timeBlock.color)
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
@@ -157,7 +154,38 @@ struct TimelineItem: View {
     }
 
     func calculateHeight() -> CGFloat {
-        return isPreview ?? false ? baseHeight : CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+        return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+    }
+}
+
+struct TimelineItemPreview: View {
+    let timeBlock: TimeBlock
+    var name: Binding<String>
+    var color: Binding<Color>
+
+    private let cornerRadius: CGFloat = 5
+    private let baseHeight: CGFloat = 70
+
+    var body: some View {
+        Button(action: {}) {
+            HStack {
+                Text(name.wrappedValue.uppercased())
+                    .bold()
+                    .lineLimit(1)
+                    .truncationMode(.tail)
+            }
+            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .frame(maxWidth: .infinity, minHeight: baseHeight, maxHeight: baseHeight)
+            .padding(10)
+            .foregroundColor(.clouds)
+            .background(color.wrappedValue)
+            .cornerRadius(self.cornerRadius)
+            .overlay(
+                RoundedRectangle(cornerRadius: self.cornerRadius)
+                    .strokeBorder(Color.clouds, lineWidth: 5)
+            )
+        }
+        .disabled(true)
     }
 }
 

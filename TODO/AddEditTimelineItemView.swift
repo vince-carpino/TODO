@@ -43,8 +43,7 @@ struct AddEditTimelineItemView: View {
                     .bold()
                     .padding()
 
-                TimelineItem(timeBlock: timeBlock, name: $itemName, color: $itemColor, isPreview: true)
-                    .disabled(true)
+                TimelineItemPreview(timeBlock: timeBlock, name: $itemName, color: $itemColor)
                     .padding()
 
                 Spacer()
