@@ -21,7 +21,7 @@ class TimeBlockHelperTests: XCTestCase {
         let expectedFinalTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
-            TimeBlockSpacer(startTime: 10, endTime: 11),
+            UnusedTimeBlock(startTime: 10, endTime: 11),
             TimeBlock(name: "third item", color: .yellow, startTime: 11, endTime: 12)
         ]
 

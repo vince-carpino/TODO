@@ -16,7 +16,7 @@ class TimeBlockSpacerTests: XCTestCase {
         let expectedName = ""
         let expectedColor = Color.unusedTimeBlockColor
 
-        let newTimeBlockSpacer = TimeBlockSpacer(startTime: 8, endTime: 9)
+        let newTimeBlockSpacer = UnusedTimeBlock(startTime: 8, endTime: 9)
 
         XCTAssertEqual(newTimeBlockSpacer.color, expectedColor)
         XCTAssertEqual(newTimeBlockSpacer.name, expectedName)

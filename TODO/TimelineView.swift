@@ -72,7 +72,7 @@ class TimeBlock: Equatable {
     }
 }
 
-class TimeBlockSpacer: TimeBlock {
+class UnusedTimeBlock: TimeBlock {
     init(startTime: Double, endTime: Double) {
         super.init(name: "", color: .unusedTimeBlockColor, startTime: startTime, endTime: endTime)
     }
@@ -88,7 +88,7 @@ class TimeBlockHelper {
             let previousTimeBlock = originalTimeBlocks[i - 1]
 
             if currentTimeBlock.startTime != previousTimeBlock.endTime {
-                let freeTime = TimeBlockSpacer(startTime: previousTimeBlock.endTime, endTime: currentTimeBlock.startTime)
+                let freeTime = UnusedTimeBlock(startTime: previousTimeBlock.endTime, endTime: currentTimeBlock.startTime)
                 let indexOfCurrentTimeBlock = originalTimeBlocks.firstIndex { (timeBlock) -> Bool in
                     timeBlock.startTime == currentTimeBlock.startTime
                 }
