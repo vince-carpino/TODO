@@ -13,8 +13,8 @@ import SwiftUI
 class TimeBlockSpacerTests: XCTestCase {
 
     func testTimeBlockSpacerHasCorrectDefaultProperties() {
-        let expectedName = "free"
-        let expectedColor = Color.clear
+        let expectedName = ""
+        let expectedColor = Color.unusedTimeBlockColor
 
         let newTimeBlockSpacer = TimeBlockSpacer(startTime: 8, endTime: 9)
 

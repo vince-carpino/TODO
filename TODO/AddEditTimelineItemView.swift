@@ -241,7 +241,7 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func isNewItem() -> Bool {
-        return timeBlock.color == .clear
+        return timeBlock.color == .unusedTimeBlockColor
     }
 
     fileprivate func nameFieldIsEmpty() -> Bool {

@@ -74,7 +74,7 @@ class TimeBlock: Equatable {
 
 class TimeBlockSpacer: TimeBlock {
     init(startTime: Double, endTime: Double) {
-        super.init(name: "free", color: .clear, startTime: startTime, endTime: endTime)
+        super.init(name: "", color: .unusedTimeBlockColor, startTime: startTime, endTime: endTime)
     }
 }
 

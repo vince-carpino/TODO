@@ -52,4 +52,6 @@ extension Color {
     public static let currentItemColor = Color.amethyst
     public static let completedItemColor = Color.silver
     public static let incompleteItemColor = Color.greenSea
+
+    public static let unusedTimeBlockColor = Color.clear
 }
