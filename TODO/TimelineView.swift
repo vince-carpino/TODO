@@ -132,6 +132,10 @@ struct TimelineItem: View {
             self.isPresentingAddEditView.toggle()
         }) {
             HStack {
+                if timeBlock.color == .unusedTimeBlockColor {
+                    Image(systemName: "plus")
+                }
+
                 Text(timeBlock.name.uppercased())
                     .bold()
                     .lineLimit(1)
