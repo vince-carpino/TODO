@@ -81,20 +81,18 @@ class UnusedTimeBlock: TimeBlock {
 class TimeBlockHelper {
     static func getFinalTimeBlocks(originalTimeBlocks: [TimeBlock]) -> [TimeBlock] {
         var newTimeBlocks: [TimeBlock] = []
-        newTimeBlocks.append(contentsOf: originalTimeBlocks)
+        newTimeBlocks.append(originalTimeBlocks[0])
 
-        for i in 1..<originalTimeBlocks.count {
+        for i in 0..<originalTimeBlocks.count - 1 {
             let currentTimeBlock = originalTimeBlocks[i]
-            let previousTimeBlock = originalTimeBlocks[i - 1]
+            let nextTimeBlock = originalTimeBlocks[i + 1]
 
-            if currentTimeBlock.startTime != previousTimeBlock.endTime {
-                let freeTime = UnusedTimeBlock(startTime: previousTimeBlock.endTime, endTime: currentTimeBlock.startTime)
-                let indexOfCurrentTimeBlock = originalTimeBlocks.firstIndex { (timeBlock) -> Bool in
-                    timeBlock.startTime == currentTimeBlock.startTime
-                }
-
-                newTimeBlocks.insert(freeTime, at: indexOfCurrentTimeBlock!)
+            if currentTimeBlock.endTime != nextTimeBlock.startTime {
+                let filler = UnusedTimeBlock(startTime: currentTimeBlock.endTime, endTime: nextTimeBlock.startTime)
+                newTimeBlocks.append(filler)
             }
+
+            newTimeBlocks.append(nextTimeBlock)
         }
 
         return newTimeBlocks

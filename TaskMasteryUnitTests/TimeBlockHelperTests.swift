@@ -11,7 +11,7 @@ import XCTest
 
 class TimeBlockHelperTests: XCTestCase {
 
-    func testGetFinalTimeBlocksFillsInEmptyTimeslots() {
+    func testGetFinalTimeBlocksFillsInOneEmptyTimeslot() {
         let originalTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
@@ -23,6 +23,28 @@ class TimeBlockHelperTests: XCTestCase {
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
             UnusedTimeBlock(startTime: 10, endTime: 11),
             TimeBlock(name: "third item", color: .yellow, startTime: 11, endTime: 12)
+        ]
+
+        let actualFinalTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: originalTimeBlocks)
+
+        XCTAssertEqual(actualFinalTimeBlocks, expectedFinalTimeBlocks)
+    }
+
+    func testGetFinalTimeBlocksFillsInTwoEmptyTimeslots() {
+        let originalTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
+            TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
+            TimeBlock(name: "third item", color: .yellow, startTime: 11, endTime: 12),
+            TimeBlock(name: "fourth item", color: .green, startTime: 15, endTime: 16)
+        ]
+
+        let expectedFinalTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
+            TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
+            UnusedTimeBlock(startTime: 10, endTime: 11),
+            TimeBlock(name: "third item", color: .yellow, startTime: 11, endTime: 12),
+            UnusedTimeBlock(startTime: 12, endTime: 15),
+            TimeBlock(name: "fourth item", color: .green, startTime: 15, endTime: 16)
         ]
 
         let actualFinalTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: originalTimeBlocks)
