@@ -23,13 +23,13 @@ struct AddEditTimelineItemView: View {
 
     private let startEndTimeStep: Double = 1
 
-    private let minimumStartHour: Double = 0
-    private let maximumStartHour: Double = 23
-    private let minimumEndHour: Double = 0
-    private let maximumEndHour: Double = 23
+    @State private var minimumStartHour: Double = 0
+    @State private var maximumStartHour: Double = 23
+    @State private var minimumEndHour: Double = 0
+    @State private var maximumEndHour: Double = 23
 
     var saveButtonColor: Color {
-        return nameFieldIsEmpty() ? .concrete : .peterRiver
+        return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
     }
 
     var body: some View {
@@ -90,10 +90,10 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
                             let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
-                            let startTimeAtMaximum: Bool = maximumStartHour - startTimeValue == startEndTimeStep
+                            let startTimeAtMaximum: Bool = startTimeValue == maximumStartHour
 
                             Button(action: {
-                                if startTimeValue > minimumStartHour {
+                                if startTimeValue != minimumStartHour {
                                     startTimeValue -= startEndTimeStep
                                 }
                             }) {
@@ -118,7 +118,7 @@ struct AddEditTimelineItemView: View {
                             Spacer()
 
                             Button(action: {
-                                if maximumStartHour - startTimeValue > startEndTimeStep {
+                                if startTimeValue != maximumStartHour {
                                     startTimeValue += startEndTimeStep
 
                                     if startTimeValue == endTimeValue {
@@ -130,7 +130,7 @@ struct AddEditTimelineItemView: View {
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                                     .frame(width: 75, height: 75)
                                     .foregroundColor(startTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(startTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
+                                    .background(startTimeAtMaximum ? Color.greenSea.opacity(0.25) : .greenSea)
                                     .cornerRadius(10)
                             }
                             .disabled(startTimeAtMaximum)
@@ -143,11 +143,11 @@ struct AddEditTimelineItemView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            let endTimeAtMinimum: Bool = endTimeValue - minimumStartHour == startEndTimeStep
-                            let endTimeAtMaximum: Bool = endTimeValue == maximumStartHour
+                            let endTimeAtMinimum: Bool = endTimeValue == minimumEndHour
+                            let endTimeAtMaximum: Bool = endTimeValue == maximumEndHour
 
                             Button(action: {
-                                if endTimeValue - minimumEndHour > startEndTimeStep {
+                                if endTimeValue != minimumEndHour {
                                     endTimeValue -= startEndTimeStep
 
                                     if endTimeValue == startTimeValue {
@@ -159,7 +159,7 @@ struct AddEditTimelineItemView: View {
                                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                                     .frame(width: 75, height: 75)
                                     .foregroundColor(endTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(endTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
+                                    .background(endTimeAtMinimum ? Color.alizarin.opacity(0.25) : .alizarin)
                                     .cornerRadius(10)
                             }
                             .disabled(endTimeAtMinimum)
@@ -176,7 +176,7 @@ struct AddEditTimelineItemView: View {
                             Spacer()
 
                             Button(action: {
-                                if endTimeValue < maximumEndHour {
+                                if endTimeValue != maximumEndHour {
                                     endTimeValue += startEndTimeStep
                                 }
                             }) {
@@ -233,15 +233,26 @@ struct AddEditTimelineItemView: View {
                         .background(saveButtonColor)
                         .cornerRadius(40)
                     }
-                    .disabled(self.nameFieldIsEmpty())
+                    .disabled(self.nameFieldIsEmpty() || colorNotChosen())
                 }
                 .padding()
             }
+        }
+        .onAppear {
+            self.minimumStartHour = timeBlock.startTime
+            self.minimumEndHour = self.minimumStartHour + startEndTimeStep
+
+            self.maximumEndHour = timeBlock.endTime
+            self.maximumStartHour = self.maximumEndHour - startEndTimeStep
         }
     }
 
     fileprivate func isNewItem() -> Bool {
         return timeBlock.color == .unusedTimeBlockColor
+    }
+
+    fileprivate func colorNotChosen() -> Bool {
+        return itemColor == .unusedTimeBlockColor
     }
 
     fileprivate func nameFieldIsEmpty() -> Bool {
