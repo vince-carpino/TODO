@@ -92,19 +92,7 @@ struct AddEditTimelineItemView: View {
                             let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
                             let startTimeAtMaximum: Bool = startTimeValue == maximumStartHour
 
-                            Button(action: {
-                                if startTimeValue != minimumStartHour {
-                                    startTimeValue -= startEndTimeStep
-                                }
-                            }) {
-                                Image(systemName: "minus")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 75, height: 75)
-                                    .foregroundColor(startTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(startTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(startTimeAtMinimum)
+                            StartEndTimeDecreaseButton(action: decreaseStartTime, isTargetTimeAtMinimum: startTimeAtMinimum)
 
                             Spacer()
 
@@ -117,23 +105,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Button(action: {
-                                if startTimeValue != maximumStartHour {
-                                    startTimeValue += startEndTimeStep
-
-                                    if startTimeValue == endTimeValue {
-                                        endTimeValue += startEndTimeStep
-                                    }
-                                }
-                            }) {
-                                Image(systemName: "plus")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 75, height: 75)
-                                    .foregroundColor(startTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(startTimeAtMaximum ? Color.greenSea.opacity(0.25) : .greenSea)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(startTimeAtMaximum)
+                            StartEndTimeIncreaseButton(action: increaseStartTime, isTargetTimeAtMaximum: startTimeAtMaximum)
                         }
 
                         Text("START TIME")
@@ -146,23 +118,7 @@ struct AddEditTimelineItemView: View {
                             let endTimeAtMinimum: Bool = endTimeValue == minimumEndHour
                             let endTimeAtMaximum: Bool = endTimeValue == maximumEndHour
 
-                            Button(action: {
-                                if endTimeValue != minimumEndHour {
-                                    endTimeValue -= startEndTimeStep
-
-                                    if endTimeValue == startTimeValue {
-                                        startTimeValue -= startEndTimeStep
-                                    }
-                                }
-                            }) {
-                                Image(systemName: "minus")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 75, height: 75)
-                                    .foregroundColor(endTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(endTimeAtMinimum ? Color.alizarin.opacity(0.25) : .alizarin)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(endTimeAtMinimum)
+                            StartEndTimeDecreaseButton(action: decreaseEndTime, isTargetTimeAtMinimum: endTimeAtMinimum)
 
                             Spacer()
 
@@ -175,19 +131,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Button(action: {
-                                if endTimeValue != maximumEndHour {
-                                    endTimeValue += startEndTimeStep
-                                }
-                            }) {
-                                Image(systemName: "plus")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                                    .frame(width: 75, height: 75)
-                                    .foregroundColor(endTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
-                                    .background(endTimeAtMaximum ? Color.greenSea.opacity(0.25) : Color.greenSea)
-                                    .cornerRadius(10)
-                            }
-                            .disabled(endTimeAtMaximum)
+                            StartEndTimeIncreaseButton(action: increaseEndTime, isTargetTimeAtMaximum: endTimeAtMaximum)
                         }
 
                         Text("END TIME")
@@ -259,6 +203,38 @@ struct AddEditTimelineItemView: View {
         let textFieldToWatch = itemName
         return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
+
+    fileprivate func decreaseStartTime() {
+        if startTimeValue != minimumStartHour {
+            startTimeValue -= startEndTimeStep
+        }
+    }
+
+    fileprivate func increaseStartTime() {
+        if startTimeValue != maximumStartHour {
+            startTimeValue += startEndTimeStep
+
+            if startTimeValue == endTimeValue {
+                endTimeValue += startEndTimeStep
+            }
+        }
+    }
+
+    fileprivate func decreaseEndTime() {
+        if endTimeValue != minimumEndHour {
+            endTimeValue -= startEndTimeStep
+
+            if endTimeValue == startTimeValue {
+                startTimeValue -= startEndTimeStep
+            }
+        }
+    }
+
+    fileprivate func increaseEndTime() {
+        if endTimeValue != maximumEndHour {
+            endTimeValue += startEndTimeStep
+        }
+    }
 }
 
 struct AddEditTimelineItemView_Previews: PreviewProvider {
@@ -314,5 +290,39 @@ struct ColorPicker: View {
         }
         .frame(height: 50)
         .cornerRadius(5)
+    }
+}
+
+struct StartEndTimeDecreaseButton: View {
+    var action: () -> Void
+    var isTargetTimeAtMinimum: Bool
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "minus")
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .frame(width: 75, height: 75)
+                .foregroundColor(isTargetTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
+                .background(isTargetTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
+                .cornerRadius(10)
+        }
+        .disabled(isTargetTimeAtMinimum)
+    }
+}
+
+struct StartEndTimeIncreaseButton: View {
+    var action: () -> Void
+    var isTargetTimeAtMaximum: Bool
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "plus")
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .frame(width: 75, height: 75)
+                .foregroundColor(isTargetTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
+                .background(isTargetTimeAtMaximum ? Color.greenSea.opacity(0.25) : .greenSea)
+                .cornerRadius(10)
+        }
+        .disabled(isTargetTimeAtMaximum)
     }
 }
