@@ -21,7 +21,7 @@ struct AddEditTimelineItemView: View {
     @State private var startTimeValue: Double = 1
     @State private var endTimeValue: Double = 2
 
-    private let startEndTimeStep: Double = 1
+    private let startEndTimeStep: Double = 0.5
 
     @State private var minimumStartHour: Double = 0
     @State private var maximumStartHour: Double = 23
