@@ -39,19 +39,38 @@ extension Color {
     public static let clouds = Color(#colorLiteral(red: 0.9254902601, green: 0.9411765337, blue: 0.9450981021, alpha: 1))
     public static let silver = Color(#colorLiteral(red: 0.741176486, green: 0.764705956, blue: 0.7803922296, alpha: 1))
 
-    public static let offWhite = Color(red: 225 / 255, green: 225 / 255, blue: 235 / 255)
-    public static let darkStart = Color(red: 50 / 255, green: 60 / 255, blue: 65 / 255)
-    public static let darkEnd = Color(red: 25 / 255, green: 25 / 255, blue: 30 / 255)
+    public static let currentItemColor: Color = .amethyst
+    public static let completedItemColor: Color = .silver
+    public static let incompleteItemColor: Color = .greenSea
 
-//    public static let darkStart = Color.wetAsphalt
-//    public static let darkEnd = Color.midnightBlue
+    public static let unusedTimeBlockColor: Color = .clear
 
-    public static let lightStart = Color.turquoise
-    public static let lightEnd = Color.greenSea
+    public static let coreDataLegend: [Color: String] = [
+        .alizarin: "alizarin",
+        .pomegranate: "pomegranate",
+        .carrot: "carrot",
+        .pumpkin: "pumpkin",
+        .sunFlower: "sunFlower",
+        .clementine: "clementine",
+        .emerland: "emerland",
+        .nephritis: "nephritis",
+        .turquoise: "turquoise",
+        .greenSea: "greenSea",
+        .peterRiver: "peterRiver",
+        .belizeHole: "belizeHole",
+        .amethyst: "amethyst",
+        .wisteria: "wisteria",
+        .wetAsphalt: "wetAsphalt",
+        .midnightBlue: "midnightBlue",
+        .concrete: "concrete",
+        .asbestos: "asbestos",
+        .clouds: "clouds",
+        .silver: "silver"
+    ]
+}
 
-    public static let currentItemColor = Color.amethyst
-    public static let completedItemColor = Color.silver
-    public static let incompleteItemColor = Color.greenSea
-
-    public static let unusedTimeBlockColor = Color.clear
+extension Dictionary where Value: Equatable {
+    func someKey(forValue val: Value) -> Key? {
+        return first(where: { $1 == val })?.key
+    }
 }
