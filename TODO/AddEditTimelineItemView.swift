@@ -18,15 +18,15 @@ struct AddEditTimelineItemView: View {
     @State private var itemStartTime: Date = Date()
     @State private var itemEndTime: Date = Date()
 
-    @State private var startTimeValue: Double = 1
-    @State private var endTimeValue: Double = 2
+    @State private var startTimeValue: Float = 1
+    @State private var endTimeValue: Float = 2
 
-    private let startEndTimeStep: Double = 0.5
+    private let startEndTimeStep: Float = 0.5
 
-    @State private var minimumStartHour: Double = 0
-    @State private var maximumStartHour: Double = 23
-    @State private var minimumEndHour: Double = 0
-    @State private var maximumEndHour: Double = 23
+    @State private var minimumStartHour: Float = 0
+    @State private var maximumStartHour: Float = 23
+    @State private var minimumEndHour: Float = 0
+    @State private var maximumEndHour: Float = 23
 
     var saveButtonColor: Color {
         return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
@@ -96,7 +96,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Text("\(Double.getHour(startTimeValue))")
+                            Text("\(Float.getHour(startTimeValue))")
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
@@ -122,7 +122,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Text("\(Double.getHour(endTimeValue))")
+                            Text("\(Float.getHour(endTimeValue))")
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {

@@ -61,10 +61,10 @@ class TimeBlock: Equatable {
 
     var name: String
     var color: Color
-    var startTime: Double
-    var endTime: Double
+    var startTime: Float
+    var endTime: Float
 
-    init(name: String, color: Color, startTime: Double, endTime: Double) {
+    init(name: String, color: Color, startTime: Float, endTime: Float) {
         self.name = name
         self.color = color
         self.startTime = startTime
@@ -73,7 +73,7 @@ class TimeBlock: Equatable {
 }
 
 class UnusedTimeBlock: TimeBlock {
-    init(startTime: Double, endTime: Double) {
+    init(startTime: Float, endTime: Float) {
         super.init(name: "", color: .unusedTimeBlockColor, startTime: startTime, endTime: endTime)
     }
 }
@@ -192,7 +192,7 @@ struct TimelineItemPreview: View {
 }
 
 struct TimelineSeparator: View {
-    var hour: Double
+    var hour: Float
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -208,7 +208,7 @@ struct TimelineSeparator: View {
         .offset(x: 0, y: -9)
     }
 
-    static func getHour(hourPastMidnight: Double) -> String {
+    static func getHour(hourPastMidnight: Float) -> String {
         let amPm = hourPastMidnight < 12 ? "AM" : "PM"
         let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
         var hourNumber = hourPastMidnight
@@ -228,8 +228,8 @@ struct TimelineSeparator: View {
     }
 }
 
-extension Double {
-    static func getHour(_ hourPastMidnight: Double) -> String {
+extension Float {
+    static func getHour(_ hourPastMidnight: Float) -> String {
         let amPm = hourPastMidnight < 12 ? "AM" : "PM"
         let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
         var hourNumber = hourPastMidnight
