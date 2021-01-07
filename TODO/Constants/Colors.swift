@@ -65,7 +65,8 @@ extension Color {
         .concrete: "concrete",
         .asbestos: "asbestos",
         .clouds: "clouds",
-        .silver: "silver"
+        .silver: "silver",
+        .clear: "clear",
     ]
 }
 
