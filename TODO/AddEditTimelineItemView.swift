@@ -67,7 +67,7 @@ struct AddEditTimelineItemView: View {
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
-                                    self.itemName = self.timeBlock.name
+                                    self.itemName = self.timeBlock.name ?? "NO NAME"
                                 }
                         }
 
@@ -79,7 +79,7 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
-                                self.itemColor = self.timeBlock.color
+                                self.itemColor = Color.coreDataLegend.someKey(forValue: self.timeBlock.colorName ?? "clear") ?? .clear
                             }
 
                         Text("COLOR")
@@ -192,7 +192,7 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func isNewItem() -> Bool {
-        return timeBlock.color == .unusedTimeBlockColor
+        return Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear == .unusedTimeBlockColor
     }
 
     fileprivate func colorNotChosen() -> Bool {
@@ -237,18 +237,18 @@ struct AddEditTimelineItemView: View {
     }
 }
 
-struct AddEditTimelineItemView_Previews: PreviewProvider {
-    static var previews: some View {
-        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
-//        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
-
-//        return Group {
-        AddEditTimelineItemView(timeBlock: shortTimeBlock)
+//struct AddEditTimelineItemView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
+////        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 //
-//            AddEditTimelineItemView(timeBlock: longTimeBlock)
-//        }
-    }
-}
+////        return Group {
+//        AddEditTimelineItemView(timeBlock: shortTimeBlock)
+////
+////            AddEditTimelineItemView(timeBlock: longTimeBlock)
+////        }
+//    }
+//}
 
 struct ColorPicker: View {
     @Binding var selectedColor: Color

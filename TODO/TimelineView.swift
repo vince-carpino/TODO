@@ -51,32 +51,32 @@ struct TimelineView: View {
     }
 }
 
-class TimeBlock: Equatable {
-    static func == (lhs: TimeBlock, rhs: TimeBlock) -> Bool {
-        return lhs.name == rhs.name
-            && lhs.color == rhs.color
-            && lhs.startTime == rhs.startTime
-            && lhs.endTime == rhs.endTime
-    }
+//class TimeBlock: Equatable {
+//    static func == (lhs: TimeBlock, rhs: TimeBlock) -> Bool {
+//        return lhs.name == rhs.name
+//            && lhs.color == rhs.color
+//            && lhs.startTime == rhs.startTime
+//            && lhs.endTime == rhs.endTime
+//    }
+//
+//    var name: String
+//    var color: Color
+//    var startTime: Float
+//    var endTime: Float
+//
+//    init(name: String, color: Color, startTime: Float, endTime: Float) {
+//        self.name = name
+//        self.color = color
+//        self.startTime = startTime
+//        self.endTime = endTime
+//    }
+//}
 
-    var name: String
-    var color: Color
-    var startTime: Float
-    var endTime: Float
-
-    init(name: String, color: Color, startTime: Float, endTime: Float) {
-        self.name = name
-        self.color = color
-        self.startTime = startTime
-        self.endTime = endTime
-    }
-}
-
-class UnusedTimeBlock: TimeBlock {
-    init(startTime: Float, endTime: Float) {
-        super.init(name: "", color: .unusedTimeBlockColor, startTime: startTime, endTime: endTime)
-    }
-}
+//class UnusedTimeBlock: TimeBlock {
+//    init(startTime: Float, endTime: Float) {
+//        super.init(name: "", color: .unusedTimeBlockColor, startTime: startTime, endTime: endTime)
+//    }
+//}
 
 class TimeBlockHelper {
     static func getFinalTimeBlocks(originalTimeBlocks: [TimeBlock]) -> [TimeBlock] {
@@ -88,7 +88,8 @@ class TimeBlockHelper {
             let nextTimeBlock = originalTimeBlocks[i + 1]
 
             if currentTimeBlock.endTime != nextTimeBlock.startTime {
-                let filler = UnusedTimeBlock(startTime: currentTimeBlock.endTime, endTime: nextTimeBlock.startTime)
+                let filler = TimeBlock()
+//                let filler = UnusedTimeBlock(startTime: currentTimeBlock.endTime, endTime: nextTimeBlock.startTime)
                 newTimeBlocks.append(filler)
             }
 
@@ -102,13 +103,13 @@ class TimeBlockHelper {
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
         let incompleteTimeBlocks: [TimeBlock] = [
-            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
-            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
-            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
-            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
-            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
-            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
-            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
+//            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+//            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+//            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+//            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
+//            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+//            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+//            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
         ]
 
         let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
@@ -130,11 +131,11 @@ struct TimelineItem: View {
             self.isPresentingAddEditView.toggle()
         }) {
             HStack {
-                if timeBlock.color == .unusedTimeBlockColor {
+                if Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear == .unusedTimeBlockColor {
                     Image(systemName: "plus")
                 }
 
-                Text(timeBlock.name.uppercased())
+                Text(timeBlock.name?.uppercased() ?? "NO NAME")
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -143,7 +144,7 @@ struct TimelineItem: View {
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(timeBlock.color)
+            .background(Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear)
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
