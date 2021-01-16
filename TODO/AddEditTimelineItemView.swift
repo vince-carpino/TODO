@@ -237,18 +237,18 @@ struct AddEditTimelineItemView: View {
     }
 }
 
-//struct AddEditTimelineItemView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
-////        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
+struct AddEditTimelineItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
+//        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
+
+//        return Group {
+        AddEditTimelineItemView(timeBlock: shortTimeBlock)
 //
-////        return Group {
-//        AddEditTimelineItemView(timeBlock: shortTimeBlock)
-////
-////            AddEditTimelineItemView(timeBlock: longTimeBlock)
-////        }
-//    }
-//}
+//            AddEditTimelineItemView(timeBlock: longTimeBlock)
+//        }
+    }
+}
 
 struct ColorPicker: View {
     @Binding var selectedColor: Color

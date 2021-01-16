@@ -26,8 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
 //        let contentView = ItemListView().environment(\.managedObjectContext, context)
 
-        let contentView = ItemScrollView().environment(\.managedObjectContext, context)
-//        let contentView = QuickAddItemView()
+//        let contentView = ItemScrollView().environment(\.managedObjectContext, context)
+
+        let incompleteTimeBlocks: [TimeBlock] = [
+            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
+            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
+        ]
+        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
+        let contentView = TimelineView(timeBlocks: []).environment(\.managedObjectContext, context)
 
 //        // Create the SwiftUI view that provides the window contents.
 //        let contentView = ItemListView()
