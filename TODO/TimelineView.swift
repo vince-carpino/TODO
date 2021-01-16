@@ -27,29 +27,33 @@ struct TimelineView: View {
                     .font(.system(size: 36, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
 
-                ScrollView(showsIndicators: false) {
-                    ZStack {
-                        VStack(spacing: 0) {
-                            ForEach(0..<timeBlocks.count) { index in
-                                TimelineSeparator(hour: self.timeBlocks[index].startTime)
+                if timeBlocks.count == 0 {
+                    EmptyTimelineView()
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        ZStack {
+                            VStack(spacing: 0) {
+                                ForEach(0..<timeBlocks.count) { index in
+                                    TimelineSeparator(hour: self.timeBlocks[index].startTime)
 
-                                HStack {
-                                    Spacer()
-                                        .frame(width: self.timelineSeparatorWidth)
+                                    HStack {
+                                        Spacer()
+                                            .frame(width: self.timelineSeparatorWidth)
 
-                                    TimelineItem(timeBlock: self.timeBlocks[index])
+                                        TimelineItem(timeBlock: self.timeBlocks[index])
+                                    }
+
+                                    if index == self.timeBlocks.count - 1 {
+                                        TimelineSeparator(hour: self.timeBlocks[index].endTime)
+                                    }
                                 }
 
-                                if index == self.timeBlocks.count - 1 {
-                                    TimelineSeparator(hour: self.timeBlocks[index].endTime)
-                                }
+                                Spacer()
                             }
-
-                            Spacer()
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding()
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
                 }
             }
         }
@@ -259,5 +263,40 @@ struct BackgroundView: View {
     var body: some View {
         Color.backgroundColor
             .edgesIgnoringSafeArea(.all)
+    }
+}
+
+struct EmptyTimelineView: View {
+    @Environment(\.managedObjectContext) var moc
+    @State private var isShowingAddEditTimeBlockView: Bool = false
+
+    var body: some View {
+        VStack {
+            Spacer()
+
+            Text("Nothing here...")
+                .foregroundColor(.clouds)
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+
+            Spacer()
+
+            Button(action: {
+                self.isShowingAddEditTimeBlockView.toggle()
+            }) {
+                HStack {
+                    Image(systemName: "plus")
+
+                    Text("Add")
+                }
+                .padding()
+                .foregroundColor(.clouds)
+                .font(.system(size: 20, weight: .semibold, design: .rounded))
+            }
+            .background(Color.peterRiver)
+            .cornerRadius(5)
+            .fullScreenCover(isPresented: $isShowingAddEditTimeBlockView, content: {
+                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9))
+            })
+        }
     }
 }
