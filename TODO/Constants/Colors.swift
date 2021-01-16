@@ -43,6 +43,8 @@ extension Color {
     public static let completedItemColor: Color = .silver
     public static let incompleteItemColor: Color = .greenSea
 
+    public static let backgroundColor: Color = .midnightBlue
+
     public static let unusedTimeBlockColor: Color = .clear
 
     public static let coreDataLegend: [Color: String] = [

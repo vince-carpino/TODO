@@ -252,7 +252,7 @@ extension Float {
 
 struct BackgroundView: View {
     var body: some View {
-        Color.midnightBlue
+        Color.backgroundColor
             .edgesIgnoringSafeArea(.all)
     }
 }
