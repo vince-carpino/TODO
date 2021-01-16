@@ -136,7 +136,7 @@ struct TimelineItem: View {
             self.isPresentingAddEditView.toggle()
         }) {
             HStack {
-                if Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear == .unusedTimeBlockColor {
+                if self.timeBlock is UnusedTimeBlock {
                     Image(systemName: "plus")
                 }
 

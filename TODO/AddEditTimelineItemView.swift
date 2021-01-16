@@ -192,7 +192,7 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func isNewItem() -> Bool {
-        return Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear == .unusedTimeBlockColor
+        return self.timeBlock is UnusedTimeBlock
     }
 
     fileprivate func colorNotChosen() -> Bool {
