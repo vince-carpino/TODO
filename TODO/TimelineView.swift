@@ -140,7 +140,7 @@ struct TimelineItem: View {
                     Image(systemName: "plus")
                 }
 
-                Text(timeBlock.name?.uppercased() ?? "NO NAME")
+                Text(timeBlock.name.uppercased())
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -149,7 +149,7 @@ struct TimelineItem: View {
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(Color.coreDataLegend.someKey(forValue: timeBlock.colorName ?? "clear") ?? .clear)
+            .background(self.timeBlock.color)
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)

@@ -67,7 +67,7 @@ struct AddEditTimelineItemView: View {
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
-                                    self.itemName = self.timeBlock.name ?? "NO NAME"
+                                    self.itemName = self.timeBlock.name
                                 }
                         }
 
@@ -79,7 +79,7 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
-                                self.itemColor = Color.coreDataLegend.someKey(forValue: self.timeBlock.colorName ?? "clear") ?? .clear
+                                self.itemColor = self.timeBlock.color
                             }
 
                         Text("COLOR")
