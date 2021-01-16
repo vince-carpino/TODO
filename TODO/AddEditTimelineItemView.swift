@@ -192,7 +192,7 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func isNewItem() -> Bool {
-        return self.timeBlock is UnusedTimeBlock
+        return timeBlock is UnusedTimeBlock
     }
 
     fileprivate func colorNotChosen() -> Bool {
@@ -242,11 +242,9 @@ struct AddEditTimelineItemView_Previews: PreviewProvider {
         let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
 //        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 
-//        return Group {
         AddEditTimelineItemView(timeBlock: shortTimeBlock)
-//
-//            AddEditTimelineItemView(timeBlock: longTimeBlock)
-//        }
+
+//        AddEditTimelineItemView(timeBlock: longTimeBlock)
     }
 }
 

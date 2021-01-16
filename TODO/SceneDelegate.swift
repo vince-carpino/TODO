@@ -10,9 +10,7 @@ import UIKit
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -24,9 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
-//        let contentView = ItemListView().environment(\.managedObjectContext, context)
 
-//        let contentView = ItemScrollView().environment(\.managedObjectContext, context)
+        // Create the SwiftUI view that provides the window contents.
 
         let incompleteTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
@@ -39,9 +36,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ]
         let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
         let contentView = TimelineView(timeBlocks: []).environment(\.managedObjectContext, context)
-
-//        // Create the SwiftUI view that provides the window contents.
-//        let contentView = ItemListView()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -82,7 +76,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
-
-
 }
-
