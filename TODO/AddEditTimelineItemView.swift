@@ -9,9 +9,11 @@
 import SwiftUI
 
 struct AddEditTimelineItemView: View {
+    @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
 
     let timeBlock: TimeBlock
+    let storedTimeBlock: StoredTimeBlock?
 
     @State private var itemName: String = ""
     @State private var itemColor: Color = .white
@@ -162,6 +164,12 @@ struct AddEditTimelineItemView: View {
                     }
 
                     Button(action: {
+                        // SAVE TO CORE DATA
+                        if isNewItem() {
+                            // create new StoredTimeBlock
+                        } else {
+                            // save StoredTimeBlock that was passsed in
+                        }
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
@@ -183,6 +191,11 @@ struct AddEditTimelineItemView: View {
             }
         }
         .onAppear {
+            // construct timeblock from storedtimeblock
+//            if storedTimeBlock != nil {
+//
+//            }
+
             self.minimumStartHour = timeBlock.startTime
             self.minimumEndHour = self.minimumStartHour + startEndTimeStep
 
@@ -235,6 +248,34 @@ struct AddEditTimelineItemView: View {
             endTimeValue += startEndTimeStep
         }
     }
+
+    fileprivate func addNewStoredTimeBlock() {
+        let storedTimeBlock = StoredTimeBlock(context: self.moc)
+        storedTimeBlock.id = UUID()
+        storedTimeBlock.name = self.itemName
+        storedTimeBlock.colorName = Color.coreDataLegend[self.itemColor]
+        storedTimeBlock.startTime = self.startTimeValue
+        storedTimeBlock.endTime = self.endTimeValue
+
+        self.saveContext()
+    }
+
+    fileprivate func saveContext() {
+        do {
+            try self.moc.save()
+        } catch {
+            print("Error while saving item:\n***\n\(error)\n***")
+        }
+    }
+
+    fileprivate func saveItem() {
+//        self.moc.performAndWait {
+//            self.timeBlock.name = self.itemName
+//            self.timeBlock.color
+//
+//            saveContext()
+//        }
+    }
 }
 
 struct AddEditTimelineItemView_Previews: PreviewProvider {
@@ -242,7 +283,8 @@ struct AddEditTimelineItemView_Previews: PreviewProvider {
         let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
 //        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 
-        AddEditTimelineItemView(timeBlock: shortTimeBlock)
+        AddEditTimelineItemView(timeBlock: shortTimeBlock, storedTimeBlock: nil)
+//        AddEditTimelineItemView(timeBlock: shortTimeBlock)
 
 //        AddEditTimelineItemView(timeBlock: longTimeBlock)
     }

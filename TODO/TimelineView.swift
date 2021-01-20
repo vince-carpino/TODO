@@ -14,8 +14,6 @@ struct TimelineView: View {
         NSSortDescriptor(key: "startTime", ascending: true)
     ]) var timeBlocksCoreData: FetchedResults<StoredTimeBlock>
 
-    let timeBlocks: [TimeBlock]
-
     private let timelineSeparatorWidth: CGFloat = 65
 
     var body: some View {
@@ -27,24 +25,24 @@ struct TimelineView: View {
                     .font(.system(size: 36, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
 
-                if timeBlocks.count == 0 {
+                if timeBlocksCoreData.count == 0 {
                     EmptyTimelineView()
                 } else {
                     ScrollView(showsIndicators: false) {
                         ZStack {
                             VStack(spacing: 0) {
-                                ForEach(0..<timeBlocks.count) { index in
-                                    TimelineSeparator(hour: self.timeBlocks[index].startTime)
+                                ForEach(timeBlocksCoreData, id: \.id) { timeBlock in
+                                    TimelineSeparator(hour: timeBlock.startTime)
 
                                     HStack {
                                         Spacer()
                                             .frame(width: self.timelineSeparatorWidth)
 
-                                        TimelineItem(timeBlock: self.timeBlocks[index])
+                                        TimelineItem(timeBlock: TimeBlock(), storedTimeBlock: timeBlock)
                                     }
 
-                                    if index == self.timeBlocks.count - 1 {
-                                        TimelineSeparator(hour: self.timeBlocks[index].endTime)
+                                    if timeBlock == self.timeBlocksCoreData.last {
+                                        TimelineSeparator(hour: timeBlock.endTime)
                                     }
                                 }
 
@@ -65,6 +63,13 @@ class TimeBlock: Equatable {
     var color: Color
     var startTime: Float
     var endTime: Float
+
+    init() {
+        self.name = ""
+        self.color = .clear
+        self.startTime = 0
+        self.endTime = 0
+    }
 
     init(name: String, color: Color, startTime: Float, endTime: Float) {
         self.name = name
@@ -110,19 +115,20 @@ class TimeBlockHelper {
 
 struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
-        let incompleteTimeBlocks: [TimeBlock] = [
-            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
-            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
-            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
-            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
-            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
-            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
-            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
-        ]
+//        let incompleteTimeBlocks: [TimeBlock] = [
+//            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+//            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+//            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+//            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
+//            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+//            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+//            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
+//        ]
+//
+//        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
 
-        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
-
-        return TimelineView(timeBlocks: completeTimeBlocks)
+//        return TimelineView(timeBlocks: completeTimeBlocks)
+        return TimelineView()
     }
 }
 
@@ -131,6 +137,7 @@ struct TimelineItem: View {
     @State private var isPresentingAddEditView = false
 
     let timeBlock: TimeBlock
+    let storedTimeBlock: StoredTimeBlock?
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
@@ -140,20 +147,29 @@ struct TimelineItem: View {
             self.isPresentingAddEditView.toggle()
         }) {
             HStack {
-                if self.timeBlock is UnusedTimeBlock {
+                if self.storedTimeBlock?.isUnused ?? true {
                     Image(systemName: "plus")
                 }
 
-                Text(timeBlock.name.uppercased())
+                Text(storedTimeBlock?.name?.uppercased() ?? "")
                     .bold()
                     .lineLimit(1)
                     .truncationMode(.tail)
+
+//                if self.timeBlock is UnusedTimeBlock {
+//                    Image(systemName: "plus")
+//                }
+
+//                Text(timeBlock.name.uppercased())
+//                    .bold()
+//                    .lineLimit(1)
+//                    .truncationMode(.tail)
             }
             .font(.system(size: 20, weight: .semibold, design: .rounded))
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
             .foregroundColor(.clouds)
-            .background(self.timeBlock.color)
+            .background(getColorFromColorName())
             .cornerRadius(self.cornerRadius)
             .overlay(
                 RoundedRectangle(cornerRadius: self.cornerRadius)
@@ -161,12 +177,18 @@ struct TimelineItem: View {
             )
         }
         .fullScreenCover(isPresented: $isPresentingAddEditView, content: {
-            AddEditTimelineItemView(timeBlock: timeBlock)
+            AddEditTimelineItemView(timeBlock: timeBlock, storedTimeBlock: nil)
+//            AddEditTimelineItemView(timeBlock: timeBlock)
         })
     }
 
     func calculateHeight() -> CGFloat {
-        return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+        return CGFloat((storedTimeBlock?.endTime ?? 9) - (storedTimeBlock?.startTime ?? 8)) * baseHeight
+//        return CGFloat(timeBlock.endTime - timeBlock.startTime) * baseHeight
+    }
+
+    func getColorFromColorName() -> Color {
+        return Color.coreDataLegend.someKey(forValue: storedTimeBlock?.colorName ?? "clear") ?? .clear
     }
 }
 
@@ -295,7 +317,8 @@ struct EmptyTimelineView: View {
             .background(Color.peterRiver)
             .cornerRadius(5)
             .fullScreenCover(isPresented: $isShowingAddEditTimeBlockView, content: {
-                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9))
+                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9), storedTimeBlock: nil)
+//                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9))
             })
         }
     }

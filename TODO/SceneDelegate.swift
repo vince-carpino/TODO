@@ -25,17 +25,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
         // Create the SwiftUI view that provides the window contents.
 
-        let incompleteTimeBlocks: [TimeBlock] = [
-            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
-            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
-            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
-            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
-            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
-            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
-            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
-        ]
-        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
-        let contentView = TimelineView(timeBlocks: []).environment(\.managedObjectContext, context)
+//        let incompleteTimeBlocks: [TimeBlock] = [
+//            TimeBlock(name: "work", color: .blue, startTime: 8, endTime: 12),
+//            TimeBlock(name: "lunch", color: .green, startTime: 12, endTime: 13),
+//            TimeBlock(name: "work", color: .blue, startTime: 13, endTime: 16),
+//            TimeBlock(name: "learning session", color: .orange, startTime: 16, endTime: 17),
+//            TimeBlock(name: "workout", color: .red, startTime: 17, endTime: 17.5),
+//            TimeBlock(name: "dinner", color: .purple, startTime: 18, endTime: 19),
+//            TimeBlock(name: "tomorrow prep", color: .yellow, startTime: 19, endTime: 19.5)
+//        ]
+//        let completeTimeBlocks: [TimeBlock] = TimeBlockHelper.getFinalTimeBlocks(originalTimeBlocks: incompleteTimeBlocks)
+//        let contentView = TimelineView(timeBlocks: []).environment(\.managedObjectContext, context)
+//        let contentView = TimelineView(timeBlocks: completeTimeBlocks).environment(\.managedObjectContext, context)
+
+        let contentView = TimelineView().environment(\.managedObjectContext, context)
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
