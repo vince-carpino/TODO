@@ -12,7 +12,7 @@ struct AddEditTimelineItemView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
 
-    let timeBlock: TimeBlock
+//    let timeBlock: TimeBlock
     let storedTimeBlock: StoredTimeBlock?
 
     @State private var itemName: String = ""
@@ -45,7 +45,7 @@ struct AddEditTimelineItemView: View {
                     .bold()
                     .padding()
 
-                TimelineItemPreview(timeBlock: timeBlock, name: $itemName, color: $itemColor)
+                TimelineItemPreview(name: $itemName, color: $itemColor)
                     .padding()
 
                 Spacer()
@@ -69,7 +69,8 @@ struct AddEditTimelineItemView: View {
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
-                                    self.itemName = self.timeBlock.name
+                                    self.itemName = self.storedTimeBlock?.name ?? ""
+//                                    self.itemName = self.timeBlock.name
                                 }
                         }
 
@@ -81,7 +82,8 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
-                                self.itemColor = self.timeBlock.color
+                                self.itemColor = getColorFromColorName()
+//                                self.itemColor = self.timeBlock.color
                             }
 
                         Text("COLOR")
@@ -102,7 +104,8 @@ struct AddEditTimelineItemView: View {
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
-                                    startTimeValue = timeBlock.startTime
+                                    startTimeValue = storedTimeBlock?.startTime ?? 8
+//                                    startTimeValue = timeBlock.startTime
                                 }
 
                             Spacer()
@@ -128,7 +131,8 @@ struct AddEditTimelineItemView: View {
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
-                                    endTimeValue = timeBlock.endTime
+                                    endTimeValue = storedTimeBlock?.endTime ?? 9
+//                                    endTimeValue = timeBlock.endTime
                                 }
 
                             Spacer()
@@ -191,21 +195,23 @@ struct AddEditTimelineItemView: View {
             }
         }
         .onAppear {
-            // construct timeblock from storedtimeblock
-//            if storedTimeBlock != nil {
-//
-//            }
-
-            self.minimumStartHour = timeBlock.startTime
+            self.minimumStartHour = storedTimeBlock?.startTime ?? 8
+//            self.minimumStartHour = timeBlock.startTime
             self.minimumEndHour = self.minimumStartHour + startEndTimeStep
 
-            self.maximumEndHour = timeBlock.endTime
+            self.maximumEndHour = storedTimeBlock?.endTime ?? 9
+//            self.maximumEndHour = timeBlock.endTime
             self.maximumStartHour = self.maximumEndHour - startEndTimeStep
         }
     }
 
     fileprivate func isNewItem() -> Bool {
-        return timeBlock is UnusedTimeBlock
+        return storedTimeBlock?.isUnused ?? true
+//        return timeBlock is UnusedTimeBlock
+    }
+
+    func getColorFromColorName() -> Color {
+        return Color.coreDataLegend.someKey(forValue: storedTimeBlock?.colorName ?? "clear") ?? .clear
     }
 
     fileprivate func colorNotChosen() -> Bool {
@@ -280,10 +286,10 @@ struct AddEditTimelineItemView: View {
 
 struct AddEditTimelineItemView_Previews: PreviewProvider {
     static var previews: some View {
-        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
+//        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
 //        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
 
-        AddEditTimelineItemView(timeBlock: shortTimeBlock, storedTimeBlock: nil)
+        AddEditTimelineItemView(storedTimeBlock: nil)
 //        AddEditTimelineItemView(timeBlock: shortTimeBlock)
 
 //        AddEditTimelineItemView(timeBlock: longTimeBlock)

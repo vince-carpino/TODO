@@ -177,7 +177,7 @@ struct TimelineItem: View {
             )
         }
         .fullScreenCover(isPresented: $isPresentingAddEditView, content: {
-            AddEditTimelineItemView(timeBlock: timeBlock, storedTimeBlock: nil)
+            AddEditTimelineItemView(storedTimeBlock: nil)
 //            AddEditTimelineItemView(timeBlock: timeBlock)
         })
     }
@@ -193,7 +193,7 @@ struct TimelineItem: View {
 }
 
 struct TimelineItemPreview: View {
-    let timeBlock: TimeBlock
+//    let timeBlock: TimeBlock
     var name: Binding<String>
     var color: Binding<Color>
 
@@ -317,7 +317,7 @@ struct EmptyTimelineView: View {
             .background(Color.peterRiver)
             .cornerRadius(5)
             .fullScreenCover(isPresented: $isShowingAddEditTimeBlockView, content: {
-                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9), storedTimeBlock: nil)
+                AddEditTimelineItemView(storedTimeBlock: nil)
 //                AddEditTimelineItemView(timeBlock: UnusedTimeBlock(startTime: 8, endTime: 9))
             })
         }
