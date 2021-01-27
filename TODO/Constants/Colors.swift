@@ -46,6 +46,7 @@ extension Color {
     public static let backgroundColor: Color = .midnightBlue
 
     public static let unusedTimeBlockColor: Color = .clear
+    public static let defaultTimeBlockColor: Color = .clear
 
     public static let coreDataLegend: [Color: String] = [
         .alizarin: "alizarin",
