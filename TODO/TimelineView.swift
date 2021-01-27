@@ -11,7 +11,7 @@ import SwiftUI
 struct TimelineView: View {
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(entity: StoredTimeBlock.entity(), sortDescriptors: [
-        NSSortDescriptor(key: "startTime", ascending: true)
+        NSSortDescriptor(keyPath: \StoredTimeBlock.startTime, ascending: true)
     ]) var timeBlocksCoreData: FetchedResults<StoredTimeBlock>
 
     private let timelineSeparatorWidth: CGFloat = 65

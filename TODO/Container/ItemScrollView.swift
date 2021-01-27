@@ -18,9 +18,9 @@ struct ItemScrollView: View {
     private var viewModeFilterOptions = ["NEXT", "TODAY", "ALL"]
 
     @FetchRequest(entity: Item.entity(), sortDescriptors: [
-        NSSortDescriptor(key: "priorityValue", ascending: false),
-        NSSortDescriptor(key: "dueDate", ascending: true),
-        NSSortDescriptor(key: "creationTime", ascending: true)
+        NSSortDescriptor(keyPath: \Item.priorityValue, ascending: false),
+        NSSortDescriptor(keyPath: \Item.dueDate, ascending: true),
+        NSSortDescriptor(keyPath: \Item.creationTime, ascending: true)
     ]) var items: FetchedResults<Item>
 
     var body: some View {
