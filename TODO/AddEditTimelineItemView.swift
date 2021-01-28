@@ -100,7 +100,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Text("\(Float.getHour(startTimeValue))")
+                            Text("\(TimelineSeparator.getHour(hourPastMidnight: startTimeValue))")
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
@@ -127,7 +127,7 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Text("\(Float.getHour(endTimeValue))")
+                            Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {

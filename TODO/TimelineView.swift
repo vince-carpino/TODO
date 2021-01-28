@@ -260,27 +260,6 @@ struct TimelineSeparator: View {
     }
 }
 
-extension Float {
-    static func getHour(_ hourPastMidnight: Float) -> String {
-        let amPm = hourPastMidnight < 12 ? "AM" : "PM"
-        let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
-        var hourNumber = hourPastMidnight
-
-        if hourPastMidnight == 0 {
-            hourNumber = 12
-        } else if hourPastMidnight > 12 {
-            hourNumber = hourPastMidnight - 12
-        }
-
-        if isPartialHour {
-            let minutes = (hourNumber - floor(hourNumber)) * 60
-            return "\(Int(hourNumber)):\(Int(minutes)) \(amPm)"
-        }
-
-        return "\(Int(hourNumber)) \(amPm)"
-    }
-}
-
 struct BackgroundView: View {
     var body: some View {
         Color.backgroundColor
