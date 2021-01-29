@@ -282,7 +282,7 @@ struct EmptyTimelineView: View {
                 HStack {
                     Image(systemName: "plus")
 
-                    Text("Add")
+                    Text("ADD")
                 }
                 .formatted(fontSize: 20)
                 .padding()
