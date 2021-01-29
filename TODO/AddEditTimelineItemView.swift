@@ -12,8 +12,7 @@ struct AddEditTimelineItemView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
 
-//    let timeBlock: TimeBlock
-    let storedTimeBlock: StoredTimeBlock?
+    let storedTimeBlock: StoredTimeBlock
 
     @State private var itemName: String = ""
     @State private var itemColor: Color = .white
@@ -39,7 +38,7 @@ struct AddEditTimelineItemView: View {
             BackgroundView()
 
             VStack {
-                Text("\(isNewItem() ? "ADD" : "EDIT") ITEM")
+                Text("\(storedTimeBlock.isUnused ? "ADD" : "EDIT") ITEM")
                     .font(.system(size: 45, weight: .semibold, design: .rounded))
                     .foregroundColor(.clouds)
                     .bold()
@@ -69,8 +68,7 @@ struct AddEditTimelineItemView: View {
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
-                                    self.itemName = self.storedTimeBlock?.name ?? ""
-//                                    self.itemName = self.timeBlock.name
+                                    self.itemName = self.storedTimeBlock.name ?? ""
                                 }
                         }
 
@@ -83,7 +81,6 @@ struct AddEditTimelineItemView: View {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
                                 self.itemColor = getColorFromColorName()
-//                                self.itemColor = self.timeBlock.color
                             }
 
                         Text("COLOR")
@@ -104,8 +101,7 @@ struct AddEditTimelineItemView: View {
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
-                                    startTimeValue = storedTimeBlock?.startTime ?? 8
-//                                    startTimeValue = timeBlock.startTime
+                                    startTimeValue = storedTimeBlock.startTime
                                 }
 
                             Spacer()
@@ -131,8 +127,7 @@ struct AddEditTimelineItemView: View {
                                 .font(.system(size: 30, weight: .semibold, design: .rounded))
                                 .foregroundColor(.clouds)
                                 .onAppear {
-                                    endTimeValue = storedTimeBlock?.endTime ?? 9
-//                                    endTimeValue = timeBlock.endTime
+                                    endTimeValue = storedTimeBlock.endTime
                                 }
 
                             Spacer()
@@ -168,12 +163,8 @@ struct AddEditTimelineItemView: View {
                     }
 
                     Button(action: {
-                        // SAVE TO CORE DATA
-                        if isNewItem() {
-                            // create new StoredTimeBlock
-                        } else {
-                            // save StoredTimeBlock that was passsed in
-                        }
+                        saveTimeBlock()
+
                         self.presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
@@ -195,23 +186,257 @@ struct AddEditTimelineItemView: View {
             }
         }
         .onAppear {
-            self.minimumStartHour = storedTimeBlock?.startTime ?? 8
-//            self.minimumStartHour = timeBlock.startTime
+            self.minimumStartHour = storedTimeBlock.startTime
             self.minimumEndHour = self.minimumStartHour + startEndTimeStep
 
-            self.maximumEndHour = storedTimeBlock?.endTime ?? 9
-//            self.maximumEndHour = timeBlock.endTime
+            self.maximumEndHour = storedTimeBlock.endTime
             self.maximumStartHour = self.maximumEndHour - startEndTimeStep
         }
     }
 
-    fileprivate func isNewItem() -> Bool {
-        return storedTimeBlock?.isUnused ?? true
-//        return timeBlock is UnusedTimeBlock
+    func getColorFromColorName() -> Color {
+        return Color.coreDataLegend.someKey(forValue: storedTimeBlock.colorName ?? "clear") ?? .clear
     }
 
-    func getColorFromColorName() -> Color {
-        return Color.coreDataLegend.someKey(forValue: storedTimeBlock?.colorName ?? "clear") ?? .clear
+    fileprivate func colorNotChosen() -> Bool {
+        return itemColor == .unusedTimeBlockColor
+    }
+
+    fileprivate func nameFieldIsEmpty() -> Bool {
+        let textFieldToWatch = itemName
+        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    fileprivate func decreaseStartTime() {
+        if startTimeValue != minimumStartHour {
+            startTimeValue -= startEndTimeStep
+        }
+    }
+
+    fileprivate func increaseStartTime() {
+        if startTimeValue != maximumStartHour {
+            startTimeValue += startEndTimeStep
+
+            if startTimeValue == endTimeValue {
+                endTimeValue += startEndTimeStep
+            }
+        }
+    }
+
+    fileprivate func decreaseEndTime() {
+        if endTimeValue != minimumEndHour {
+            endTimeValue -= startEndTimeStep
+
+            if endTimeValue == startTimeValue {
+                startTimeValue -= startEndTimeStep
+            }
+        }
+    }
+
+    fileprivate func increaseEndTime() {
+        if endTimeValue != maximumEndHour {
+            endTimeValue += startEndTimeStep
+        }
+    }
+
+    fileprivate func saveContext() {
+        do {
+            try moc.save()
+        } catch {
+            print("Error while saving item:\n***\n\(error)\n***")
+        }
+    }
+
+    fileprivate func saveTimeBlock() {
+        moc.performAndWait {
+            self.storedTimeBlock.name = self.itemName
+            self.storedTimeBlock.colorName = Color.coreDataLegend[self.itemColor]
+            self.storedTimeBlock.startTime = self.startTimeValue
+            self.storedTimeBlock.endTime = self.endTimeValue
+
+            saveContext()
+        }
+    }
+}
+
+struct AddEditTimelineItemView_Previews: PreviewProvider {
+    static var previews: some View {
+        let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let timeBlockToAdd = StoredTimeBlock(context: moc)
+        timeBlockToAdd.id = UUID()
+        timeBlockToAdd.name = ""
+        timeBlockToAdd.colorName = "clear"
+        timeBlockToAdd.startTime = 1
+        timeBlockToAdd.endTime = 23
+        timeBlockToAdd.isUnused = false
+
+        return AddEditTimelineItemView(storedTimeBlock: timeBlockToAdd).environment(\.managedObjectContext, moc)
+    }
+}
+
+struct AddFirstTimelineItemView: View {
+    @Environment(\.managedObjectContext) var moc
+    @Environment(\.presentationMode) var presentationMode
+
+    @State private var itemName: String = ""
+    @State private var itemColor: Color = .defaultTimeBlockColor
+    @State private var itemStartTime: Date = Date()
+    @State private var itemEndTime: Date = Date()
+
+    @State private var startTimeValue: Float = 8
+    @State private var endTimeValue: Float = 9
+
+    private let startEndTimeStep: Float = 0.5
+
+    @State private var minimumStartHour: Float = 0
+    @State private var maximumStartHour: Float = 23.5
+    @State private var minimumEndHour: Float = 0.5
+    @State private var maximumEndHour: Float = 24
+
+    var saveButtonColor: Color {
+        return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
+    }
+
+    var body: some View {
+        ZStack {
+            BackgroundView()
+
+            VStack {
+                Text("ADD ITEM")
+                    .font(.system(size: 45, weight: .semibold, design: .rounded))
+                    .foregroundColor(.clouds)
+                    .bold()
+                    .padding()
+
+                TimelineItemPreview(name: $itemName, color: $itemColor)
+                    .padding()
+
+                Spacer()
+
+                Divider()
+                    .background(Color.clouds)
+
+                VStack(spacing: 25) {
+                    VStack(alignment: .leading) {
+                        ZStack(alignment: .leading) {
+                            if itemName.isEmpty {
+                                Text("Enter a name...")
+                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .padding(.leading, 10)
+                                    .foregroundColor(Color.clouds.opacity(0.25))
+                            }
+                            TextField("", text: $itemName)
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .padding(10)
+                                .foregroundColor(.clouds)
+                                .background(Color.black.opacity(0.25))
+                                .cornerRadius(5)
+                        }
+
+                        Text("NAME")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        ColorPicker(selectedColor: $itemColor)
+
+                        Text("COLOR")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
+                            let startTimeAtMaximum: Bool = startTimeValue == maximumStartHour
+
+                            StartEndTimeDecreaseButton(action: decreaseStartTime, isTargetTimeAtMinimum: startTimeAtMinimum)
+
+                            Spacer()
+
+                            Text("\(TimelineSeparator.getHour(hourPastMidnight: startTimeValue))")
+                                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                                .foregroundColor(.clouds)
+
+                            Spacer()
+
+                            StartEndTimeIncreaseButton(action: increaseStartTime, isTargetTimeAtMaximum: startTimeAtMaximum)
+                        }
+
+                        Text("START TIME")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
+                    }
+
+                    VStack(alignment: .leading, spacing: 8) {
+                        HStack {
+                            let endTimeAtMinimum: Bool = endTimeValue == minimumEndHour
+                            let endTimeAtMaximum: Bool = endTimeValue == maximumEndHour
+
+                            StartEndTimeDecreaseButton(action: decreaseEndTime, isTargetTimeAtMinimum: endTimeAtMinimum)
+
+                            Spacer()
+
+                            Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
+                                .font(.system(size: 30, weight: .semibold, design: .rounded))
+                                .foregroundColor(.clouds)
+
+                            Spacer()
+
+                            StartEndTimeIncreaseButton(action: increaseEndTime, isTargetTimeAtMaximum: endTimeAtMaximum)
+                        }
+
+                        Text("END TIME")
+                            .font(.system(size: 14, weight: .semibold, design: .rounded))
+                            .foregroundColor(.clouds)
+                    }
+                }
+                .padding()
+
+                HStack {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "xmark")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+
+                            Text("CANCEL")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        }
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.clouds)
+                        .overlay(RoundedRectangle(cornerRadius: 40)
+                            .stroke(Color.asbestos, lineWidth: 5)
+                        )
+                        .cornerRadius(40)
+                    }
+
+                    Button(action: {
+                        addNewStoredTimeBlock()
+
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "plus")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+
+                            Text("SAVE")
+                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        }
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .foregroundColor(.clouds)
+                        .background(saveButtonColor)
+                        .cornerRadius(40)
+                    }
+                    .disabled(self.nameFieldIsEmpty() || colorNotChosen())
+                }
+                .padding()
+            }
+        }
     }
 
     fileprivate func colorNotChosen() -> Bool {
@@ -256,43 +481,25 @@ struct AddEditTimelineItemView: View {
     }
 
     fileprivate func addNewStoredTimeBlock() {
-        let storedTimeBlock = StoredTimeBlock(context: self.moc)
-        storedTimeBlock.id = UUID()
-        storedTimeBlock.name = self.itemName
-        storedTimeBlock.colorName = Color.coreDataLegend[self.itemColor]
-        storedTimeBlock.startTime = self.startTimeValue
-        storedTimeBlock.endTime = self.endTimeValue
+        moc.performAndWait {
+            let timeBlockToStore = StoredTimeBlock(context: moc)
+            timeBlockToStore.id = UUID()
+            timeBlockToStore.name = itemName
+            timeBlockToStore.colorName = Color.coreDataLegend[itemColor]
+            timeBlockToStore.startTime = startTimeValue
+            timeBlockToStore.endTime = endTimeValue
+            timeBlockToStore.isUnused = false
 
-        self.saveContext()
+            saveContext()
+        }
     }
 
     fileprivate func saveContext() {
         do {
-            try self.moc.save()
+            try moc.save()
         } catch {
             print("Error while saving item:\n***\n\(error)\n***")
         }
-    }
-
-    fileprivate func saveItem() {
-//        self.moc.performAndWait {
-//            self.timeBlock.name = self.itemName
-//            self.timeBlock.color
-//
-//            saveContext()
-//        }
-    }
-}
-
-struct AddEditTimelineItemView_Previews: PreviewProvider {
-    static var previews: some View {
-//        let shortTimeBlock: TimeBlock = TimeBlock(name: "short", color: .purple, startTime: 8, endTime: 9)
-//        let longTimeBlock: TimeBlock = TimeBlock(name: "long", color: .purple, startTime: 8, endTime: 12)
-
-        AddEditTimelineItemView(storedTimeBlock: nil)
-//        AddEditTimelineItemView(timeBlock: shortTimeBlock)
-
-//        AddEditTimelineItemView(timeBlock: longTimeBlock)
     }
 }
 
@@ -300,12 +507,12 @@ struct ColorPicker: View {
     @Binding var selectedColor: Color
 
     private let colors: [Color] = [
-        .red,
-        .orange,
-        .yellow,
-        .green,
-        .blue,
-        .purple,
+        .alizarin,
+        .carrot,
+        .sunFlower,
+        .nephritis,
+        .peterRiver,
+        .amethyst,
     ]
 
     var body: some View {
