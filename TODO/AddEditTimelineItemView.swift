@@ -39,9 +39,8 @@ struct AddEditTimelineItemView: View {
 
             VStack {
                 Text("\(storedTimeBlock.isUnused ? "ADD" : "EDIT") ITEM")
-                    .font(.system(size: 45, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
                     .bold()
+                    .formatted(fontSize: 45)
                     .padding()
 
                 TimelineItemPreview(name: $itemName, color: $itemColor)
@@ -57,14 +56,12 @@ struct AddEditTimelineItemView: View {
                         ZStack(alignment: .leading) {
                             if itemName.isEmpty {
                                 Text("Enter a name...")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .formatted(fontSize: 20, foregroundColor: Color.clouds.opacity(0.25))
                                     .padding(.leading, 10)
-                                    .foregroundColor(Color.clouds.opacity(0.25))
                             }
                             TextField("", text: $itemName)
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .formatted(fontSize: 20)
                                 .padding(10)
-                                .foregroundColor(.clouds)
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
@@ -73,8 +70,7 @@ struct AddEditTimelineItemView: View {
                         }
 
                         Text("NAME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -84,8 +80,7 @@ struct AddEditTimelineItemView: View {
                             }
 
                         Text("COLOR")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -98,8 +93,7 @@ struct AddEditTimelineItemView: View {
                             Spacer()
 
                             Text("\(TimelineSeparator.getHour(hourPastMidnight: startTimeValue))")
-                                .font(.system(size: 30, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                                .formatted(fontSize: 30)
                                 .onAppear {
                                     startTimeValue = storedTimeBlock.startTime
                                 }
@@ -110,8 +104,7 @@ struct AddEditTimelineItemView: View {
                         }
 
                         Text("START TIME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -124,8 +117,7 @@ struct AddEditTimelineItemView: View {
                             Spacer()
 
                             Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
-                                .font(.system(size: 30, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                                .formatted(fontSize: 30)
                                 .onAppear {
                                     endTimeValue = storedTimeBlock.endTime
                                 }
@@ -136,8 +128,7 @@ struct AddEditTimelineItemView: View {
                         }
 
                         Text("END TIME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
                 }
                 .padding()
@@ -148,14 +139,12 @@ struct AddEditTimelineItemView: View {
                     }) {
                         HStack {
                             Image(systemName: "xmark")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text("CANCEL")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
+                        .formatted(fontSize: 20)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .overlay(RoundedRectangle(cornerRadius: 40)
                             .stroke(Color.asbestos, lineWidth: 5)
                         )
@@ -169,14 +158,12 @@ struct AddEditTimelineItemView: View {
                     }) {
                         HStack {
                             Image(systemName: "plus")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text("SAVE")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
+                        .formatted(fontSize: 20)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .background(saveButtonColor)
                         .cornerRadius(40)
                     }
@@ -303,9 +290,8 @@ struct AddFirstTimelineItemView: View {
 
             VStack {
                 Text("ADD ITEM")
-                    .font(.system(size: 45, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
                     .bold()
+                    .formatted(fontSize: 45)
                     .padding()
 
                 TimelineItemPreview(name: $itemName, color: $itemColor)
@@ -321,29 +307,25 @@ struct AddFirstTimelineItemView: View {
                         ZStack(alignment: .leading) {
                             if itemName.isEmpty {
                                 Text("Enter a name...")
-                                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                    .formatted(fontSize: 20, foregroundColor: Color.clouds.opacity(0.25))
                                     .padding(.leading, 10)
-                                    .foregroundColor(Color.clouds.opacity(0.25))
                             }
                             TextField("", text: $itemName)
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                                .formatted(fontSize: 20)
                                 .padding(10)
-                                .foregroundColor(.clouds)
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                         }
 
                         Text("NAME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
 
                         Text("COLOR")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -356,8 +338,7 @@ struct AddFirstTimelineItemView: View {
                             Spacer()
 
                             Text("\(TimelineSeparator.getHour(hourPastMidnight: startTimeValue))")
-                                .font(.system(size: 30, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                                .formatted(fontSize: 30)
 
                             Spacer()
 
@@ -365,8 +346,7 @@ struct AddFirstTimelineItemView: View {
                         }
 
                         Text("START TIME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
 
                     VStack(alignment: .leading, spacing: 8) {
@@ -379,8 +359,7 @@ struct AddFirstTimelineItemView: View {
                             Spacer()
 
                             Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
-                                .font(.system(size: 30, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                                .formatted(fontSize: 30)
 
                             Spacer()
 
@@ -388,8 +367,7 @@ struct AddFirstTimelineItemView: View {
                         }
 
                         Text("END TIME")
-                            .font(.system(size: 14, weight: .semibold, design: .rounded))
-                            .foregroundColor(.clouds)
+                            .formatted(fontSize: 14)
                     }
                 }
                 .padding()
@@ -400,14 +378,12 @@ struct AddFirstTimelineItemView: View {
                     }) {
                         HStack {
                             Image(systemName: "xmark")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text("CANCEL")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
+                        .formatted(fontSize: 20)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .overlay(RoundedRectangle(cornerRadius: 40)
                             .stroke(Color.asbestos, lineWidth: 5)
                         )
@@ -421,14 +397,12 @@ struct AddFirstTimelineItemView: View {
                     }) {
                         HStack {
                             Image(systemName: "plus")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text("SAVE")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
+                        .formatted(fontSize: 20)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .background(saveButtonColor)
                         .cornerRadius(40)
                     }
@@ -534,8 +508,7 @@ struct ColorPicker: View {
 
                         if color == selectedColor {
                             Image(systemName: "checkmark")
-                                .font(.system(size: 18, weight: .semibold, design: .rounded))
-                                .foregroundColor(.clouds)
+                                .formatted(fontSize: 18)
                         }
                     }
                 }
@@ -553,9 +526,8 @@ struct StartEndTimeDecreaseButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: "minus")
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .formatted(fontSize: 20, foregroundColor: isTargetTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
                 .frame(width: 75, height: 75)
-                .foregroundColor(isTargetTimeAtMinimum ? Color.clouds.opacity(0.25) : .clouds)
                 .background(isTargetTimeAtMinimum ? Color.alizarin.opacity(0.25) : Color.alizarin)
                 .cornerRadius(10)
         }
@@ -570,9 +542,8 @@ struct StartEndTimeIncreaseButton: View {
     var body: some View {
         Button(action: action) {
             Image(systemName: "plus")
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .formatted(fontSize: 20, foregroundColor: isTargetTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
                 .frame(width: 75, height: 75)
-                .foregroundColor(isTargetTimeAtMaximum ? Color.clouds.opacity(0.25) : .clouds)
                 .background(isTargetTimeAtMaximum ? Color.greenSea.opacity(0.25) : .greenSea)
                 .cornerRadius(10)
         }

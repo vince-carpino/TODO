@@ -22,10 +22,9 @@ struct QuickAddItemView: View {
 
             VStack {
                 TextField("Enter a name...", text: $itemName)
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
+                    .formatted(fontSize: 24)
                     .padding(15)
                     .background(Color.incompleteItemColor)
-                    .foregroundColor(.clouds)
                     .cornerRadius(10)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)

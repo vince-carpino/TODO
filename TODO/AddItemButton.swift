@@ -19,15 +19,12 @@ struct AddItemButton: View {
         Button(action: {}) {
             HStack {
                 Image(systemName: "plus.square")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
 
                 Text("new item")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
                     .bold()
-                    .foregroundColor(.clouds)
                     .cornerRadius(10)
             }
+            .formatted(fontSize: 24)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity)
             .background(Color.peterRiver)

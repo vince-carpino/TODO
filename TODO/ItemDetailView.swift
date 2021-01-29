@@ -71,10 +71,9 @@ struct ItemDetailView: View {
 
                             Text("\(self.$isCurrentItem.wrappedValue ? "Don't " : "")Set as Current")
                         }
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .formatted(fontSize: 18)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .background(self.$isCurrentItem.wrappedValue ? Color.completedItemColor : Color.currentItemColor)
                         .cornerRadius(40)
                     }
@@ -96,10 +95,9 @@ struct ItemDetailView: View {
 
                             Text("Mark as \(self.$isCompleted.wrappedValue ? "Incomplete" : "Done")")
                         }
-                        .font(.system(size: 18, weight: .semibold, design: .rounded))
+                        .formatted(fontSize: 18)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .background(self.$isCompleted.wrappedValue ? Color.completedItemColor : Color.nephritis)
                         .cornerRadius(40)
                     }
@@ -113,10 +111,9 @@ struct ItemDetailView: View {
 
                                 Text("Delete Item")
                             }
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            .formatted(fontSize: 18, foregroundColor: .alizarin)
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
-                            .foregroundColor(.alizarin)
                             .overlay(RoundedRectangle(cornerRadius: 40)
                                 .stroke(Color.alizarin, lineWidth: 3)
                             )
@@ -142,10 +139,9 @@ struct ItemDetailView: View {
 
                                 Text("Edit Item")
                             }
-                            .font(.system(size: 18, weight: .semibold, design: .rounded))
+                            .formatted(fontSize: 18, foregroundColor: .peterRiver)
                             .padding()
                             .frame(minWidth: 0, maxWidth: .infinity)
-                            .foregroundColor(.peterRiver)
                             .overlay(RoundedRectangle(cornerRadius: 40)
                                 .stroke(Color.peterRiver, lineWidth: 3)
                             )
@@ -224,12 +220,11 @@ struct ItemPropertyDetail: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(propertyValue)
-                .font(.system(size: 28, weight: .semibold, design: .rounded))
+                .formatted(fontSize: 28)
 
             Text(propertyName)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
+                .formatted(fontSize: 14)
         }
-        .foregroundColor(.clouds)
         .padding()
     }
 }

@@ -23,8 +23,7 @@ struct TimelineView: View {
 
             VStack {
                 Text("TODAY")
-                    .font(.system(size: 36, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
+                    .formatted(fontSize: 36)
 
                 if timeBlocksCoreData.count == 0 {
                     EmptyTimelineView()
@@ -151,10 +150,9 @@ struct TimelineItem: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
-            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .formatted(fontSize: 20)
             .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
             .padding(10)
-            .foregroundColor(.clouds)
             .background(getColorFromColorName())
             .cornerRadius(self.cornerRadius)
             .overlay(
@@ -191,10 +189,9 @@ struct TimelineItemPreview: View {
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
-            .font(.system(size: 20, weight: .semibold, design: .rounded))
+            .formatted(fontSize: 20)
             .frame(maxWidth: .infinity, minHeight: baseHeight, maxHeight: baseHeight)
             .padding(10)
-            .foregroundColor(.clouds)
             .background(color.wrappedValue)
             .cornerRadius(self.cornerRadius)
             .overlay(
@@ -212,8 +209,7 @@ struct TimelineSeparator: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(TimelineSeparator.getHour(hourPastMidnight: hour))
-                .font(.system(size: 15, weight: .semibold, design: .rounded))
-                .foregroundColor(.clouds)
+                .formatted(fontSize: 15)
 
             Divider()
                 .background(Color.clouds)
@@ -276,8 +272,7 @@ struct EmptyTimelineView: View {
             Spacer()
 
             Text("Nothing here...")
-                .foregroundColor(.clouds)
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
+                .formatted(fontSize: 20)
 
             Spacer()
 
@@ -289,9 +284,8 @@ struct EmptyTimelineView: View {
 
                     Text("Add")
                 }
+                .formatted(fontSize: 20)
                 .padding()
-                .foregroundColor(.clouds)
-                .font(.system(size: 20, weight: .semibold, design: .rounded))
             }
             .background(Color.peterRiver)
             .cornerRadius(5)

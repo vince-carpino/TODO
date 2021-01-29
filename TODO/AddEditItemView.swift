@@ -42,9 +42,8 @@ struct AddEditItemView: View {
 
             VStack {
                 Text(self.isNewItem() ? "Add Item" : "Edit Item")
-                    .font(.system(size: 30, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
                     .bold()
+                    .formatted(fontSize: 30)
                     .padding(.bottom, 15)
 
                 Spacer()
@@ -75,22 +74,19 @@ struct AddEditItemView: View {
                     }) {
                         HStack {
                             Image(systemName: isNewItem() ? "plus" : "arrow.down.square.fill")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
 
                             Text(self.isNewItem() ? "Add Item" : "Save")
-                                .font(.system(size: 20, weight: .semibold, design: .rounded))
                         }
+                        .formatted(fontSize: 20)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity)
-                        .foregroundColor(.clouds)
                         .background(buttonColor)
                         .cornerRadius(40)
                     }
                     .disabled(self.nameFieldIsEmpty())
 
                     Text("swipe down to cancel")
-                        .foregroundColor(.silver)
-                        .font(.system(size: 14, weight: .semibold, design: .rounded))
+                        .formatted(fontSize: 14, foregroundColor: .silver)
                 }
             }
             .padding()

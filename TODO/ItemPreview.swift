@@ -22,12 +22,11 @@ struct ItemPreview: View {
         ZStack {
             Button(action: {}) {
                 Text(item.name ?? "Unknown name")
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
                     .bold()
+                    .formatted(fontSize: 24)
                     .lineLimit(3)
                     .truncationMode(.tail)
                     .padding(30)
-                    .foregroundColor(.clouds)
                     .background(getBackgroundColor(item: item))
                     .cornerRadius(10)
                     .overlay(

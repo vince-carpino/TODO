@@ -55,19 +55,17 @@ struct ItemPreviewOption: View {
             VStack {
                 Image(systemName: iconName)
                     .frame(width: 75, height: 75)
-                    .font(.system(size: 24, weight: .semibold, design: .rounded))
-                    .foregroundColor(.clouds)
+                    .formatted(fontSize: 24)
                     .background(accentColor)
                     .clipShape(Circle())
                     .overlay(
                         Circle().strokeBorder(Color.clouds, lineWidth: 3)
                     )
                 Text(label)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
+                    .formatted(fontSize: 20, foregroundColor: accentColor)
                     .padding(5)
                     .background(Color.clouds)
                     .cornerRadius(5)
-                    .foregroundColor(accentColor)
             }
         }
     }
