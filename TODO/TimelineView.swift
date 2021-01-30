@@ -62,11 +62,11 @@ struct TimelineView_Previews: PreviewProvider {
     static var previews: some View {
         let moc = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
-        let storedTimeBlock1 = StoredTimeBlock(context: moc)
-        storedTimeBlock1.name = "First thing"
-        storedTimeBlock1.colorName = "alizarin"
-        storedTimeBlock1.startTime = 8
-        storedTimeBlock1.endTime = 9
+        let storedTimeBlock = StoredTimeBlock(context: moc)
+        storedTimeBlock.name = "First thing"
+        storedTimeBlock.colorName = "alizarin"
+        storedTimeBlock.startTime = 8
+        storedTimeBlock.endTime = 9
 
         return TimelineView().environment(\.managedObjectContext, moc)
     }
