@@ -119,31 +119,30 @@
 		D0008C32244E67DF00E4F5AD /* TODO */ = {
 			isa = PBXGroup;
 			children = (
+				D00C318D25C4E2BC0010A3BF /* App */,
 				D089D9C2246CE65900A8CE33 /* Constants */,
-				D0008C33244E67DF00E4F5AD /* AppDelegate.swift */,
-				D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */,
 				D0166B0D24763CD90045418A /* Container */,
 				D0166B0A247635B70045418A /* AddEditItemView.swift */,
 				D0750435251EA7E0003583C8 /* AddEditTimelineItemView.swift */,
+				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
+				D00C316B25C4DD730010A3BF /* BackgroundView.swift */,
+				D00C316725C4DC580010A3BF /* EmptyTimelineView.swift */,
+				D00C318925C4E04B0010A3BF /* FormattedText.swift */,
 				D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */,
 				D0517ABD2473557F00FFC5F1 /* ItemPreview.swift */,
 				D0E8A53724C253D50043F181 /* ItemPreviewOptionsView.swift */,
-				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D01D0F7824B614C00037D8DB /* QuickAddItemView.swift */,
-				D0F83A0724F07CBB0036C4E2 /* TimelineView.swift */,
-				D00C318925C4E04B0010A3BF /* FormattedText.swift */,
 				D00C317F25C4DFE70010A3BF /* TimeBlock.swift */,
 				D00C317B25C4DFAA0010A3BF /* TimeBlockHelper.swift */,
 				D00C317725C4DF1C0010A3BF /* TimelineItem.swift */,
 				D00C317325C4DEB30010A3BF /* TimelineItemPreview.swift */,
 				D00C316F25C4DDA80010A3BF /* TimelineSeparator.swift */,
-				D00C316B25C4DD730010A3BF /* BackgroundView.swift */,
-				D00C316725C4DC580010A3BF /* EmptyTimelineView.swift */,
+				D0F83A0724F07CBB0036C4E2 /* TimelineView.swift */,
 				D0008C39244E67E200E4F5AD /* Assets.xcassets */,
-				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
-				D0008C41244E67E200E4F5AD /* Info.plist */,
-				D078586C246F52BF00F370BF /* DataModel.xcdatamodeld */,
 				D0008C3B244E67E200E4F5AD /* Preview Content */,
+				D078586C246F52BF00F370BF /* DataModel.xcdatamodeld */,
+				D0008C41244E67E200E4F5AD /* Info.plist */,
+				D0008C3E244E67E200E4F5AD /* LaunchScreen.storyboard */,
 			);
 			path = TODO;
 			sourceTree = "<group>";
@@ -154,6 +153,15 @@
 				D0008C3C244E67E200E4F5AD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		D00C318D25C4E2BC0010A3BF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D0008C33244E67DF00E4F5AD /* AppDelegate.swift */,
+				D0008C35244E67DF00E4F5AD /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		D0166B0D24763CD90045418A /* Container */ = {
