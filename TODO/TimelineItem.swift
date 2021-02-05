@@ -12,7 +12,7 @@ struct TimelineItem: View {
     @Environment(\.managedObjectContext) var moc
     @State private var isPresentingAddEditView = false
 
-    let storedTimeBlock: StoredTimeBlock
+    @ObservedObject var storedTimeBlock: StoredTimeBlock
 
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
