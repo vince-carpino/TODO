@@ -464,7 +464,34 @@ struct AddFirstTimelineItemView: View {
             timeBlockToStore.endTime = endTimeValue
             timeBlockToStore.isUnused = false
 
+            fillEmptyTimelineSpaces(firstTimeBlock: timeBlockToStore)
+
             saveContext()
+        }
+    }
+
+    fileprivate func fillEmptyTimelineSpaces(firstTimeBlock: StoredTimeBlock) {
+        let startOfDayHour: Float = 8
+        let endOfDayHour: Float = 24
+
+        if firstTimeBlock.startTime != startOfDayHour {
+            let filler = StoredTimeBlock(context: moc)
+            filler.id = UUID()
+            filler.name = ""
+            filler.colorName = "clear"
+            filler.startTime = startOfDayHour
+            filler.endTime = firstTimeBlock.startTime
+            filler.isUnused = true
+        }
+
+        if firstTimeBlock.endTime != endOfDayHour {
+            let filler = StoredTimeBlock(context: moc)
+            filler.id = UUID()
+            filler.name = ""
+            filler.colorName = "clear"
+            filler.startTime = firstTimeBlock.endTime
+            filler.endTime = endOfDayHour
+            filler.isUnused = true
         }
     }
 
