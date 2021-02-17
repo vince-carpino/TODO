@@ -25,7 +25,7 @@ struct TimelineSeparator: View {
     }
 
     static func getHour(hourPastMidnight: Float) -> String {
-        let amPm = hourPastMidnight < 12 ? "AM" : "PM"
+        let amPm = hourPastMidnight < 12 || hourPastMidnight == 24 ? "AM" : "PM"
         let isPartialHour = floor(hourPastMidnight) != hourPastMidnight
         var hourNumber = floor(hourPastMidnight)
 
