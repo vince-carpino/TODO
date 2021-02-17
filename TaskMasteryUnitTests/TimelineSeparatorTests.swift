@@ -6,8 +6,8 @@
 //  Copyright © 2020 Vince Carpino. All rights reserved.
 //
 
-@testable import Task_Mastery
 import XCTest
+@testable import Task_Mastery
 
 class TimelineSeparatorTests: XCTestCase {
     func testGetHourReturns12AM() {

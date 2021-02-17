@@ -11,7 +11,7 @@ import XCTest
 
 class TimeBlockHelperTests: XCTestCase {
 
-    func testGetFinalTimeBlocksFillsInOneEmptyTimeslot() {
+    func testGetFinalTimeBlocksFillsInOneEmptyTimeSlot() {
         let originalTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
@@ -30,7 +30,7 @@ class TimeBlockHelperTests: XCTestCase {
         XCTAssertEqual(actualFinalTimeBlocks, expectedFinalTimeBlocks)
     }
 
-    func testGetFinalTimeBlocksFillsInTwoEmptyTimeslots() {
+    func testGetFinalTimeBlocksFillsInTwoEmptyTimeSlots() {
         let originalTimeBlocks: [TimeBlock] = [
             TimeBlock(name: "first item", color: .red, startTime: 8, endTime: 9),
             TimeBlock(name: "second item", color: .orange, startTime: 9, endTime: 10),
