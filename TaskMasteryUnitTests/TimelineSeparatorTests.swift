@@ -46,6 +46,15 @@ class TimelineSeparatorTests: XCTestCase {
         XCTAssertEqual(actual, expected)
     }
 
+    func testGetHourReturns12AMNextDay() {
+        let hourPastMidnight: Float = 24
+        let expected = "12 AM"
+
+        let actual = TimelineSeparator.getHour(hourPastMidnight: hourPastMidnight)
+
+        XCTAssertEqual(actual, expected)
+    }
+
     func testGetHourReturnsCorrectPartialHourFor15Minutes() {
         let hourPastMidnight: Float = 8.25
         let expected = "8:15 AM"
