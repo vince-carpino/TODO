@@ -29,8 +29,16 @@ struct AddEditTimelineItemView: View {
     @State private var minimumEndHour: Float = 0
     @State private var maximumEndHour: Float = 23
 
+    var colorNotChosen: Bool {
+        return itemColor == .unusedTimeBlockColor
+    }
+
+    var nameFieldIsEmpty: Bool {
+        return itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
     var saveButtonColor: Color {
-        return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
+        return nameFieldIsEmpty || colorNotChosen ? .concrete : .peterRiver
     }
 
     var endTimeIsMidnight: Bool {
@@ -80,7 +88,7 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
-                                self.itemColor = getColorFromColorName()
+                                self.itemColor = getColor(colorName: storedTimeBlock.colorName)
                             }
 
                         Text("COLOR")
@@ -145,9 +153,7 @@ struct AddEditTimelineItemView: View {
                 .padding()
 
                 HStack {
-                    Button(action: {
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
+                    Button(action: dismissSheet) {
                         HStack {
                             Image(systemName: "xmark")
 
@@ -162,11 +168,7 @@ struct AddEditTimelineItemView: View {
                         .cornerRadius(40)
                     }
 
-                    Button(action: {
-                        saveTimeBlock()
-
-                        self.presentationMode.wrappedValue.dismiss()
-                    }) {
+                    Button(action: saveTimeBlockAndDismissSheet) {
                         HStack {
                             Image(systemName: "plus")
 
@@ -178,31 +180,41 @@ struct AddEditTimelineItemView: View {
                         .background(saveButtonColor)
                         .cornerRadius(40)
                     }
-                    .disabled(self.nameFieldIsEmpty() || colorNotChosen())
+                    .disabled(nameFieldIsEmpty || colorNotChosen)
                 }
                 .padding()
             }
         }
         .onAppear {
-            self.minimumStartHour = storedTimeBlock.startTime
+            determineMinimumStartHour()
             self.minimumEndHour = self.minimumStartHour + startEndTimeStep
 
-            self.maximumEndHour = storedTimeBlock.endTime
+            determineMaximumEndHour()
+//            self.maximumEndHour = storedTimeBlock.endTime
             self.maximumStartHour = self.maximumEndHour - startEndTimeStep
         }
     }
 
-    func getColorFromColorName() -> Color {
-        return Color.coreDataLegend.someKey(forValue: storedTimeBlock.colorName ?? "clear") ?? .clear
+    func getColor(colorName: String?) -> Color {
+        return Color.coreDataLegend.someKey(forValue: colorName ?? "clear") ?? .clear
     }
 
-    fileprivate func colorNotChosen() -> Bool {
-        return itemColor == .unusedTimeBlockColor
+    fileprivate func determineMinimumStartHour() {
+        let previousTimeBlockIndex = timeBlocksCoreData.firstIndex(of: storedTimeBlock)! - 1
+        if previousTimeBlockIndex >= 0 {
+            let previousTimeBlock = timeBlocksCoreData[previousTimeBlockIndex]
+            if previousTimeBlock.isUnused {
+                minimumStartHour = previousTimeBlock.startTime
+            }
+        }
     }
 
-    fileprivate func nameFieldIsEmpty() -> Bool {
-        let textFieldToWatch = itemName
-        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    fileprivate func determineMaximumEndHour() {
+        let nextTimeBlockIndex = timeBlocksCoreData.firstIndex(of: storedTimeBlock)! + 1
+        if timeBlocksCoreData.indices.contains(nextTimeBlockIndex), timeBlocksCoreData[nextTimeBlockIndex].isUnused {
+            let nextTimeBlock = timeBlocksCoreData[nextTimeBlockIndex]
+            maximumEndHour = nextTimeBlock.endTime
+        }
     }
 
     fileprivate func decreaseStartTime() {
@@ -253,6 +265,15 @@ struct AddEditTimelineItemView: View {
             self.storedTimeBlock.endTime = self.endTimeValue
 
             saveContext()
+    fileprivate func saveTimeBlockAndDismissSheet() {
+        saveTimeBlock()
+
+        dismissSheet()
+    }
+
+    func dismissSheet() {
+        self.presentationMode.wrappedValue.dismiss()
+    }
         }
     }
 }
