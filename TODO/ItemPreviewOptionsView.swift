@@ -1,11 +1,3 @@
-//
-//  ItemPreviewOptions.swift
-//  TODO
-//
-//  Created by Vince Carpino on 7/17/20.
-//  Copyright © 2020 Vince Carpino. All rights reserved.
-//
-
 import SwiftUI
 
 struct ItemPreviewOptionsView: View {

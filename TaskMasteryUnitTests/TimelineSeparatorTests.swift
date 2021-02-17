@@ -1,11 +1,3 @@
-//
-//  TimelineSeparatorTests.swift
-//  TaskMasteryUnitTests
-//
-//  Created by Vince Carpino on 9/21/20.
-//  Copyright © 2020 Vince Carpino. All rights reserved.
-//
-
 import XCTest
 @testable import Task_Mastery
 

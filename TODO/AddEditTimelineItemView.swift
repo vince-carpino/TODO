@@ -1,11 +1,3 @@
-//
-//  AddEditTimelineItemView.swift
-//  TODO
-//
-//  Created by Vince Carpino on 9/25/20.
-//  Copyright © 2020 Vince Carpino. All rights reserved.
-//
-
 import SwiftUI
 
 struct AddEditTimelineItemView: View {

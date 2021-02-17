@@ -1,11 +1,3 @@
-//
-//  TimeBlock.swift
-//  TODO
-//
-//  Created by Vince Carpino on 1/29/21.
-//  Copyright © 2021 Vince Carpino. All rights reserved.
-//
-
 import SwiftUI
 
 class TimeBlock: Equatable {

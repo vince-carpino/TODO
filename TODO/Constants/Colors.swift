@@ -1,11 +1,3 @@
-//
-//  Colors.swift
-//  TODO
-//
-//  Created by Vince Carpino on 5/19/20.
-//  Copyright © 2020 Vince Carpino. All rights reserved.
-//
-
 import SwiftUI
 
 extension Color {
