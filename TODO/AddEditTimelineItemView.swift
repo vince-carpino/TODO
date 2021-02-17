@@ -33,6 +33,10 @@ struct AddEditTimelineItemView: View {
         return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
     }
 
+    var endTimeIsMidnight: Bool {
+        return endTimeValue == 24
+    }
+
     var body: some View {
         ZStack {
             BackgroundView()
@@ -116,11 +120,18 @@ struct AddEditTimelineItemView: View {
 
                             Spacer()
 
-                            Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
-                                .formatted(fontSize: 30)
-                                .onAppear {
-                                    endTimeValue = storedTimeBlock.endTime
+                            VStack {
+                                Text("\(TimelineSeparator.getHour(hourPastMidnight: endTimeValue))")
+                                    .formatted(fontSize: 30)
+                                    .onAppear {
+                                        endTimeValue = storedTimeBlock.endTime
                                 }
+
+                                if endTimeIsMidnight {
+                                    Text("NEXT DAY")
+                                        .formatted(fontSize: 16)
+                                }
+                            }
 
                             Spacer()
 
@@ -254,7 +265,7 @@ struct AddEditTimelineItemView_Previews: PreviewProvider {
         timeBlockToAdd.name = ""
         timeBlockToAdd.colorName = "clear"
         timeBlockToAdd.startTime = 1
-        timeBlockToAdd.endTime = 23
+        timeBlockToAdd.endTime = 24
         timeBlockToAdd.isUnused = false
 
         return AddEditTimelineItemView(storedTimeBlock: timeBlockToAdd).environment(\.managedObjectContext, moc)
