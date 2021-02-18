@@ -20,7 +20,16 @@ struct AddFirstTimelineItemView: View {
     @State private var maximumEndHour: Float = 24
 
     var saveButtonColor: Color {
-        return nameFieldIsEmpty() || colorNotChosen() ? .concrete : .peterRiver
+        return nameFieldIsEmpty || colorNotChosen ? .concrete : .peterRiver
+    }
+
+    var colorNotChosen: Bool {
+        return itemColor == .unusedTimeBlockColor
+    }
+
+    var nameFieldIsEmpty: Bool {
+        let textFieldToWatch = itemName
+        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
@@ -112,9 +121,7 @@ struct AddFirstTimelineItemView: View {
                 .padding()
 
                 HStack {
-                    Button(action: {
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
+                    Button(action: dismissSheet) {
                         HStack {
                             Image(systemName: "xmark")
 
@@ -129,11 +136,7 @@ struct AddFirstTimelineItemView: View {
                         .cornerRadius(40)
                     }
 
-                    Button(action: {
-                        addNewStoredTimeBlock()
-
-                        presentationMode.wrappedValue.dismiss()
-                    }) {
+                    Button(action: saveTimeBlockAndDismissSheet) {
                         HStack {
                             Image(systemName: "plus")
 
@@ -145,20 +148,11 @@ struct AddFirstTimelineItemView: View {
                         .background(saveButtonColor)
                         .cornerRadius(40)
                     }
-                    .disabled(nameFieldIsEmpty() || colorNotChosen())
+                    .disabled(nameFieldIsEmpty || colorNotChosen)
                 }
                 .padding()
             }
         }
-    }
-
-    fileprivate func colorNotChosen() -> Bool {
-        return itemColor == .unusedTimeBlockColor
-    }
-
-    fileprivate func nameFieldIsEmpty() -> Bool {
-        let textFieldToWatch = itemName
-        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     fileprivate func decreaseStartTime() {
@@ -193,6 +187,10 @@ struct AddFirstTimelineItemView: View {
         }
     }
 
+    func dismissSheet() {
+        presentationMode.wrappedValue.dismiss()
+    }
+
     fileprivate func addNewStoredTimeBlock() {
         moc.performAndWait {
             let timeBlockToStore = StoredTimeBlock(context: moc)
@@ -207,6 +205,12 @@ struct AddFirstTimelineItemView: View {
 
             saveContext()
         }
+    }
+
+    func saveTimeBlockAndDismissSheet() {
+        addNewStoredTimeBlock()
+
+        dismissSheet()
     }
 
     fileprivate func fillEmptyTimelineSpaces(firstTimeBlock: StoredTimeBlock) {
