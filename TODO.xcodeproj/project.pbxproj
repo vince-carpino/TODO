@@ -20,6 +20,10 @@
 		D00C317C25C4DFAA0010A3BF /* TimeBlockHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C317B25C4DFAA0010A3BF /* TimeBlockHelper.swift */; };
 		D00C318025C4DFE70010A3BF /* TimeBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C317F25C4DFE70010A3BF /* TimeBlock.swift */; };
 		D00C318A25C4E04B0010A3BF /* FormattedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00C318925C4E04B0010A3BF /* FormattedText.swift */; };
+		D00CBC9225DDEED4006E5878 /* AddFirstTimelineItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CBC9125DDEED4006E5878 /* AddFirstTimelineItemView.swift */; };
+		D00CBC9625DDF012006E5878 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CBC9525DDF012006E5878 /* ColorPicker.swift */; };
+		D00CBC9A25DDF109006E5878 /* StartEndTimeDecreaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CBC9925DDF109006E5878 /* StartEndTimeDecreaseButton.swift */; };
+		D00CBC9E25DDF181006E5878 /* StartEndTimeIncreaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00CBC9D25DDF181006E5878 /* StartEndTimeIncreaseButton.swift */; };
 		D0166B0B247635B70045418A /* AddEditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0166B0A247635B70045418A /* AddEditItemView.swift */; };
 		D01D0F7924B614C00037D8DB /* QuickAddItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01D0F7824B614C00037D8DB /* QuickAddItemView.swift */; };
 		D049B23F2474EF67005A4017 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = D049B23E2474EF67005A4017 /* Colors.swift */; };
@@ -62,6 +66,10 @@
 		D00C317B25C4DFAA0010A3BF /* TimeBlockHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockHelper.swift; sourceTree = "<group>"; };
 		D00C317F25C4DFE70010A3BF /* TimeBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlock.swift; sourceTree = "<group>"; };
 		D00C318925C4E04B0010A3BF /* FormattedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedText.swift; sourceTree = "<group>"; };
+		D00CBC9125DDEED4006E5878 /* AddFirstTimelineItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFirstTimelineItemView.swift; sourceTree = "<group>"; };
+		D00CBC9525DDF012006E5878 /* ColorPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPicker.swift; sourceTree = "<group>"; };
+		D00CBC9925DDF109006E5878 /* StartEndTimeDecreaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartEndTimeDecreaseButton.swift; sourceTree = "<group>"; };
+		D00CBC9D25DDF181006E5878 /* StartEndTimeIncreaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartEndTimeIncreaseButton.swift; sourceTree = "<group>"; };
 		D0166B0A247635B70045418A /* AddEditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditItemView.swift; sourceTree = "<group>"; };
 		D01D0F7824B614C00037D8DB /* QuickAddItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickAddItemView.swift; sourceTree = "<group>"; };
 		D049B23E2474EF67005A4017 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -124,6 +132,10 @@
 				D0166B0D24763CD90045418A /* Container */,
 				D0166B0A247635B70045418A /* AddEditItemView.swift */,
 				D0750435251EA7E0003583C8 /* AddEditTimelineItemView.swift */,
+				D00CBC9D25DDF181006E5878 /* StartEndTimeIncreaseButton.swift */,
+				D00CBC9925DDF109006E5878 /* StartEndTimeDecreaseButton.swift */,
+				D00CBC9525DDF012006E5878 /* ColorPicker.swift */,
+				D00CBC9125DDEED4006E5878 /* AddFirstTimelineItemView.swift */,
 				D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */,
 				D00C316B25C4DD730010A3BF /* BackgroundView.swift */,
 				D00C316725C4DC580010A3BF /* EmptyTimelineView.swift */,
@@ -298,17 +310,21 @@
 				D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */,
 				D00C317825C4DF1C0010A3BF /* TimelineItem.swift in Sources */,
 				D00C316825C4DC580010A3BF /* EmptyTimelineView.swift in Sources */,
+				D00CBC9E25DDF181006E5878 /* StartEndTimeIncreaseButton.swift in Sources */,
 				D0F83A0824F07CBB0036C4E2 /* TimelineView.swift in Sources */,
 				D0166B0B247635B70045418A /* AddEditItemView.swift in Sources */,
+				D00CBC9625DDF012006E5878 /* ColorPicker.swift in Sources */,
 				D0750436251EA7E0003583C8 /* AddEditTimelineItemView.swift in Sources */,
 				D049B23F2474EF67005A4017 /* Colors.swift in Sources */,
 				D0E8A53824C253D50043F181 /* ItemPreviewOptionsView.swift in Sources */,
 				D00C318A25C4E04B0010A3BF /* FormattedText.swift in Sources */,
 				D0008C34244E67DF00E4F5AD /* AppDelegate.swift in Sources */,
+				D00CBC9A25DDF109006E5878 /* StartEndTimeDecreaseButton.swift in Sources */,
 				D0008C36244E67DF00E4F5AD /* SceneDelegate.swift in Sources */,
 				D00C317025C4DDA80010A3BF /* TimelineSeparator.swift in Sources */,
 				D00C317C25C4DFAA0010A3BF /* TimeBlockHelper.swift in Sources */,
 				D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */,
+				D00CBC9225DDEED4006E5878 /* AddFirstTimelineItemView.swift in Sources */,
 				D0517ABE2473557F00FFC5F1 /* ItemPreview.swift in Sources */,
 				D01D0F7924B614C00037D8DB /* QuickAddItemView.swift in Sources */,
 				D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */,
