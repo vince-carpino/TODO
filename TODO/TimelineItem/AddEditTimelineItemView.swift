@@ -4,6 +4,10 @@ struct AddEditTimelineItemView: View {
     @Environment(\.managedObjectContext) var moc
     @Environment(\.presentationMode) var presentationMode
 
+    @FetchRequest(entity: StoredTimeBlock.entity(), sortDescriptors: [
+        NSSortDescriptor(keyPath: \StoredTimeBlock.startTime, ascending: true),
+    ]) var timeBlocksCoreData: FetchedResults<StoredTimeBlock>
+
     let storedTimeBlock: StoredTimeBlock
 
     @State private var itemName: String = ""
