@@ -8,24 +8,21 @@ struct TimelineItemPreview: View {
     private let baseHeight: CGFloat = 70
 
     var body: some View {
-        Button(action: {}) {
-            HStack {
-                Text(name.wrappedValue.uppercased())
-                    .bold()
-                    .lineLimit(1)
-                    .truncationMode(.tail)
-            }
-            .formatted(fontSize: 20)
-            .frame(maxWidth: .infinity, minHeight: baseHeight, maxHeight: baseHeight)
-            .padding(10)
-            .background(color.wrappedValue)
-            .cornerRadius(self.cornerRadius)
-            .overlay(
-                RoundedRectangle(cornerRadius: self.cornerRadius)
-                    .strokeBorder(Color.clouds, lineWidth: 5)
-            )
+        HStack {
+            Text(name.wrappedValue.uppercased())
+                .bold()
+                .lineLimit(1)
+                .truncationMode(.tail)
         }
-        .disabled(true)
+        .formatted(fontSize: 20)
+        .frame(maxWidth: .infinity, minHeight: baseHeight, maxHeight: baseHeight)
+        .padding(10)
+        .background(color.wrappedValue)
+        .cornerRadius(cornerRadius)
+        .overlay(
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .strokeBorder(Color.clouds, lineWidth: 5)
+        )
     }
 }
 

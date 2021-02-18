@@ -7,10 +7,10 @@ class TimeBlock: Equatable {
     var endTime: Float
 
     init() {
-        self.name = ""
-        self.color = .clear
-        self.startTime = 0
-        self.endTime = 0
+        name = ""
+        color = .clear
+        startTime = 0
+        endTime = 0
     }
 
     init(name: String, color: Color, startTime: Float, endTime: Float) {

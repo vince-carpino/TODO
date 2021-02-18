@@ -69,7 +69,7 @@ struct AddEditTimelineItemView: View {
                                 .background(Color.black.opacity(0.25))
                                 .cornerRadius(5)
                                 .onAppear {
-                                    self.itemName = self.storedTimeBlock.name ?? ""
+                                    itemName = storedTimeBlock.name ?? ""
                                 }
                         }
 
@@ -80,7 +80,7 @@ struct AddEditTimelineItemView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ColorPicker(selectedColor: $itemColor)
                             .onAppear {
-                                self.itemColor = getColor(colorName: storedTimeBlock.colorName)
+                                itemColor = getColor(colorName: storedTimeBlock.colorName)
                             }
 
                         Text("COLOR")
@@ -125,7 +125,7 @@ struct AddEditTimelineItemView: View {
                                     .formatted(fontSize: 30)
                                     .onAppear {
                                         endTimeValue = storedTimeBlock.endTime
-                                }
+                                    }
 
                                 if endTimeIsMidnight {
                                     Text("NEXT DAY")
@@ -179,11 +179,10 @@ struct AddEditTimelineItemView: View {
         }
         .onAppear {
             determineMinimumStartHour()
-            self.minimumEndHour = self.minimumStartHour + startEndTimeStep
+            minimumEndHour = minimumStartHour + startEndTimeStep
 
             determineMaximumEndHour()
-//            self.maximumEndHour = storedTimeBlock.endTime
-            self.maximumStartHour = self.maximumEndHour - startEndTimeStep
+            maximumStartHour = maximumEndHour - startEndTimeStep
         }
     }
 
@@ -251,10 +250,12 @@ struct AddEditTimelineItemView: View {
 
     fileprivate func saveTimeBlock() {
         moc.performAndWait {
-            self.storedTimeBlock.name = self.itemName
-            self.storedTimeBlock.colorName = Color.coreDataLegend[self.itemColor]
-            self.storedTimeBlock.startTime = self.startTimeValue
-            self.storedTimeBlock.endTime = self.endTimeValue
+
+            storedTimeBlock.name = itemName
+            storedTimeBlock.colorName = Color.coreDataLegend[itemColor]
+            storedTimeBlock.startTime = startTimeValue
+            storedTimeBlock.endTime = endTimeValue
+            storedTimeBlock.isUnused = false
 
             saveContext()
     fileprivate func saveTimeBlockAndDismissSheet() {
@@ -264,7 +265,7 @@ struct AddEditTimelineItemView: View {
     }
 
     func dismissSheet() {
-        self.presentationMode.wrappedValue.dismiss()
+        presentationMode.wrappedValue.dismiss()
     }
         }
     }

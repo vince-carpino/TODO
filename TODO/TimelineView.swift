@@ -28,12 +28,12 @@ struct TimelineView: View {
 
                                     HStack {
                                         Spacer()
-                                            .frame(width: self.timelineSeparatorWidth)
+                                            .frame(width: timelineSeparatorWidth)
 
                                         TimelineItem(storedTimeBlock: timeBlock)
                                     }
 
-                                    if timeBlock == self.timeBlocksCoreData.last {
+                                    if timeBlock == timeBlocksCoreData.last {
                                         TimelineSeparator(hour: timeBlock.endTime)
                                     }
                                 }

@@ -9,12 +9,18 @@ struct TimelineItem: View {
     private let cornerRadius: CGFloat = 5
     private let baseHeight: CGFloat = 70
 
+    var backgroundColor: Color {
+        return Color.coreDataLegend.someKey(forValue: storedTimeBlock.colorName ?? "clear") ?? .clear
+    }
+
+    var calculatedHeight: CGFloat {
+        return CGFloat(storedTimeBlock.endTime - storedTimeBlock.startTime) * baseHeight
+    }
+
     var body: some View {
-        Button(action: {
-            self.isPresentingAddEditView.toggle()
-        }) {
+        Button(action: toggleAddEditView) {
             HStack {
-                if self.storedTimeBlock.isUnused {
+                if storedTimeBlock.isUnused {
                     Image(systemName: "plus")
                 }
 
@@ -24,12 +30,12 @@ struct TimelineItem: View {
                     .truncationMode(.tail)
             }
             .formatted(fontSize: 20)
-            .frame(maxWidth: .infinity, minHeight: calculateHeight(), maxHeight: calculateHeight())
+            .frame(maxWidth: .infinity, minHeight: calculatedHeight, maxHeight: calculatedHeight)
             .padding(10)
-            .background(getColorFromColorName())
-            .cornerRadius(self.cornerRadius)
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
             .overlay(
-                RoundedRectangle(cornerRadius: self.cornerRadius)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(Color.clouds, lineWidth: 5)
             )
         }
@@ -38,12 +44,8 @@ struct TimelineItem: View {
         })
     }
 
-    func calculateHeight() -> CGFloat {
-        return CGFloat(storedTimeBlock.endTime - storedTimeBlock.startTime) * baseHeight
-    }
-
-    func getColorFromColorName() -> Color {
-        return Color.coreDataLegend.someKey(forValue: storedTimeBlock.colorName ?? "clear") ?? .clear
+    func toggleAddEditView() {
+        isPresentingAddEditView.toggle()
     }
 }
 
