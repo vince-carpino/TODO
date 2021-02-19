@@ -7,8 +7,6 @@ struct TimelineView: View {
         NSSortDescriptor(keyPath: \StoredTimeBlock.startTime, ascending: true)
     ]) var timeBlocksCoreData: FetchedResults<StoredTimeBlock>
 
-    private let timelineSeparatorWidth: CGFloat = 65
-
     var body: some View {
         ZStack {
             BackgroundView()
@@ -23,19 +21,8 @@ struct TimelineView: View {
                     ScrollView(showsIndicators: false) {
                         ZStack {
                             VStack(spacing: 0) {
-                                ForEach(timeBlocksCoreData, id: \.id) { timeBlock in
-                                    TimelineSeparator(hour: timeBlock.startTime)
-
-                                    HStack {
-                                        Spacer()
-                                            .frame(width: timelineSeparatorWidth)
-
-                                        TimelineItem(storedTimeBlock: timeBlock)
-                                    }
-
-                                    if timeBlock == timeBlocksCoreData.last {
-                                        TimelineSeparator(hour: timeBlock.endTime)
-                                    }
+                                ForEach(timeBlocksCoreData) { timeBlock in
+                                    TimelineListItemView(timeBlockToShow: timeBlock, timeBlocksList: timeBlocksCoreData)
                                 }
 
                                 Spacer()
