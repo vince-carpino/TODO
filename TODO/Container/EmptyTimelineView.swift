@@ -13,7 +13,7 @@ struct EmptyTimelineView: View {
 
             Spacer()
 
-            Button(action: toggleAddEditView) {
+            Button(action: showAddEditView) {
                 HStack {
                     Image(systemName: "plus")
 
@@ -30,7 +30,7 @@ struct EmptyTimelineView: View {
         }
     }
 
-    func toggleAddEditView() {
+    func showAddEditView() {
         self.isShowingAddEditTimelineItemView.toggle()
     }
 }
