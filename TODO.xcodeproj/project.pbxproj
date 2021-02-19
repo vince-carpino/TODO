@@ -34,6 +34,9 @@
 		D078586E246F52BF00F370BF /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D078586C246F52BF00F370BF /* DataModel.xcdatamodeld */; };
 		D07C10BB25DF431700FF40CC /* TimelineListItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C10BA25DF431700FF40CC /* TimelineListItemView.swift */; };
 		D07C10BF25DF482400FF40CC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07C10BE25DF482400FF40CC /* Constants.swift */; };
+		D09F829825E07DCD00397C5D /* TitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F829725E07DCD00397C5D /* TitleView.swift */; };
+		D09F82A225E0852E00397C5D /* AddEditSaveButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F82A125E0852E00397C5D /* AddEditSaveButton.swift */; };
+		D09F82A625E0858800397C5D /* AddEditCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09F82A525E0858800397C5D /* AddEditCancelButton.swift */; };
 		D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */; };
 		D0DD642E246BAECB00ECFAC2 /* AddItemButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */; };
 		D0E6089825196C71009A68A5 /* TimeBlockSpacerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6089725196C71009A68A5 /* TimeBlockSpacerTests.swift */; };
@@ -84,6 +87,9 @@
 		D078586D246F52BF00F370BF /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		D07C10BA25DF431700FF40CC /* TimelineListItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineListItemView.swift; sourceTree = "<group>"; };
 		D07C10BE25DF482400FF40CC /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		D09F829725E07DCD00397C5D /* TitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleView.swift; sourceTree = "<group>"; };
+		D09F82A125E0852E00397C5D /* AddEditSaveButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditSaveButton.swift; sourceTree = "<group>"; };
+		D09F82A525E0858800397C5D /* AddEditCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditCancelButton.swift; sourceTree = "<group>"; };
 		D0BEB2BA246A7C4800781D9E /* ItemDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemDetailView.swift; sourceTree = "<group>"; };
 		D0DD642D246BAECB00ECFAC2 /* AddItemButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemButton.swift; sourceTree = "<group>"; };
 		D0E6089725196C71009A68A5 /* TimeBlockSpacerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBlockSpacerTests.swift; sourceTree = "<group>"; };
@@ -192,12 +198,15 @@
 		D00CBCA525DE0030006E5878 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				D00CBC9D25DDF181006E5878 /* StartEndTimeIncreaseButton.swift */,
-				D00CBC9925DDF109006E5878 /* StartEndTimeDecreaseButton.swift */,
-				D00CBC9525DDF012006E5878 /* ColorPicker.swift */,
+				D09F82A525E0858800397C5D /* AddEditCancelButton.swift */,
+				D09F82A125E0852E00397C5D /* AddEditSaveButton.swift */,
 				D00C316B25C4DD730010A3BF /* BackgroundView.swift */,
-				D00C316F25C4DDA80010A3BF /* TimelineSeparator.swift */,
+				D00CBC9525DDF012006E5878 /* ColorPicker.swift */,
+				D00CBC9925DDF109006E5878 /* StartEndTimeDecreaseButton.swift */,
+				D00CBC9D25DDF181006E5878 /* StartEndTimeIncreaseButton.swift */,
 				D07C10BA25DF431700FF40CC /* TimelineListItemView.swift */,
+				D00C316F25C4DDA80010A3BF /* TimelineSeparator.swift */,
+				D09F829725E07DCD00397C5D /* TitleView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -223,8 +232,8 @@
 			isa = PBXGroup;
 			children = (
 				D00C316725C4DC580010A3BF /* EmptyTimelineView.swift */,
-				D0F83A0724F07CBB0036C4E2 /* TimelineView.swift */,
 				D0517ABF2473582C00FFC5F1 /* ItemScrollView.swift */,
+				D0F83A0724F07CBB0036C4E2 /* TimelineView.swift */,
 			);
 			path = Container;
 			sourceTree = "<group>";
@@ -353,12 +362,15 @@
 				D00C318025C4DFE70010A3BF /* TimeBlock.swift in Sources */,
 				D00C317425C4DEB30010A3BF /* TimelineItemPreview.swift in Sources */,
 				D00C316C25C4DD730010A3BF /* BackgroundView.swift in Sources */,
+				D09F82A625E0858800397C5D /* AddEditCancelButton.swift in Sources */,
+				D09F829825E07DCD00397C5D /* TitleView.swift in Sources */,
 				D0BEB2BB246A7C4800781D9E /* ItemDetailView.swift in Sources */,
 				D00C317825C4DF1C0010A3BF /* TimelineItem.swift in Sources */,
 				D00C316825C4DC580010A3BF /* EmptyTimelineView.swift in Sources */,
 				D00CBC9E25DDF181006E5878 /* StartEndTimeIncreaseButton.swift in Sources */,
 				D0F83A0824F07CBB0036C4E2 /* TimelineView.swift in Sources */,
 				D0166B0B247635B70045418A /* AddEditItemView.swift in Sources */,
+				D09F82A225E0852E00397C5D /* AddEditSaveButton.swift in Sources */,
 				D00CBC9625DDF012006E5878 /* ColorPicker.swift in Sources */,
 				D0750436251EA7E0003583C8 /* AddEditTimelineItemView.swift in Sources */,
 				D049B23F2474EF67005A4017 /* Colors.swift in Sources */,

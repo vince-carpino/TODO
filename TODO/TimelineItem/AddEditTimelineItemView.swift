@@ -41,15 +41,16 @@ struct AddEditTimelineItemView: View {
         return endTimeValue == 24
     }
 
+    var titleText: String {
+        return "\(storedTimeBlock.isUnused ? "Add" : "Edit") Item"
+    }
+
     var body: some View {
         ZStack {
             BackgroundView()
 
             VStack {
-                Text("\(storedTimeBlock.isUnused ? "ADD" : "EDIT") ITEM")
-                    .bold()
-                    .formatted(fontSize: 45)
-                    .padding()
+                TitleView(text: titleText)
 
                 TimelineItemPreview(name: $itemName, color: $itemColor)
                     .padding()
@@ -149,34 +150,9 @@ struct AddEditTimelineItemView: View {
                 .padding()
 
                 HStack {
-                    Button(action: dismissSheet) {
-                        HStack {
-                            Image(systemName: "xmark")
+                    AddEditCancelButton(action: dismissSheet)
 
-                            Text("CANCEL")
-                        }
-                        .formatted(fontSize: 20)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .overlay(RoundedRectangle(cornerRadius: 40)
-                            .stroke(Color.asbestos, lineWidth: 5)
-                        )
-                        .cornerRadius(40)
-                    }
-
-                    Button(action: saveTimeBlockAndDismissSheet) {
-                        HStack {
-                            Image(systemName: "plus")
-
-                            Text("SAVE")
-                        }
-                        .formatted(fontSize: 20)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(saveButtonColor)
-                        .cornerRadius(40)
-                    }
-                    .disabled(nameFieldIsEmpty || colorNotChosen)
+                    AddEditSaveButton(action: saveTimeBlockAndDismissSheet, backgroundColor: saveButtonColor, disabledCondition: nameFieldIsEmpty || colorNotChosen)
                 }
                 .padding()
             }

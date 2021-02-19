@@ -12,8 +12,7 @@ struct TimelineView: View {
             BackgroundView()
 
             VStack {
-                Text("TODAY")
-                    .formatted(fontSize: 36)
+                TitleView(text: "Today")
 
                 if timeBlocksCoreData.count == 0 {
                     EmptyTimelineView()

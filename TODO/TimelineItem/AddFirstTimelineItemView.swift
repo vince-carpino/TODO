@@ -12,12 +12,26 @@ struct AddFirstTimelineItemView: View {
     @State private var startTimeValue: Float = 8
     @State private var endTimeValue: Float = 9
 
-    private let startEndTimeStep: Float = 0.5
-
     @State private var minimumStartHour: Float = 0
     @State private var maximumStartHour: Float = 23.5
     @State private var minimumEndHour: Float = 0.5
     @State private var maximumEndHour: Float = 24
+
+    var startTimeAtMinimum: Bool {
+        return startTimeValue == minimumStartHour
+    }
+
+    var startTimeAtMaximum: Bool {
+        startTimeValue == maximumStartHour
+    }
+
+    var endTimeAtMinimum: Bool {
+        endTimeValue == minimumEndHour
+    }
+
+    var endTimeAtMaximum: Bool {
+        endTimeValue == maximumEndHour
+    }
 
     var saveButtonColor: Color {
         return nameFieldIsEmpty || colorNotChosen ? .concrete : .peterRiver
@@ -28,8 +42,7 @@ struct AddFirstTimelineItemView: View {
     }
 
     var nameFieldIsEmpty: Bool {
-        let textFieldToWatch = itemName
-        return textFieldToWatch.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        return itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     var body: some View {
@@ -37,10 +50,7 @@ struct AddFirstTimelineItemView: View {
             BackgroundView()
 
             VStack {
-                Text("ADD ITEM")
-                    .bold()
-                    .formatted(fontSize: 45)
-                    .padding()
+                TitleView(text: "Add Item")
 
                 TimelineItemPreview(name: $itemName, color: $itemColor)
                     .padding()
@@ -78,9 +88,6 @@ struct AddFirstTimelineItemView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
-                            let startTimeAtMaximum: Bool = startTimeValue == maximumStartHour
-
                             StartEndTimeDecreaseButton(action: decreaseStartTime, isTargetTimeAtMinimum: startTimeAtMinimum)
 
                             Spacer()
@@ -99,9 +106,6 @@ struct AddFirstTimelineItemView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            let endTimeAtMinimum: Bool = endTimeValue == minimumEndHour
-                            let endTimeAtMaximum: Bool = endTimeValue == maximumEndHour
-
                             StartEndTimeDecreaseButton(action: decreaseEndTime, isTargetTimeAtMinimum: endTimeAtMinimum)
 
                             Spacer()
@@ -121,34 +125,9 @@ struct AddFirstTimelineItemView: View {
                 .padding()
 
                 HStack {
-                    Button(action: dismissSheet) {
-                        HStack {
-                            Image(systemName: "xmark")
+                    AddEditCancelButton(action: dismissSheet)
 
-                            Text("CANCEL")
-                        }
-                        .formatted(fontSize: 20)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .overlay(RoundedRectangle(cornerRadius: 40)
-                            .stroke(Color.asbestos, lineWidth: 5)
-                        )
-                        .cornerRadius(40)
-                    }
-
-                    Button(action: saveTimeBlockAndDismissSheet) {
-                        HStack {
-                            Image(systemName: "plus")
-
-                            Text("SAVE")
-                        }
-                        .formatted(fontSize: 20)
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .background(saveButtonColor)
-                        .cornerRadius(40)
-                    }
-                    .disabled(nameFieldIsEmpty || colorNotChosen)
+                    AddEditSaveButton(action: saveTimeBlockAndDismissSheet, backgroundColor: saveButtonColor, disabledCondition: nameFieldIsEmpty || colorNotChosen)
                 }
                 .padding()
             }
@@ -157,33 +136,33 @@ struct AddFirstTimelineItemView: View {
 
     fileprivate func decreaseStartTime() {
         if startTimeValue != minimumStartHour {
-            startTimeValue -= startEndTimeStep
+            startTimeValue -= Constants.startEndTimeStep
         }
     }
 
     fileprivate func increaseStartTime() {
         if startTimeValue != maximumStartHour {
-            startTimeValue += startEndTimeStep
+            startTimeValue += Constants.startEndTimeStep
 
             if startTimeValue == endTimeValue {
-                endTimeValue += startEndTimeStep
+                endTimeValue += Constants.startEndTimeStep
             }
         }
     }
 
     fileprivate func decreaseEndTime() {
         if endTimeValue != minimumEndHour {
-            endTimeValue -= startEndTimeStep
+            endTimeValue -= Constants.startEndTimeStep
 
             if endTimeValue == startTimeValue {
-                startTimeValue -= startEndTimeStep
+                startTimeValue -= Constants.startEndTimeStep
             }
         }
     }
 
     fileprivate func increaseEndTime() {
         if endTimeValue != maximumEndHour {
-            endTimeValue += startEndTimeStep
+            endTimeValue += Constants.startEndTimeStep
         }
     }
 
@@ -214,26 +193,23 @@ struct AddFirstTimelineItemView: View {
     }
 
     fileprivate func fillEmptyTimelineSpaces(firstTimeBlock: StoredTimeBlock) {
-        let startOfDayHour: Float = 8
-        let endOfDayHour: Float = 24
-
-        if firstTimeBlock.startTime != startOfDayHour {
+        if firstTimeBlock.startTime != Constants.startOfDayHour {
             let filler = StoredTimeBlock(context: moc)
             filler.id = UUID()
             filler.name = ""
             filler.colorName = "clear"
-            filler.startTime = startOfDayHour
+            filler.startTime = Constants.startOfDayHour
             filler.endTime = firstTimeBlock.startTime
             filler.isUnused = true
         }
 
-        if firstTimeBlock.endTime != endOfDayHour {
+        if firstTimeBlock.endTime != Constants.endOfDayHour {
             let filler = StoredTimeBlock(context: moc)
             filler.id = UUID()
             filler.name = ""
             filler.colorName = "clear"
             filler.startTime = firstTimeBlock.endTime
-            filler.endTime = endOfDayHour
+            filler.endTime = Constants.endOfDayHour
             filler.isUnused = true
         }
     }
