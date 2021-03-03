@@ -33,6 +33,10 @@ struct AddEditTimelineItemView: View {
         return itemName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    var saveButtonDisabled: Bool {
+        return nameFieldIsEmpty || colorNotChosen
+    }
+
     var saveButtonColor: Color {
         return nameFieldIsEmpty || colorNotChosen ? .concrete : .peterRiver
     }
@@ -43,6 +47,22 @@ struct AddEditTimelineItemView: View {
 
     var titleText: String {
         return "\(storedTimeBlock.isUnused ? "Add" : "Edit") Item"
+    }
+
+    var startTimeAtMinimum: Bool {
+        return startTimeValue == minimumStartHour
+    }
+
+    var startTimeAtMaximum: Bool {
+        return startTimeValue == maximumStartHour
+    }
+
+    var endTimeAtMinimum: Bool {
+        return endTimeValue == minimumEndHour
+    }
+
+    var endTimeAtMaximum: Bool {
+        return endTimeValue == maximumEndHour
     }
 
     var body: some View {
@@ -94,9 +114,6 @@ struct AddEditTimelineItemView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            let startTimeAtMinimum: Bool = startTimeValue == minimumStartHour
-                            let startTimeAtMaximum: Bool = startTimeValue == maximumStartHour
-
                             StartEndTimeDecreaseButton(action: decreaseStartTime, isTargetTimeAtMinimum: startTimeAtMinimum)
 
                             Spacer()
@@ -118,9 +135,6 @@ struct AddEditTimelineItemView: View {
 
                     VStack(alignment: .leading, spacing: 8) {
                         HStack {
-                            let endTimeAtMinimum: Bool = endTimeValue == minimumEndHour
-                            let endTimeAtMaximum: Bool = endTimeValue == maximumEndHour
-
                             StartEndTimeDecreaseButton(action: decreaseEndTime, isTargetTimeAtMinimum: endTimeAtMinimum)
 
                             Spacer()
@@ -152,7 +166,7 @@ struct AddEditTimelineItemView: View {
                 HStack {
                     AddEditCancelButton(action: dismissSheet)
 
-                    AddEditSaveButton(action: saveTimeBlockAndDismissSheet, backgroundColor: saveButtonColor, disabledCondition: nameFieldIsEmpty || colorNotChosen)
+                    AddEditSaveButton(action: saveTimeBlockAndDismissSheet, backgroundColor: saveButtonColor, disabledCondition: saveButtonDisabled)
                 }
                 .padding()
             }
