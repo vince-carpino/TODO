@@ -10,6 +10,9 @@ struct AddEditTimelineItemView: View {
 
     let storedTimeBlock: StoredTimeBlock
 
+    @State private var previousTimeBlock: StoredTimeBlock? = nil
+    @State private var nextTimeBlock: StoredTimeBlock? = nil
+
     @State private var itemName: String = ""
     @State private var itemColor: Color = .white
     @State private var itemStartTime: Date = Date()
@@ -184,19 +187,25 @@ struct AddEditTimelineItemView: View {
 
     fileprivate func determineMinimumStartHour() {
         let previousTimeBlockIndex = timeBlocksCoreData.firstIndex(of: storedTimeBlock)! - 1
-        if previousTimeBlockIndex >= 0 {
-            let previousTimeBlock = timeBlocksCoreData[previousTimeBlockIndex]
-            if previousTimeBlock.isUnused {
-                minimumStartHour = previousTimeBlock.startTime
+        if timeBlocksCoreData.indices.contains(previousTimeBlockIndex) {
+            previousTimeBlock = timeBlocksCoreData[previousTimeBlockIndex]
+            if previousTimeBlock != nil, previousTimeBlock!.isUnused {
+                minimumStartHour = previousTimeBlock!.startTime
+            } else {
+                minimumStartHour = storedTimeBlock.startTime
             }
         }
     }
 
     fileprivate func determineMaximumEndHour() {
         let nextTimeBlockIndex = timeBlocksCoreData.firstIndex(of: storedTimeBlock)! + 1
-        if timeBlocksCoreData.indices.contains(nextTimeBlockIndex), timeBlocksCoreData[nextTimeBlockIndex].isUnused {
-            let nextTimeBlock = timeBlocksCoreData[nextTimeBlockIndex]
-            maximumEndHour = nextTimeBlock.endTime
+        if timeBlocksCoreData.indices.contains(nextTimeBlockIndex) {
+            nextTimeBlock = timeBlocksCoreData[nextTimeBlockIndex]
+            if nextTimeBlock != nil, nextTimeBlock!.isUnused {
+                maximumEndHour = nextTimeBlock!.endTime
+            } else {
+                maximumEndHour = storedTimeBlock.endTime
+            }
         }
     }
 
@@ -240,16 +249,60 @@ struct AddEditTimelineItemView: View {
         }
     }
 
+    fileprivate func createUnusedTimeBlock(startTime: Float, endTime: Float) {
+        let newPreviousTimeBlock = StoredTimeBlock(context: moc)
+        newPreviousTimeBlock.id = UUID()
+        newPreviousTimeBlock.name = ""
+        newPreviousTimeBlock.colorName = "clear"
+        newPreviousTimeBlock.startTime = startTime
+        newPreviousTimeBlock.endTime = endTime
+        newPreviousTimeBlock.isUnused = true
+    }
+
+    fileprivate func configurePreviousTimeBlock() {
+        if previousTimeBlock == nil { return }
+
+        if storedTimeBlock == timeBlocksCoreData.first, storedTimeBlock.startTime != Constants.startOfDayHour {
+            createUnusedTimeBlock(startTime: Constants.startOfDayHour, endTime: storedTimeBlock.startTime)
+        } else if storedTimeBlock.startTime == previousTimeBlock!.startTime {
+            moc.delete(previousTimeBlock!)
+        } else if storedTimeBlock.startTime != previousTimeBlock!.endTime, previousTimeBlock!.isUnused {
+            previousTimeBlock!.endTime = storedTimeBlock.startTime
+        } else if !previousTimeBlock!.isUnused, previousTimeBlock!.endTime != storedTimeBlock.startTime {
+            createUnusedTimeBlock(startTime: previousTimeBlock!.endTime, endTime: storedTimeBlock.startTime)
+        }
+    }
+
+    fileprivate func configureNextTimeBlock() {
+        if nextTimeBlock == nil { return }
+
+        if storedTimeBlock == timeBlocksCoreData.last, storedTimeBlock.endTime != Constants.endOfDayHour {
+            createUnusedTimeBlock(startTime: storedTimeBlock.endTime, endTime: Constants.endOfDayHour)
+        } else if storedTimeBlock.endTime == nextTimeBlock!.endTime {
+            moc.delete(nextTimeBlock!)
+        } else if storedTimeBlock.endTime != nextTimeBlock!.startTime, nextTimeBlock!.isUnused {
+            nextTimeBlock!.startTime = storedTimeBlock.endTime
+        } else if !nextTimeBlock!.isUnused, nextTimeBlock!.startTime != storedTimeBlock.endTime {
+            createUnusedTimeBlock(startTime: storedTimeBlock.endTime, endTime: nextTimeBlock!.startTime)
+        }
+    }
+
     fileprivate func saveTimeBlock() {
         moc.performAndWait {
-
             storedTimeBlock.name = itemName
             storedTimeBlock.colorName = Color.coreDataLegend[itemColor]
             storedTimeBlock.startTime = startTimeValue
             storedTimeBlock.endTime = endTimeValue
             storedTimeBlock.isUnused = false
 
+            configurePreviousTimeBlock()
+
+            configureNextTimeBlock()
+
             saveContext()
+        }
+    }
+
     fileprivate func saveTimeBlockAndDismissSheet() {
         saveTimeBlock()
 
@@ -258,35 +311,6 @@ struct AddEditTimelineItemView: View {
 
     func dismissSheet() {
         presentationMode.wrappedValue.dismiss()
-    }
-
-    fileprivate func fillEmptyTimelineSpaces(firstTimeBlock: StoredTimeBlock) {
-        let startOfDayHour: Float = 8
-        let endOfDayHour: Float = 24
-
-        if firstTimeBlock.startTime != startOfDayHour {
-            let filler = StoredTimeBlock(context: moc)
-            filler.id = UUID()
-            filler.name = ""
-            filler.colorName = "clear"
-            filler.startTime = startOfDayHour
-            filler.endTime = firstTimeBlock.startTime
-            filler.isUnused = true
-        }
-
-        if firstTimeBlock.endTime != endOfDayHour {
-            let filler = StoredTimeBlock(context: moc)
-            filler.id = UUID()
-            filler.name = ""
-            filler.colorName = "clear"
-            filler.startTime = firstTimeBlock.endTime
-            filler.endTime = endOfDayHour
-            filler.isUnused = true
-        }
-
-                }
-
-        }
     }
 }
 
