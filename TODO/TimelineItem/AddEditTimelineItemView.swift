@@ -18,8 +18,6 @@ struct AddEditTimelineItemView: View {
     @State private var startTimeValue: Float = 1
     @State private var endTimeValue: Float = 2
 
-    private let startEndTimeStep: Float = 0.5
-
     @State private var minimumStartHour: Float = 0
     @State private var maximumStartHour: Float = 23
     @State private var minimumEndHour: Float = 0
@@ -173,10 +171,10 @@ struct AddEditTimelineItemView: View {
         }
         .onAppear {
             determineMinimumStartHour()
-            minimumEndHour = minimumStartHour + startEndTimeStep
+            minimumEndHour = minimumStartHour + Constants.startEndTimeStep
 
             determineMaximumEndHour()
-            maximumStartHour = maximumEndHour - startEndTimeStep
+            maximumStartHour = maximumEndHour - Constants.startEndTimeStep
         }
     }
 
@@ -204,33 +202,33 @@ struct AddEditTimelineItemView: View {
 
     fileprivate func decreaseStartTime() {
         if startTimeValue != minimumStartHour {
-            startTimeValue -= startEndTimeStep
+            startTimeValue -= Constants.startEndTimeStep
         }
     }
 
     fileprivate func increaseStartTime() {
         if startTimeValue != maximumStartHour {
-            startTimeValue += startEndTimeStep
+            startTimeValue += Constants.startEndTimeStep
 
             if startTimeValue == endTimeValue {
-                endTimeValue += startEndTimeStep
+                endTimeValue += Constants.startEndTimeStep
             }
         }
     }
 
     fileprivate func decreaseEndTime() {
         if endTimeValue != minimumEndHour {
-            endTimeValue -= startEndTimeStep
+            endTimeValue -= Constants.startEndTimeStep
 
             if endTimeValue == startTimeValue {
-                startTimeValue -= startEndTimeStep
+                startTimeValue -= Constants.startEndTimeStep
             }
         }
     }
 
     fileprivate func increaseEndTime() {
         if endTimeValue != maximumEndHour {
-            endTimeValue += startEndTimeStep
+            endTimeValue += Constants.startEndTimeStep
         }
     }
 
