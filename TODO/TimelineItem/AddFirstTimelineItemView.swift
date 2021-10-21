@@ -192,25 +192,23 @@ struct AddFirstTimelineItemView: View {
         dismissSheet()
     }
 
+    fileprivate func createUnusedTimeBlock(startTime: Float, endTime: Float) {
+        let newPreviousTimeBlock = StoredTimeBlock(context: moc)
+        newPreviousTimeBlock.id = UUID()
+        newPreviousTimeBlock.name = ""
+        newPreviousTimeBlock.colorName = "clear"
+        newPreviousTimeBlock.startTime = startTime
+        newPreviousTimeBlock.endTime = endTime
+        newPreviousTimeBlock.isUnused = true
+    }
+
     fileprivate func fillEmptyTimelineSpaces(firstTimeBlock: StoredTimeBlock) {
         if firstTimeBlock.startTime != Constants.startOfDayHour {
-            let filler = StoredTimeBlock(context: moc)
-            filler.id = UUID()
-            filler.name = ""
-            filler.colorName = "clear"
-            filler.startTime = Constants.startOfDayHour
-            filler.endTime = firstTimeBlock.startTime
-            filler.isUnused = true
+            createUnusedTimeBlock(startTime: Constants.startOfDayHour, endTime: firstTimeBlock.startTime)
         }
 
         if firstTimeBlock.endTime != Constants.endOfDayHour {
-            let filler = StoredTimeBlock(context: moc)
-            filler.id = UUID()
-            filler.name = ""
-            filler.colorName = "clear"
-            filler.startTime = firstTimeBlock.endTime
-            filler.endTime = Constants.endOfDayHour
-            filler.isUnused = true
+            createUnusedTimeBlock(startTime: firstTimeBlock.endTime, endTime: Constants.endOfDayHour)
         }
     }
 
